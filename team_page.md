@@ -1,7 +1,7 @@
 # Computer POGramming
 
 ## Mascot: Pink Hairless Cats
-
+![Cat](cat.heic)
 
 ### Roster
 * Ishaan Kale
