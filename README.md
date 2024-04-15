@@ -16,7 +16,7 @@
 - Harsh Gurnani
 - Kiera Navarro
 - Sarevesh Mann
-- Jeffery Lee
+- Jeffrey Lee
 - Smruthi Gowtham
 - Sofia Nguyen
 - Terence Tan
