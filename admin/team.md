@@ -11,6 +11,8 @@
   * 4th Year Cognitive Science major specializing in Machine Learning and minor in Computer Science in ERC
   * [Github](https://github.com/cdelira9)
 * David Choi
+  * 3rd Year Computer Science major. My current interests are in the intersection of Computer Graphics and Machine Learning. 
+  * [Github](https://github.com/dyc-github)
 * Eugenie Ren
 * Harsh Gurnani
 * Jeffrey Lee
