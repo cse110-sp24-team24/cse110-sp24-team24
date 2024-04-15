@@ -7,6 +7,8 @@
 * Ishaan Kale
 
 * Cythia Delira
+  * 4th Year Cognitive Science major specializing in Machine Learning and minor in Computer Science in ERC
+  * [Github](https://github.com/cdelira9)
 * David Choi
 * Eugenie Ren
 * Harsh Gurnani
@@ -16,7 +18,7 @@
 * Terence Tan
 * Sofia Nguyen
 * Geena Limfat
-  * 3rd Year Cognitive Science major specializing in Machine Learning and minor in Copmuter Science in Sixth College
+  * 3rd Year Cognitive Science major specializing in Machine Learning and minor in Computer Science in Sixth College
   * [Github](https://github.com/geenalimfat)
 
 ### Values
