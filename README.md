@@ -1,7 +1,7 @@
 # Team 24
 <hr style="border:2px solid gray">
 
-[Team Page Link](https://cse110-sp24-team24.github.io/cse110-sp24-team24/admin/team.md)
+[Team Page Link](https://github.com/cse110-sp24-team24/cse110-sp24-team24/blob/main/admin/team.md)
 
 # Team Members
 <hr style="border:2px solid gray">
