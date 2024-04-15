@@ -36,5 +36,5 @@
 
 **Team Page on GitHub**
 
-## Next Meeting Discussions**
+## Next Meeting Discussions
 - Assign roles
