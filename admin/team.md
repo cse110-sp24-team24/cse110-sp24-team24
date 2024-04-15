@@ -20,6 +20,8 @@
   * [Github](https://github.com/jxnlee)
 * Kiera Navarro
 * Sarvesh Mann
+  * 3rd Year Computer Science major in Sixth College
+  * [Github](https://github.com/sarveshmann) 
 * Terence Tan
 * Sofia Nguyen
 * Geena Limfat
