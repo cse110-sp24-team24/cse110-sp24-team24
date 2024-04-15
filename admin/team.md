@@ -14,6 +14,8 @@
 * Eugenie Ren
 * Harsh Gurnani
 * Jeffrey Lee
+  * 2nd Year Computer Engineering major in ERC
+  * [Github](https://github.com/jxnlee)
 * Kiera Navarro
 * Sarvesh Mann
 * Terence Tan
