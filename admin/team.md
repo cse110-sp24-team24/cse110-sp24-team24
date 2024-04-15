@@ -5,7 +5,8 @@
 
 ### Roster
 * Ishaan Kale
-
+  * 2nd Year Computer Science major in Marshall college
+  * [Github](https://github.com/ikale1234/)
 * Cythia Delira
   * 4th Year Cognitive Science major specializing in Machine Learning and minor in Computer Science in ERC
   * [Github](https://github.com/cdelira9)
