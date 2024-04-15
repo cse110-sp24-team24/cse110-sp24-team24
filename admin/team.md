@@ -14,6 +14,8 @@
   * 3rd Year Computer Science major. My current interests are in the intersection of Computer Graphics and Machine Learning. 
   * [Github](https://github.com/dyc-github)
 * Eugenie Ren
+  * 3rd Year Computer Science major in Seventh College, interested in Machine Learning.
+  * [Github](https://github.com/Azathotha)
 * Harsh Gurnani
 * Jeffrey Lee
   * 2nd Year Computer Engineering major in ERC
