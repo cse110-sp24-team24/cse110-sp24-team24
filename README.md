@@ -15,7 +15,7 @@
 - Eugenie Ren
 - Harsh Gurnani
 - Kiera Navarro
-- Sarevesh Mann
+- Sarvesh Mann
 - Jeffrey Lee
 - Smruthi Gowtham
 - Sofia Nguyen
