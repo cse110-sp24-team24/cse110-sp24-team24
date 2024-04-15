@@ -1,10 +1,10 @@
-# Meeting Minutes
+# Kickoff Meeting Minutes
 
 ## Meeting Details
 - **Date:** April 14, 2024
 - **Time:** 3:00 PM - 4:00 PM
 - **Location:** Geisel Library 2069A East and Zoom
-- **Attendess:**  Cynthia, Ishaan, David, Eugenie, Jeffrey, Sarvesh, Terrence, Kiera, Geena, Sofia, Harsh
+- **Attendees:**  Cynthia, Ishaan, David, Eugenie, Jeffrey, Sarvesh, Terrence, Kiera, Geena, Sofia, Harsh
 
 ## Agenda
 1. Discuss project branding, team name and identity
