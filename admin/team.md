@@ -25,6 +25,8 @@
   - 2nd Year Computer Engineering major in ERC
   - [Github](https://github.com/jxnlee)
 - Kiera Navarro
+  - 3rd Year Math-Computer Science Major at Marshall
+  - [Github](https://github.com/kieraliz)
 - Sarvesh Mann
   - 3rd Year Computer Science major in Sixth College
   - [Github](https://github.com/sarveshmann)
