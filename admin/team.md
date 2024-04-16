@@ -30,6 +30,8 @@
   - [Github](https://github.com/sarveshmann)
 - Terence Tan
 - Sofia Nguyen
+  - 2nd Year Computer Science major at Seventh College, interested in game dev, graphics, and music.
+  - [Github](https://github.com/symsoph)
 - Geena Limfat
   - 3rd Year Cognitive Science major specializing in Machine Learning and minor in Computer Science in Sixth College
   - [Github](https://github.com/geenalimfat)
