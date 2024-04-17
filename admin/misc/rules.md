@@ -38,6 +38,7 @@ Geena Limfat
 
 ## 6. Signatures
 - Eugenie Ren
+- Sofia Nguyen
 
 
 
