@@ -2,19 +2,21 @@
 
 ## 1. Group Identification
 **Team Number:** 24
+<br>
 **Team Name:** Computer PAWgrammers
+<br>
 **Team Members:**
-Ishaan Kale
-Cynthia Delira
-David Choi
-Eugenie Ren
-Harsh Gurnani
-Jeffrey Lee
-Kiera Navarro
-Sarvesh Mann
-Terence Tan
-Sofia Nguyen
-Geena Limfat
+Ishaan Kale,
+Cynthia Delira,
+David Choi,
+Eugenie Ren,
+Harsh Gurnani,
+Jeffrey Lee,
+Kiera Navarro,
+Sarvesh Mann,
+Terence Tan,
+Sofia Nguyen,
+Geena Limfat 
 
 ## 2. Primary Means of Communications and Expectations
 - Primary means of communication will be in Slack
@@ -40,6 +42,7 @@ Geena Limfat
 - Eugenie Ren
 - Sofia Nguyen
 - Kiera Navarro
+- Sarvesh Mann
 
 
 
