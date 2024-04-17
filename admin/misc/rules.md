@@ -37,7 +37,7 @@ Geena Limfat
 - For big issues/disagreements – do a vote
 
 ## 6. Signatures
-
+- Eugenie Ren
 
 
 
