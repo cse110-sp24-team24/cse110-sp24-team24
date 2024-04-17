@@ -43,6 +43,7 @@ Geena Limfat
 - Sofia Nguyen
 - Kiera Navarro
 - Sarvesh Mann
+- David Choi
 
 
 
