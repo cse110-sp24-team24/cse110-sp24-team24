@@ -31,6 +31,8 @@
   - 3rd Year Computer Science major in Sixth College
   - [Github](https://github.com/sarveshmann)
 - Terence Tan
+  - 2nd Year Computer Science major at ERC, draw as a hobby
+  - [Github](https://github.com/TerenceTan1021)
 - Sofia Nguyen
   - 2nd Year Computer Science major at Seventh College, interested in game dev, graphics, and music.
   - [Github](https://github.com/symsoph)
