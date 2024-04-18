@@ -39,11 +39,5 @@ Geena Limfat
 - For big issues/disagreements – do a vote
 
 ## 6. Signatures
-- Eugenie Ren
-- Sofia Nguyen
-- Kiera Navarro
-- Sarvesh Mann
-- David Choi
-- Jeffrey Lee
 
 
