@@ -4,7 +4,7 @@
 - **Date:** April 28, 2024
 - **Time:** 3:00 PM - 3:30 PM
 - **Location:** Zoom
--  **Attendees:** Cynthia, Ishaan, Eugenie, Jeffrey, Terrence, Harsh, Geena, Sofia, Kiera
+-  **Attendees:** Cynthia, Sarvesh, Ishaan, Eugenie, Jeffrey, Terrence, Harsh, Geena, Sofia, Kiera
 -  **Absentees:** David
 
 ### Completed Tasks:
