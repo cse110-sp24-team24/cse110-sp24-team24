@@ -68,22 +68,25 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 <hr>
 
 **User Persona: Derick**
-* I am a 16 year old highschooler who is looking to  get into Computers
-* Want something simple that even a novice can use
+
+- I am a 16 year old highschooler who is looking to get into Computers
+- Want something simple that even a novice can use
 
 **Wants/Needs**
+
 - want a easy to use website
 - looking for something to help study computers
 - offline usage, as at home the wifi is not as good
 - efficent as his device is not the lastest tech
 
 **Personality**
+
 - prefer something minimalistic
 - prefers something to run on his old 2016 laptop
 - prefers to have it being within reachability(no wifi, loads fast)
 
-  <hr>
-  
+<hr>
+
 **User Persona: Emily**
 
 - I am a senior development manager
@@ -122,7 +125,7 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - Takes very short and quick notes regularly while working
 - Enjoys experimental work and researching innovative ideas
 
-  <hr>
+<hr>
 
 **User Persona: Draymond**
 
@@ -144,27 +147,45 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 <hr>
 
 **User Persona: Jade**
+
 - Manager
 - Looking for a DevJournal that will keep her better organized
 - Doesn’t know the fine details about coding but manages a software team
-  
+
 **Wants/Needs**
+
 - Easy access to resources
-    - Coding references
+  - Coding references
 - Needs to keep note of team meetings
-    - Standups
-    - Brainstorming
+  - Standups
+  - Brainstorming
 - Needs to keep all her pitches/rundowns in one place
-  
+
 **Personality:**
-- Straight to the point 
+
+- Straight to the point
 - Minimalist
 - Organized
 - Easily Distracted
 
+<hr>
+
+**User Persona: Margaret**
+
+- I am a 51 year old high school teacher who teaches an intro to programming class.
+- I love creating interesting programming assignments for my students.
+
+**Wants/Needs**
+
+- Wants a journal to keep entries about her personal and work life.
+- Needs a place to organize the programming assignments for her class and label them accordingly.
+
+**Personality**
+
+- Less tech-savvy.
+- Enjoys simplicity and ease of use in apps.
+
 ## Problems
-
-
 
 - Developers face challenges in documenting their progress with everyday and long term tasks, as there is no good centralized way to record both code snippets and regular documentation. Existing solutions don't cater towards the specifc functionality that developers are looking for in their note-taking or journaling applications.
 - Oftentimes, developers face bugs/issues that show up repeatedly and are not simple to fix. Even after finding a solution, there is not a good way for them to record how they solved the problem, leading to much unnecessary stress of trying to resolve it when they face the issue again. Similarly, it is currently difficult to access old code that may be useful or reusable.
@@ -172,26 +193,53 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - These pain points are ubiquitous across the developer community. We want to propose a solution that addresses these problems and makes work life simpler for developers, to drive productivity and project success.
 
 ## Appetite
+
 3 weeks to build working prototype; 2 weeks to finetune, style, and user tests. 3 weeks would constrain us to build a basic skeleton of our main feature, the notes.
- - Considering that our timeline is only 4ish weeks, we should be cautious about the features we commit to
- - The work should be communicated and split up in a clear way. We should understand which features depend on each other so that we don't get stuck with a dependency
- - We should prioritize the most important features first, and then reevaluate our other ideas
- - We should aim to complete the prototype within *2 weeks* to allow enough time for testing, style, etc ??
- - We should always allow a "buffer time" for unforseen issues. The final week should be focused on wrapping up the work (rather than rushing other features)
- - We should try to meet up at least once per week in person, small groups or all together. This would help resolve isues of communication and staying on track. We might have issues with coordinating everyone's schedules, so small groups might be ideal.
+
+- Considering that our timeline is only 4ish weeks, we should be cautious about the features we commit to
+- The work should be communicated and split up in a clear way. We should understand which features depend on each other so that we don't get stuck with a dependency
+- We should prioritize the most important features first, and then reevaluate our other ideas
+- We should aim to complete the prototype within _2 weeks_ to allow enough time for testing, style, etc ??
+- We should always allow a "buffer time" for unforseen issues. The final week should be focused on wrapping up the work (rather than rushing other features)
+- We should try to meet up at least once per week in person, small groups or all together. This would help resolve isues of communication and staying on track. We might have issues with coordinating everyone's schedules, so small groups might be ideal.
+
+## Brainstorming
+
+Our team largely brainstormed using [this Miro board](https://miro.com/app/board/uXjVKNcw5I4=/).
+
+### User stories
+
+We started off the brainstorming process by creating a lot of user stories (around 4 per team member), shown in the image below. Each user story was categorized according to a specific feature that we could implement in our developer journal web app. Finally, we voted on our favorite features that we thought would be the most high priority to include in our CRUD app. Creating user stories really helped us identify the main pain points that users currently face so that we could prioritize creating an app that could provide a strong user experience. The chosen features based on our voting will be used as issues during the actual project, which will help with organization and establishing a development timeline.
+
+![User stories](./project_user_stories.png)
+
+### UI Development
+
+We divided into smaller groups to brainstorm ideas for the UI that we wanted to create. While going through this process, we surveyed other ‘competitors’ apps that had aspect that we liked and wanted to include. The small group sessions resulted in many different ideas for how we wanted our UI to look, and each group had good solutions included in their UI to solve the main problems we outlined above. For example, we all voted to have a separate page pop up for each journal entry upon it being clicked. In the end, we took a vote to decide on the UI we liked the most and the small features from each one that we wanted in the final product, and used these to build up a final user interface that we drew together as a team (an image of which is shown in the Solution section below).
 
 ## Solution
+
+
+### Current UI Design
+![design](solution.png)
 
 Need to narrow down the core features for note-taking.
 Suggestions (in order from critical to lesser):
 
-1. add multiple notes / multiple folders
-2. Searching titles (organization)
-3. title
+1. contain multiple notes displayed in chronological order
+2. Search Filtering (organization)
+   - create a search filter that will only display notes that are filtered by tags and title
+   - also filters by all text context in the note
+3. titles and dates for notes
+   - Title and date set as attribute in note object (date default set as day note was added)
 4. tagging
-5. save/ delete note (with warning)
-6. hovering tool bar functions (italicize, bold, images, etc)
-7. insert/ delete code blocks, images, videos, external links
+    - Allow user to create tags for notes to make searching for specific notes possible
+5. edit/save/delete note (with warning)
+    - Button for edit, save, and delete should be connected to the actual note
+6. hovering tool bar functions for editing notes (italicize, bold, images, etc)
+   - Tool bar pops up when editing different notes
+   - insert/ delete code blocks, images, videos, external links are also options in this tool bar 
+7. Has a side bar with a home button and an add button for a new task (in order to navigate between new notes and current available notes)
 
 ## Technology
 
@@ -213,15 +261,14 @@ Here's a potential skeleton:
 
 ### What Else We Learned from Last Time
 
-- Focusing on the small details that may not cause too big of a difference instead of looking at the overall project 
-- Focusing too much time on adding new features instead of making sure the basic ones are well implemented 
-- Exploring new tech in limited timeframe 
+- Focusing on the small details that may not cause too big of a difference instead of looking at the overall project
+- Focusing too much time on adding new features instead of making sure the basic ones are well implemented
+- Exploring new tech in limited timeframe
 - Not communicating well with other teams on what they’re doing, how they’re implementing, the progress they’ve made, any issues
 - Don’t get overeager with how much we accomplish and try to do more than we can handle in the given time frame
 - Not documenting enough on our progress
 - Waiting for whole group meetings to discuss next steps
-	- Can discuss in slack/in smaller groups
-
+  - Can discuss in slack/in smaller groups
 
 ## No Gos
 
