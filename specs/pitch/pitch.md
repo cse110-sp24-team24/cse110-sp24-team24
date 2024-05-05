@@ -85,7 +85,7 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - prefers something to run on his old 2016 laptop
 - prefers to have it being within reachability(no wifi, loads fast)
 
-  <hr>
+<hr>
 
 **User Persona: Emily**
 
@@ -125,7 +125,7 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - Takes very short and quick notes regularly while working
 - Enjoys experimental work and researching innovative ideas
 
-  <hr>
+<hr>
 
 **User Persona: Draymond**
 
@@ -167,6 +167,23 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - Minimalist
 - Organized
 - Easily Distracted
+
+<hr>
+
+**User Persona: Margaret**
+
+- I am a 51 year old high school teacher who teaches an intro to programming class.
+- I love creating interesting programming assignments for my students.
+
+**Wants/Needs**
+
+- Wants a journal to keep entries about my personal and work life.
+- Needs a place to organize the programming assignments for my class and label them accordingly.
+
+**Personality**
+
+- Less tech-savvy.
+- Enjoys simplicity and ease of use in apps.
 
 ## Problems
 
