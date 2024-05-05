@@ -177,8 +177,8 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 
 **Wants/Needs**
 
-- Wants a journal to keep entries about my personal and work life.
-- Needs a place to organize the programming assignments for my class and label them accordingly.
+- Wants a journal to keep entries about her personal and work life.
+- Needs a place to organize the programming assignments for her class and label them accordingly.
 
 **Personality**
 
