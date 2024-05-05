@@ -67,6 +67,22 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 
 <hr>
 
+**User Persona: Derick**
+* I am a 16 year old highschooler who is looking to  get into Computers
+* Want something simple that even a novice can use
+
+**Wants/Needs**
+- want a easy to use website
+- looking for something to help study computers
+- offline usage, as at home the wifi is not as good
+- efficent as his device is not the lastest tech
+
+**Personality**
+- prefer something minimalistic
+- prefers something to run on his old 2016 laptop
+- prefers to have it being within reachability(no wifi, loads fast)
+- 
+  <hr>
 **User Persona: Emily**
 
 - I am a senior development manager
