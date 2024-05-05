@@ -20,7 +20,7 @@ Sofia Nguyen,
 Geena Limfat
 
 ## Statement of Purpose
-To create a Dev Journal that allows for note-taking (include images, videos, and tags), write code, delete, save, searching. 
+To create a Dev Journal that allows for note-taking (include images, videos, and tags), write code, delete, save, searching.  By maintaining a journal, developers can track their progress and identify areas for improvement.
 
 ## User Personas
 **User Persona: Avery**
@@ -40,8 +40,28 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 * Doesn't consider themselves to be artsy but can appreciate nice layouts and colors 
 * Tends to be forgetful
 
+<hr>
+  
+**User Persona: Alex**
+
+* I am a seasoned developer with over 10 years of experience in the field.
+* Passionate about mentoring junior team members and creating a culture of continuous learning.
+
+**Wants/Needs**
+- Seeks a platform to share insights and document best practices.
+- Wants simplicity and efficiency in the journaling process.
+- Prefers a straightforward interface to log daily experiences quickly and easily.
+- Needs the ability to categorize entries and track progress over time.
+
+**Personality**
+* Analytical and methodical in approach.
+* Appreciates functionality over aesthetics but knows the importance of a clean and intuitive user interface.
+* Strives for efficiency and effectiveness in all aspects of work.
+* Enjoys problem-solving and finding creative solutions to challenges.
+
 ## Problems
 - Might get lost in complexity because there are many features, so we should firstly build the note-taking feature.
+- Hard to ensure the journal aligns with different needs and preferences.
 
 ## Appetite
 3 weeks to build working prototype; 2 weeks to finetune, style, and user tests. 3 weeks would constrain us to build a basic skeleton of our main feature, the notes. 
