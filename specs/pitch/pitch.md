@@ -153,12 +153,13 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 Need to narrow down the core features for note-taking.
 Suggestions (in order from critical to lesser):
 
-1. add multiple notes
-2. title
-3. tagging
-4. save/ delete note (with warning)
-5. tool bar functions (italicize, bold, images, etc)
-6. insert/ delete code blocks, images, videos
+1. add multiple notes / multiple folders
+2. Searching titles (organization)
+3. title
+4. tagging
+5. save/ delete note (with warning)
+6. hovering tool bar functions (italicize, bold, images, etc)
+7. insert/ delete code blocks, images, videos, external links
 
 ## Rabbit Holes
 
