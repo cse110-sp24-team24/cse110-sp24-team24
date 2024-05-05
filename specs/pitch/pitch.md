@@ -123,26 +123,30 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - Enjoys experimental work and researching innovative ideas
 
   <hr>
-  
+
 **User Persona: Draymond**
 
-* I am a retired basketball player looking to start a personal CS project
-* Currently starting off alone, but looking to add other interested people
+- I am a retired basketball player looking to start a personal CS project
+- Currently starting off alone, but looking to add other interested people
 
 **Wants/Needs**
+
 - Needs a place to track progress of project brainstorming, planning, and coding
 - Wants to keep things organized and easy to work with to help with future onboarding of new workers
 - Does not want application to get in the way of work and take up unnecessary time
 
 **Personality**
-* Aggressive and assertive in his beliefs
-* Very articulate and likes to explain his thoughts thoroughly
-* Enjoys taking on new hobbies and tasks that intrigue
+
+- Aggressive and assertive in his beliefs
+- Very articulate and likes to explain his thoughts thoroughly
+- Enjoys taking on new hobbies and tasks that intrigue
 
 ## Problems
 
-- Might get lost in complexity because there are many features, so we should firstly build the note-taking feature.
-- Hard to ensure the journal aligns with different needs and preferences.
+- Developers face challenges in documenting their progress with everyday and long term tasks, as there is no good centralized way to record both code snippets and regular documentation. Existing solutions don't cater towards the specifc functionality that developers are looking for in their note-taking or journaling applications.
+- Oftentimes, developers face bugs/issues that show up repeatedly and are not simple to fix. Even after finding a solution, there is not a good way for them to record how they solved the problem, leading to much unnecessary stress of trying to resolve it when they face the issue again. Similarly, it is currently difficult to access old code that may be useful or reusable.
+- Furthermore, it is hard to keep track of work-related resources (i.e. Github links, StackOverflow, etc), since there are so many links and resources and no way to organize everything.
+- These pain points are ubiquitous across the developer community. We want to propose a solution that addresses these problems and makes work life simpler for developers, to drive productivity and project success.
 
 ## Appetite
 3 weeks to build working prototype; 2 weeks to finetune, style, and user tests. 3 weeks would constrain us to build a basic skeleton of our main feature, the notes.
