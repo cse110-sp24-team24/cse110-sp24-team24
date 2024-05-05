@@ -155,6 +155,10 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 
 ## Solution
 
+
+### Current UI Design
+![design](solution.png)
+
 Need to narrow down the core features for note-taking.
 Suggestions (in order from critical to lesser):
 
