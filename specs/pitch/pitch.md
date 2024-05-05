@@ -161,6 +161,15 @@ Suggestions (in order from critical to lesser):
 6. hovering tool bar functions (italicize, bold, images, etc)
 7. insert/ delete code blocks, images, videos, external links
 
+## Technology
+
+1. Html, CSS, Javascript for creating the website
+2. Git 4 version control
+3. Github for collaberation
+4. Miro team brainstorming
+5. Slack communitcating
+6. Zoom for meetings
+
 ## Rabbit Holes
 
 Avoid complexity and to achieve minimalism, we all need to work with a basic skeleton of the notes. Perhaps we can transfer the add/delete function from our warm-up exercise and make it our skeleton. Last time, our tasks were too dependent on each other and we had long waiting times.
