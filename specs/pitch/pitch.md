@@ -59,6 +59,24 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 * Strives for efficiency and effectiveness in all aspects of work.
 * Enjoys problem-solving and finding creative solutions to challenges.
 
+  <hr>
+  
+**User Persona: Emily**
+
+* I am a senior development manager
+* Oversees plamnning, execution, and delivery of products
+
+**Wants/Needs**
+- Wants to keep an organized place with all the notes from different meetings
+- Wants to personalize his own tagging of different notes
+- Needs an efficient note taking application that saves his notes but can also return to edit
+- Needs an efficient way to return to look back at previous notes from previous meetings
+
+**Personality**
+* Organized and prefers minimalism
+* Has so many meetings with different clients and teams throughout a single day
+* Has a busy schedule
+
 ## Problems
 - Might get lost in complexity because there are many features, so we should firstly build the note-taking feature.
 - Hard to ensure the journal aligns with different needs and preferences.
