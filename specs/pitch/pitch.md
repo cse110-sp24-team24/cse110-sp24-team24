@@ -81,8 +81,9 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - prefer something minimalistic
 - prefers something to run on his old 2016 laptop
 - prefers to have it being within reachability(no wifi, loads fast)
-- 
+
   <hr>
+  
 **User Persona: Emily**
 
 - I am a senior development manager
