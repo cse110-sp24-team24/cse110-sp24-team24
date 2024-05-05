@@ -141,7 +141,30 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 - Very articulate and likes to explain his thoughts thoroughly
 - Enjoys taking on new hobbies and tasks that intrigue
 
+<hr>
+
+**User Persona: Jade**
+- Manager
+- Looking for a DevJournal that will keep her better organized
+- Doesn’t know the fine details about coding but manages a software team
+  
+**Wants/Needs**
+- Easy access to resources
+    - Coding references
+- Needs to keep note of team meetings
+    - Standups
+    - Brainstorming
+- Needs to keep all her pitches/rundowns in one place
+  
+**Personality:**
+- Straight to the point 
+- Minimalist
+- Organized
+- Easily Distracted
+
 ## Problems
+
+
 
 - Developers face challenges in documenting their progress with everyday and long term tasks, as there is no good centralized way to record both code snippets and regular documentation. Existing solutions don't cater towards the specifc functionality that developers are looking for in their note-taking or journaling applications.
 - Oftentimes, developers face bugs/issues that show up repeatedly and are not simple to fix. Even after finding a solution, there is not a good way for them to record how they solved the problem, leading to much unnecessary stress of trying to resolve it when they face the issue again. Similarly, it is currently difficult to access old code that may be useful or reusable.
@@ -179,7 +202,7 @@ Suggestions (in order from critical to lesser):
 5. Slack communitcating
 6. Zoom for meetings
 
-## Rabbit Holes
+## Rabbit Holes/Risk Analysis
 
 Avoid complexity and to achieve minimalism, we all need to work with a basic skeleton of the notes. Perhaps we can transfer the add/delete function from our warm-up exercise and make it our skeleton. Last time, our tasks were too dependent on each other and we had long waiting times.
 Here's a potential skeleton:
@@ -187,6 +210,18 @@ Here's a potential skeleton:
 - (https://www.youtube.com/watch?v=gvtxYX4sw08 - html - part1)
 - (https://www.youtube.com/watch?v=dM4edrhLEjM - part2)
 - (https://youtu.be/HdHk1SaL5M0?feature=shared&t=199 - part3 - has nice outline of js functions)
+
+### What Else We Learned from Last Time
+
+- Focusing on the small details that may not cause too big of a difference instead of looking at the overall project 
+- Focusing too much time on adding new features instead of making sure the basic ones are well implemented 
+- Exploring new tech in limited timeframe 
+- Not communicating well with other teams on what they’re doing, how they’re implementing, the progress they’ve made, any issues
+- Don’t get overeager with how much we accomplish and try to do more than we can handle in the given time frame
+- Not documenting enough on our progress
+- Waiting for whole group meetings to discuss next steps
+	- Can discuss in slack/in smaller groups
+
 
 ## No Gos
 
