@@ -67,6 +67,23 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 
 <hr>
 
+**User Persona: Derick**
+* I am a 16 year old highschooler who is looking to  get into Computers
+* Want something simple that even a novice can use
+
+**Wants/Needs**
+- want a easy to use website
+- looking for something to help study computers
+- offline usage, as at home the wifi is not as good
+- efficent as his device is not the lastest tech
+
+**Personality**
+- prefer something minimalistic
+- prefers something to run on his old 2016 laptop
+- prefers to have it being within reachability(no wifi, loads fast)
+
+  <hr>
+  
 **User Persona: Emily**
 
 - I am a senior development manager
@@ -140,12 +157,22 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 Need to narrow down the core features for note-taking.
 Suggestions (in order from critical to lesser):
 
-1. add multiple notes
-2. title
-3. tagging
-4. save/ delete note (with warning)
-5. tool bar functions (italicize, bold, images, etc)
-6. insert/ delete code blocks, images, videos
+1. add multiple notes / multiple folders
+2. Searching titles (organization)
+3. title
+4. tagging
+5. save/ delete note (with warning)
+6. hovering tool bar functions (italicize, bold, images, etc)
+7. insert/ delete code blocks, images, videos, external links
+
+## Technology
+
+1. Html, CSS, Javascript for creating the website
+2. Git 4 version control
+3. Github for collaberation
+4. Miro team brainstorming
+5. Slack communitcating
+6. Zoom for meetings
 
 ## Rabbit Holes
 
