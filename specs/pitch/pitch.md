@@ -162,13 +162,20 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 Need to narrow down the core features for note-taking.
 Suggestions (in order from critical to lesser):
 
-1. add multiple notes / multiple folders
-2. Searching titles (organization)
-3. title
+1. contain multiple notes displayed in chronological order
+2. Search Filtering (organization)
+   - create a search filter that will only display notes that are filtered by tags and title
+   - also filters by all text context in the note
+3. titles and dates for notes
+   - Title and date set as attribute in note object (date default set as day note was added)
 4. tagging
-5. save/ delete note (with warning)
-6. hovering tool bar functions (italicize, bold, images, etc)
-7. insert/ delete code blocks, images, videos, external links
+    - Allow user to create tags for notes to make searching for specific notes possible
+5. edit/save/delete note (with warning)
+    - Button for edit, save, and delete should be connected to the actual note
+6. hovering tool bar functions for editing notes (italicize, bold, images, etc)
+   - Tool bar pops up when editing different notes
+   - insert/ delete code blocks, images, videos, external links are also options in this tool bar 
+7. Has a side bar with a home button and an add button for a new task (in order to navigate between new notes and current available notes)
 
 ## Technology
 
