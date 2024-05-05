@@ -77,6 +77,23 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 * Has so many meetings with different clients and teams throughout a single day
 * Has a busy schedule
 
+  <hr>
+  
+**User Persona: Draymond**
+
+* I am a retired basketball player looking to start a personal CS project
+* Currently starting off alone, but looking to add other interested people
+
+**Wants/Needs**
+- Needs a place to track progress of project brainstorming, planning, and coding
+- Wants to keep things organized and easy to work with to help with future onboarding of new workers
+- Does not want application to get in the way of work and take up unnecessary time
+
+**Personality**
+* Aggressive and assertive in his beliefs
+* Very articulate and likes to explain his thoughts thoroughly
+* Enjoys taking on new hobbies and tasks that intrigue
+
 ## Problems
 - Might get lost in complexity because there are many features, so we should firstly build the note-taking feature.
 - Hard to ensure the journal aligns with different needs and preferences.
