@@ -194,12 +194,10 @@ To create a Dev Journal that allows for note-taking (include images, videos, and
 
 ## Appetite
 
-3 weeks to build working prototype; 2 weeks to finetune, style, and user tests. 3 weeks would constrain us to build a basic skeleton of our main feature, the notes.
-
 - Considering that our timeline is only 4ish weeks, we should be cautious about the features we commit to
 - The work should be communicated and split up in a clear way. We should understand which features depend on each other so that we don't get stuck with a dependency
 - We should prioritize the most important features first, and then reevaluate our other ideas
-- We should aim to complete the prototype within _2 weeks_ to allow enough time for testing, style, etc ??
+- We should aim to complete the prototype within _2 weeks_ to allow enough time for testing, style, etc
 - We should always allow a "buffer time" for unforseen issues. The final week should be focused on wrapping up the work (rather than rushing other features)
 - We should try to meet up at least once per week in person, small groups or all together. This would help resolve isues of communication and staying on track. We might have issues with coordinating everyone's schedules, so small groups might be ideal.
 
