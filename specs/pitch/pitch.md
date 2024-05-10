@@ -248,6 +248,45 @@ Suggestions (in order from critical to lesser):
 5. Slack communitcating
 6. Zoom for meetings
 
+## Unit Testing:
+- Use jest & pupeteer 
+- Unit testing parallelly with development
+  
+## Database:
+- Using electron and the users local file system
+
+## Timeline:
+**Week 7**
+- (Only 1 note) MVP finished
+    - Electron + File Storage(3ppl) (Figure out electron)
+    - API /Structure(4ppl) (make a basic api to process note data and decide on the structure of that note data)
+    - Editing/Text(4 people)
+        - UI/html structure
+        - Process the text
+
+**Week 8** (multi note is done by May 25th)
+- Implementing the home
+- Multiple notes
+
+**Week 9** (Fix any egregious bugs) ← A DONE PROJECT
+- Bug fixs
+
+**Week 10**
+- Additional features (TBD)
+
+**Week 11**
+- Final wrapup (TBD)
+  
+
+## Non-functional features:
+  - Performance:
+    - Faster than 3 seconds (the average load time on desktop on google)
+  - Accessibility:
+    - Accessible color palette (color blind friendly)
+    - Screen reader compatibility
+    - Using electron.js so only local to computer   
+
+
 ## Rabbit Holes/Risk Analysis
 
 Avoid complexity and to achieve minimalism, we all need to work with a basic skeleton of the notes. Perhaps we can transfer the add/delete function from our warm-up exercise and make it our skeleton. Last time, our tasks were too dependent on each other and we had long waiting times.
