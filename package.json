@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^9.2.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.2.0",
+    "prettier": "^3.2.5"
+  },
+  "scripts": {
+    "lint-check": "npm run style:lint && npm run style:prettier",
+    "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
+    "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'"
+  }
+}
