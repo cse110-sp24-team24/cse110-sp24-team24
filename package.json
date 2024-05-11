@@ -16,8 +16,7 @@
     "lint-check": "npm run style:lint && npm run style:prettier",
     "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
-    "test": "jest",
-    "test:e2e": "__test__/basicFeature.test.js"
+    "test": "jest"
   },
   "jest": {
     "preset": "jest-puppeteer",
