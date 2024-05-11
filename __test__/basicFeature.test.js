@@ -1,7 +1,7 @@
 // Team Member 1: Basic Functionality Testing
 describe('Basic Functionality Testing', () => {
     beforeAll(async () => {
-        await page.goto('');
+        //await page.goto('');
     });
 
     // Test 1: Navigate to the App
@@ -42,7 +42,7 @@ describe('Basic Functionality Testing', () => {
 // Team Member 2: Additional Functionality Testing
 describe('Additional Functionality Testing', () => {
     beforeAll(async () => {
-        await page.goto('');
+        //await page.goto('');
     });
     
     // Test 1: Test filtering notes by tag and date
@@ -70,7 +70,7 @@ describe('Additional Functionality Testing', () => {
 // Team Member 3: Advanced Functionality Testing
 describe('Advanced Functionality Testing', () => {
     beforeAll(async () => {
-        await page.goto('');
+        //await page.goto('');
     });
     
     // Test 1: Test the functionality of inserting various elements
