@@ -12,7 +12,7 @@
     "prettier": "^3.2.5",
     "puppeteer": "^22.8.0"
   },
-  "scripts": {
+    "scripts": {
     "lint-check": "npm run style:lint && npm run style:prettier",
     "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
