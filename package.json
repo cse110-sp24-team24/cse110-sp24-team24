@@ -21,5 +21,13 @@
   "jest": {
     "preset": "jest-puppeteer",
     "verbose": true
-  }
+  },
+  "type": "module",
+  "name": "cse110-sp24-team24",
+  "description": "<hr style=\"border:2px solid gray\">",
+  "version": "1.0.0",
+  "main": "unitTest.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
