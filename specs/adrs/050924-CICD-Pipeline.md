@@ -34,9 +34,10 @@ We will run the automated tests during development and before pushing the code t
 **Chosen option 4**: Documentation generation via automation -- JSDocs
 
 We will add documentation comments throughout our code, then automatically document our classes, methods, method parameters, etc in an HTML website. 
-We will use JSDocs in our local editors, and add status checks to our GitHub actions that will create or update our JSDocs as we push the code to main.
+We will use JSDocs in our local editors, and add status checks to our GitHub actions that will create or update our JSDocs as we push the code to main. This will help us make documentation current and accessible to everyone on and outside of the team and increases the bus factor. 
 
 **Chosen option 5**: Code quality via human review -- branch protection and pull requests
 
-We will use branch protection to set requirements for any pushes to the branch, and require that our branch passes the status checks. 
-In our pull requests, we will require 2 manual reviews from people not in your direct team before we can merge the changes.
+We will use branch protection to set requirements for any pushes to the branch, and require that our branch passes the status checks. This prevents branches from having bad code and keeps bugs minimal before pushing to main. 
+
+In our pull requests, we will require 2 manual reviews from people not in your direct team before we can merge the changes. This helps keep all subteams informed of other moving parts of the project, not just our own, so that our team remains cohesive and increases the bus factor. 
