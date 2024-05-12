@@ -28,7 +28,9 @@ Geena Limfat
 ### Linting and Code Style
 
 ### Documentation Generation via automation
-
+- For easy access to documentation for all JS methods so that our team is on the same page, we are attempting to automate generating a site which renders from JSDocs.
+- For now, we are able to generate locally, but we would like to have the site update each time there is a merge/push to ```main```.
+- We are trying to integrate this automation with Github Actions.
 ### Code Quality via human review
 - To enforce human review, branch protections rules will be implemented to both the main and sub team branches to ensure the code is being reviewed before merging.
 - For sub team branch, each team should implement the use of pull requests before merging to their team branch to ensure other members review the code.
