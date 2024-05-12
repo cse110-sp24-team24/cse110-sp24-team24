@@ -6,6 +6,8 @@ import {
 */
 const sum = require('../code-to-unit-test/unitTest');
 //Testing to see if the file works
+/*global test*/
+/*eslint no-undef: "error"*/
 test('Sum of 1 + 2', () => {
     expect(sum(1, 2)).toBe(3);
 });
