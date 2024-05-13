@@ -24,7 +24,9 @@ Geena Limfat
 ### Unit Testing
 
 ### E2E Testing
-
+- To ensure that user interactions will work properly in our dev journal, we implemented Puppeteer for our end-to-end testing to ensure that our tests will accurately reflect how users will engage with the application
+- For now as we do not have a website set up to test it on, we have some dummy tests set up that represent future features on the dev journal that we will test
+- Each future pull request should pass the tests before being merged into main
 ### Linting and Code Style
 
 ### Documentation Generation via automation
