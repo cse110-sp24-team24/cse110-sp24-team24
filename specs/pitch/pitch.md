@@ -217,8 +217,8 @@ We divided into smaller groups to brainstorm ideas for the UI that we wanted to 
 
 ## Solution
 
-
 ### Current UI Design
+
 ![design](solution.png)
 
 Need to narrow down the core features for note-taking.
@@ -231,12 +231,12 @@ Suggestions (in order from critical to lesser):
 3. titles and dates for notes
    - Title and date set as attribute in note object (date default set as day note was added)
 4. tagging
-    - Allow user to create tags for notes to make searching for specific notes possible
+   - Allow user to create tags for notes to make searching for specific notes possible
 5. edit/save/delete note (with warning)
-    - Button for edit, save, and delete should be connected to the actual note
+   - Button for edit, save, and delete should be connected to the actual note
 6. hovering tool bar functions for editing notes (italicize, bold, images, etc)
    - Tool bar pops up when editing different notes
-   - insert/ delete code blocks, images, videos, external links are also options in this tool bar 
+   - insert/ delete code blocks, images, videos, external links are also options in this tool bar
 7. Has a side bar with a home button and an add button for a new task (in order to navigate between new notes and current available notes)
 
 ## Technology
@@ -249,43 +249,50 @@ Suggestions (in order from critical to lesser):
 6. Zoom for meetings
 
 ## Unit Testing:
-- Use jest & pupeteer 
+
+- Use jest & pupeteer
 - Unit testing parallelly with development
-  
+
 ## Database:
+
 - Using electron and the users local file system
 
 ## Timeline:
+
 **Week 7**
+
 - (Only 1 note) MVP finished
-    - Electron + File Storage(3ppl) (Figure out electron)
-    - API /Structure(4ppl) (make a basic api to process note data and decide on the structure of that note data)
-    - Editing/Text(4 people)
-        - UI/html structure
-        - Process the text
+  - Electron + File Storage(3ppl) (Figure out electron)
+  - API /Structure(4ppl) (make a basic api to process note data and decide on the structure of that note data)
+  - Editing/Text(4 people)
+    - UI/html structure
+    - Process the text
 
 **Week 8** (multi note is done by May 25th)
+
 - Implementing the home
 - Multiple notes
 
 **Week 9** (Fix any egregious bugs) ← A DONE PROJECT
+
 - Bug fixs
 
 **Week 10**
+
 - Additional features (TBD)
 
 **Week 11**
+
 - Final wrapup (TBD)
-  
 
 ## Non-functional features:
-  - Performance:
-    - Faster than 3 seconds (the average load time on desktop on google)
-  - Accessibility:
-    - Accessible color palette (color blind friendly)
-    - Screen reader compatibility
-    - Using electron.js so only local to computer   
 
+- Performance:
+  - Faster than 3 seconds (the average load time on desktop on google)
+- Accessibility:
+  - Accessible color palette (color blind friendly)
+  - Screen reader compatibility
+  - Using electron.js so only local to computer
 
 ## Rabbit Holes/Risk Analysis
 

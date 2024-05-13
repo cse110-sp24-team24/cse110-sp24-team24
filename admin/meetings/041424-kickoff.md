@@ -1,19 +1,23 @@
 # Kickoff Meeting Minutes
 
 ## Meeting Details
+
 - **Date:** April 14, 2024
 - **Time:** 3:00 PM - 4:00 PM
 - **Location:** Geisel Library 2069A East and Zoom
-- **Attendees:**  Cynthia, Ishaan, David, Eugenie, Jeffrey, Sarvesh, Terrence, Kiera, Geena, Sofia, Harsh
+- **Attendees:** Cynthia, Ishaan, David, Eugenie, Jeffrey, Sarvesh, Terrence, Kiera, Geena, Sofia, Harsh
 
 ## Agenda
+
 1. Discuss project branding, team name and identity
 2. Discuss and create group contract
 3. Create team rules
 4. Discuss deadlines
-   
+
 ## Meeting Notes
+
 **Team Brand:**
+
 - Cat Theme
 - Color scheme: pastel pink
 - Mascot: hairless cat
@@ -21,10 +25,12 @@
 **Logo**
 
 **Team Name:**
+
 - Computer PAWgrammers
 
 **Group Contract/Rules Discussion**
-- Communication 
+
+- Communication
 - Communicate when can’t finish work on time or is stuck on a problem
 - Honest and upfront about skills
 - Consistently check the slack
@@ -37,4 +43,5 @@
 **Team Page on GitHub**
 
 ## Next Meeting Discussions
+
 - Assign roles
