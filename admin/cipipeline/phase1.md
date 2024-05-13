@@ -23,6 +23,9 @@ Geena Limfat
 
 ### Unit Testing
 
+- We are using Jest unit tests to verify individual units of our codebase, including functions, methods, and classes. On every pull request, we will require that the branch passes the unit tests before being able to be merged.
+- Catching bugs using an automated process will help fix bugs early in development and fix them as soon as possible. Through unit tests, we will prevent corruption of the codebase.
+
 ### E2E Testing
 
 - To ensure that user interactions will work properly in our dev journal, we implemented Puppeteer for our end-to-end testing to ensure that our tests will accurately reflect how users will engage with the application
