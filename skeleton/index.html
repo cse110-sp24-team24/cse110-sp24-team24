@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev Journal</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="sidebar">
+      <button id="homeButton">🏠 Home</button>
+      <button id="addNoteButton">➕ Add Note</button>
+    </div>
+    <div class="main-content">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search..." />
+      </div>
+      <div id="notesContainer">
+        <h2>Your Journals:</h2>
+        <!-- Notes will be dynamically inserted here -->
+      </div>
+    </div>
+    <div id="noteEditor" class="hidden">
+      <div class="editor-toolbar">
+        <button id="saveNoteButton">💾 Save</button>
+        <button id="deleteNoteButton">🗑️ Delete</button>
+        <button id="cancelButton">❌ Cancel</button>
+      </div>
+      <input type="text" id="noteTitle" placeholder="Title" />
+      <input type="date" id="noteDate" />
+      <textarea
+        id="noteContent"
+        placeholder="Write your note here..."
+      ></textarea>
+      <input type="text" id="noteTags" placeholder="Tags (comma separated)" />
+      <div class="editor-options">
+        <button id="addImageButton">🖼️ Add Image</button>
+        <button id="addVideoButton">📹 Add Video</button>
+        <button id="addCodeBlockButton">🖥️ Add Code Block</button>
+        <!-- More options can be added here -->
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
