@@ -11,3 +11,8 @@ let newNote = {
 };
 
 saveNote(newNote);
+
+
+function DeletNote(note) {
+  
+}
