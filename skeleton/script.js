@@ -1,89 +1,122 @@
-let notes = [];
-let editingNoteIndex = null;
+let notes = []; // Array to store notes
+let editingNoteIndex = null; // Index of the note currently being edited
 
-document.getElementById("addNoteButton").addEventListener("click", () => {
+// Get DOM elements
+const addNoteButton = document.getElementById("addNoteButton");
+const saveNoteButton = document.getElementById("saveNoteButton");
+const deleteNoteButton = document.getElementById("deleteNoteButton");
+const cancelButton = document.getElementById("cancelButton");
+const searchInput = document.getElementById("searchInput");
+const noteEditor = document.getElementById("noteEditor");
+const noteTitle = document.getElementById("noteTitle");
+const noteContent = document.getElementById("noteContent");
+const noteTags = document.getElementById("noteTags");
+const noteDate = document.getElementById("noteDate");
+const notesContainer = document.getElementById("notesContainer");
+
+// Event listeners
+addNoteButton.addEventListener("click", () => {
   showNoteEditor();
 });
+saveNoteButton.addEventListener("click", saveNote);
+deleteNoteButton.addEventListener("click", deleteNote);
+cancelButton.addEventListener("click", hideNoteEditor);
+searchInput.addEventListener("input", filterNotes);
 
-document.getElementById("saveNoteButton").addEventListener("click", saveNote);
-document
-  .getElementById("deleteNoteButton")
-  .addEventListener("click", deleteNote);
-document
-  .getElementById("cancelButton")
-  .addEventListener("click", hideNoteEditor);
-document.getElementById("searchInput").addEventListener("input", filterNotes);
-
-function showNoteEditor(
-  note = {
-    title: "",
-    content: "",
-    tags: "",
-    date: new Date().toISOString().substring(0, 10),
-  },
-  index = null
-) {
+// Show note editor with optional note data and index
+function showNoteEditor(note = { title: "", content: "", tags: "", date: new Date().toISOString().substring(0, 10) }, index = null) {
   editingNoteIndex = index;
-  document.getElementById("noteTitle").value = note.title;
-  document.getElementById("noteContent").value = note.content;
-  document.getElementById("noteTags").value = note.tags;
-  document.getElementById("noteDate").value = note.date;
-  document.getElementById("noteEditor").classList.remove("hidden");
+  noteTitle.value = note.title;
+  noteContent.value = note.content;
+  noteTags.value = note.tags;
+  noteDate.value = note.date;
+  noteEditor.classList.remove("hidden"); // Show the note editor
 }
 
+// Hide note editor and clear fields
 function hideNoteEditor() {
-  document.getElementById("noteEditor").classList.add("hidden");
+  noteEditor.classList.add("hidden"); // Hide the note editor
+  clearNoteEditor();
 }
 
+// Clear note editor fields
+function clearNoteEditor() {
+  noteTitle.value = "";
+  noteContent.value = "";
+  noteTags.value = "";
+  noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
+}
+
+// Save note and update notes array
 function saveNote() {
-  const title = document.getElementById("noteTitle").value;
-  const content = document.getElementById("noteContent").value;
-  const tags = document.getElementById("noteTags").value;
-  const date = document.getElementById("noteDate").value;
+  const title = noteTitle.value.trim();
+  const content = noteContent.value.trim();
+  const tags = noteTags.value.trim();
+  const date = noteDate.value;
+
+  if (!title || !content) {
+    alert("Title and content cannot be empty.");
+    return;
+  }
 
   const note = { title, content, tags, date };
 
   if (editingNoteIndex !== null) {
-    notes[editingNoteIndex] = note;
+    notes[editingNoteIndex] = note; // Update existing note
   } else {
-    notes.push(note);
+    notes.push(note); // Add new note
   }
 
   renderNotes();
   hideNoteEditor();
 }
 
+// Delete note and update notes array
 function deleteNote() {
   if (editingNoteIndex !== null) {
-    notes.splice(editingNoteIndex, 1);
+    if (confirm("Are you sure you want to delete this note?")) {
+      notes.splice(editingNoteIndex, 1); // Remove note from array
+      renderNotes();
+      hideNoteEditor();
+    }
   }
-
-  renderNotes();
-  hideNoteEditor();
 }
 
+// Delete note by index
+function deleteNoteByIndex(event, index) {
+  event.stopPropagation(); // Prevent click event from propagating to parent elements
+  if (confirm("Are you sure you want to delete this note?")) {
+    notes.splice(index, 1); // Remove note from array
+    renderNotes();
+  }
+}
+
+// Render notes to the container
 function renderNotes(filteredNotes = notes) {
-  const notesContainer = document.getElementById("notesContainer");
-  notesContainer.innerHTML = "<h2>Your Journals:</h2>";
+  notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
 
   filteredNotes.forEach((note, index) => {
     const noteElement = document.createElement("div");
     noteElement.className = "note";
     noteElement.innerHTML = `
-            <h2>${note.title}</h2>
-            <p>${note.content}</p>
-            <small>${note.date} - Tags: ${note.tags}</small>
-        `;
+      <div class="note-header">
+        <h2>${note.title}</h2>
+        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
+      </div>
+      <p>${note.content}</p>
+      <small>${note.date} - Tags: ${note.tags}</small>
+    `;
     noteElement.addEventListener("click", () => {
-      showNoteEditor(note, index);
+      showNoteEditor(note, index); // Edit note on click
     });
 
     notesContainer.appendChild(noteElement);
   });
 }
 
+// Filter notes based on search input
 function filterNotes() {
-  const query = document.getElementById("searchInput").value.toLowerCase();
+  const query = searchInput.value.toLowerCase();
   const filteredNotes = notes.filter(
     (note) =>
       note.title.toLowerCase().includes(query) ||
@@ -91,5 +124,5 @@ function filterNotes() {
       note.tags.toLowerCase().includes(query)
   );
 
-  renderNotes(filteredNotes);
+  renderNotes(filteredNotes); // Render filtered notes
 }
