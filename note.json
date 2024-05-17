@@ -1,0 +1,7 @@
+{
+  "id": "1",
+  "title": "string",
+  "date": "Date object",
+  "tags": ["array of strings"],
+  "content": "long string"
+}
