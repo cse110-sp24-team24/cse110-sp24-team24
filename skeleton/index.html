@@ -1,42 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Specifies the character encoding for the HTML document -->
     <meta charset="UTF-8" />
+    <!-- Sets the viewport to make the website responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Sets the title of the webpage -->
     <title>Dev Journal</title>
+    <!-- Links the external CSS stylesheet for styling the webpage -->
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- Sidebar with navigation buttons -->
     <div class="sidebar">
-      <button id="homeButton">🏠 Home</button>
-      <button id="addNoteButton">➕ Add Note</button>
+      <button id="homeButton" aria-label="Home">🏠 Home</button>
+      <button id="addNoteButton" aria-label="Add Note">➕ Add Note</button>
     </div>
+    <!-- Main content area -->
     <div class="main-content">
+      <!-- Header with the title of the webpage -->
+      <header class="header-title">
+        <h1>Dev Journal</h1>
+        <p>Your Personal Developer Notebook</p>
+      </header>
+      <!-- Search bar for searching notes -->
       <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search..." />
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search..."
+          aria-label="Search"
+        />
       </div>
+      <!-- Container for displaying notes -->
       <div id="notesContainer">
         <h2>Your Journals:</h2>
         <!-- Notes will be dynamically inserted here -->
       </div>
     </div>
+    <!-- Note editor section (hidden by default) -->
     <div id="noteEditor" class="hidden">
+      <!-- Toolbar with options for saving, deleting, or canceling a note -->
       <div class="editor-toolbar">
-        <button id="saveNoteButton">💾 Save</button>
-        <button id="deleteNoteButton">🗑️ Delete</button>
-        <button id="cancelButton">❌ Cancel</button>
+        <button id="saveNoteButton" aria-label="Save Note">💾 Save</button>
+        <button id="deleteNoteButton" aria-label="Delete Note">
+          🗑️ Delete
+        </button>
+        <button id="cancelButton" aria-label="Cancel">❌ Cancel</button>
       </div>
-      <input type="text" id="noteTitle" placeholder="Title" />
-      <input type="date" id="noteDate" />
+      <!-- Input fields for the note's title, date, content, and tags -->
+      <label for="noteTitle">Title</label>
+      <input
+        type="text"
+        id="noteTitle"
+        placeholder="Title"
+        aria-label="Note Title"
+      />
+      <label for="noteDate">Date</label>
+      <input type="date" id="noteDate" aria-label="Note Date" />
+      <label for="noteContent">Content</label>
       <textarea
         id="noteContent"
         placeholder="Write your note here..."
+        aria-label="Note Content"
       ></textarea>
-      <input type="text" id="noteTags" placeholder="Tags (comma separated)" />
+      <label for="noteTags">Tags</label>
+      <input
+        type="text"
+        id="noteTags"
+        placeholder="Tags (comma separated)"
+        aria-label="Note Tags"
+      />
+      <!-- Additional options for adding multimedia content to the note -->
       <div class="editor-options">
-        <button id="addImageButton">🖼️ Add Image</button>
-        <button id="addVideoButton">📹 Add Video</button>
-        <button id="addCodeBlockButton">🖥️ Add Code Block</button>
+        <button id="addImageButton" aria-label="Add Image">🖼️ Add Image</button>
+        <button id="addVideoButton" aria-label="Add Video">📹 Add Video</button>
+        <button id="addCodeBlockButton" aria-label="Add Code Block">
+          🖥️ Add Code Block
+        </button>
         <!-- More options can be added here -->
       </div>
     </div>
