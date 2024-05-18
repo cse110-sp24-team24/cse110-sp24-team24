@@ -90,7 +90,7 @@ function applyStyle(style)
 // Save note and update notes array
 function saveNote() {
   const title = noteTitle.value.trim();
-  const content = noteContent.value.trim();
+  const content = noteContent.textContent.trim();
   const tags = noteTags.value.trim();
   const date = noteDate.value;
 
@@ -186,12 +186,7 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
     });
     notesContainer.appendChild(noteElement);
   });
-
-
-
 }
-
-
 
 
 // Filter notes based on search input
@@ -212,10 +207,8 @@ function filterNotes() {
       note.content.toLowerCase().includes(query) &&
       (!filteredtitleNotes.includes(note)) &&
       (!filteredtagNotes.includes(note))
-
   );
 
-
+  // Render filtered notes
   renderNotes(filteredtitleNotes, filteredtagNotes, filteredtextNotes);
-// Render filtered notes
 }
