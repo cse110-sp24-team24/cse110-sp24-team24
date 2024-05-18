@@ -1,6 +1,7 @@
 let notes = []; // Array to store notes
 let editingNoteIndex = null; // Index of the note currently being edited
 
+
 // Get DOM elements
 const addNoteButton = document.getElementById("addNoteButton");
 const saveNoteButton = document.getElementById("saveNoteButton");
@@ -131,10 +132,10 @@ function deleteNoteByIndex(event, index) {
 }
 
 // Render notes to the container
-function renderNotes(filteredNotes = notes) {
+function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filteredtextNotes = []) {
   notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
 
-  filteredNotes.forEach((note, index) => {
+  filteredtitleNotes.forEach((note, index) => {
     const noteElement = document.createElement("div");
     noteElement.className = "note";
     noteElement.innerHTML = `
@@ -148,20 +149,73 @@ function renderNotes(filteredNotes = notes) {
     noteElement.addEventListener("click", () => {
       showNoteEditor(note, index); // Edit note on click
     });
-
     notesContainer.appendChild(noteElement);
   });
+
+  filteredtagNotes.forEach((note, index) => {
+    const noteElement = document.createElement("div");
+    noteElement.className = "note";
+    noteElement.innerHTML = `
+      <div class="note-header">
+        <h2>${note.title}</h2>
+        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
+      </div>
+      <p>${note.content}</p>
+      <small>${note.date} - Tags: ${note.tags}</small>
+    `;
+    noteElement.addEventListener("click", () => {
+      showNoteEditor(note, index); // Edit note on click
+    });
+    notesContainer.appendChild(noteElement);
+  });
+
+
+  filteredtextNotes.forEach((note, index) => {
+    const noteElement = document.createElement("div");
+    noteElement.className = "note";
+    noteElement.innerHTML = `
+      <div class="note-header">
+        <h2>${note.title}</h2>
+        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
+      </div>
+      <p>${note.content}</p>
+      <small>${note.date} - Tags: ${note.tags}</small>
+    `;
+    noteElement.addEventListener("click", () => {
+      showNoteEditor(note, index); // Edit note on click
+    });
+    notesContainer.appendChild(noteElement);
+  });
+
+
+
 }
+
+
+
 
 // Filter notes based on search input
 function filterNotes() {
   const query = searchInput.value.toLowerCase();
-  const filteredNotes = notes.filter(
+
+  let filteredtitleNotes = notes.filter(
     (note) =>
-      note.title.toLowerCase().includes(query) ||
-      note.content.toLowerCase().includes(query) ||
-      note.tags.toLowerCase().includes(query)
+      note.title.toLowerCase().includes(query)
+  );
+  let filteredtagNotes = notes.filter(
+    (note) =>
+      note.tags.toLowerCase().includes(query) &&
+      (!filteredtitleNotes.includes(note))
+  );
+  let filteredtextNotes = notes.filter(
+    (note) =>
+      note.content.toLowerCase().includes(query) &&
+      (!filteredtitleNotes.includes(note)) &&
+      (!filteredtagNotes.includes(note))
+
   );
 
-  renderNotes(filteredNotes); // Render filtered notes
+
+  renderNotes(filteredtitleNotes, filteredtagNotes, filteredtextNotes);
+// Render filtered notes
 }
