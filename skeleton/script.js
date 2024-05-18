@@ -35,7 +35,7 @@ boldButton.addEventListener("click", function() {applyStyle('bold');});
 function showNoteEditor(note = { title: "", content: "", tags: "", date: new Date().toISOString().substring(0, 10) }, index = null) {
   editingNoteIndex = index;
   noteTitle.value = note.title;
-  noteContent.value = note.content;
+  noteContent.innerHTML = note.content;
   noteTags.value = note.tags;
   noteDate.value = note.date;
   noteEditor.classList.remove("hidden"); // Show the note editor
