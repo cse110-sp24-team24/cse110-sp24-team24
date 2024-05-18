@@ -17,10 +17,41 @@ deleteButton.addEventListener("click", function () {
   DeleteNote(newNote.id);
 });
 
+// Edit or Update button
+const editButton = document.getElementById("EditButton");
+editButton.addEventListener("click", () => editNote(newNote.id, content));
+
+/**
+ * When the edit button is clicked, update the note content
+ * @param {Number} noteId 
+ * @param {String} content 
+ */
+function editNote(noteId, content) {
+  // Grab the existing notes from local storage
+  let notes = JSON.parse(localStorage.getItem("notes"));
+
+  // Filter out the note with the given id
+  notes = notes.filter((note) => note.id !== noteId);
+
+  // override content of note
+  notes.content = content;
+
+  //save note
+  saveNote(notes);
+}
+
+/**
+ * Function to save one note
+ * @param {JSON object} note 
+ */
 function saveNote(note) {
   localStorage.setItem("notes", JSON.stringify(note));
 }
 
+/**
+ * Function to delete one note
+ * @param {Number} noteId 
+ */
 function DeleteNote(noteId) {
   // Grab the existing notes from local storage
   let notes = JSON.parse(localStorage.getItem("notes"));
