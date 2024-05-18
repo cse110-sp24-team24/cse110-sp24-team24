@@ -50,7 +50,7 @@ function hideNoteEditor() {
 // Clear note editor fields
 function clearNoteEditor() {
   noteTitle.value = "";
-  noteContent.value = "";
+  noteContent.innerHTML = ""; // Clears the prev content when making a new note
   noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
 }
