@@ -150,6 +150,11 @@ h2 {
 .note p {
   margin: 0 0 10px 0;
   color: #bbbbbb;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Show only 3 lines in list view*/
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 
 .note small {
