@@ -90,7 +90,7 @@ function applyStyle(style)
 // Save note and update notes array
 function saveNote() {
   const title = noteTitle.value.trim();
-  const content = noteContent.textContent.trim();
+  const content = noteContent.innerHTML.trim();
   const tags = noteTags.value.trim();
   const date = noteDate.value;
 
