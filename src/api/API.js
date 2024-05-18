@@ -18,15 +18,38 @@ deleteButton.addEventListener("click", function () {
 });
 
 // Edit or Update button
-const editButton = document.getElementById("EditButton");
-editButton.addEventListener("click", () => editNote(newNote.id, content));
+// content
+const editContentButton = document.getElementById("EditContentButton");
+editContentButton.addEventListener("click", () => editNoteContent(newNote.id, content));
+// tags
+const editTagsButton = document.getElementById("EditTagsButton");
+editTagsButton.addEventListener("click", () => editNoteTags(noteId, tags));
 
 /**
- * When the edit button is clicked, update the note content
+ * Update note tags
+ * @param {Number} noteId 
+ * @param {String Array} tags 
+ */
+function editNoteTags(noteId, tags) {
+  // Grab the existing notes from local storage
+  let notes = JSON.parse(localStorage.getItem("notes"));
+
+  // Filter out the note with the given id
+  notes = notes.filter((note) => note.id !== noteId);
+
+  // change tags
+  notes.tags = tags;
+
+  // save note
+  saveNote(notes);
+}
+
+/**
+ * When the edit content button is clicked, update the note content
  * @param {Number} noteId 
  * @param {String} content 
  */
-function editNote(noteId, content) {
+function editNoteContent(noteId, content) {
   // Grab the existing notes from local storage
   let notes = JSON.parse(localStorage.getItem("notes"));
 
@@ -39,6 +62,8 @@ function editNote(noteId, content) {
   //save note
   saveNote(notes);
 }
+
+
 
 /**
  * Function to save one note
