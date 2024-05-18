@@ -216,8 +216,27 @@ body {
 }
 
 /* Floating toolbar styles */
-#floatingToolbar {
+#contentContainer {
   position: relative;
+  flex: 1; /* Make the container grow to fill available space */
+  display: flex;
+  flex-direction: column;
+}
+
+#noteContent {
+  flex: 1; /* Make the content area grow to fill available space */
+  width: 100%;
+  resize: none;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+#noteContent.placeholder {
+  color: #888; /* Style for placeholder text */
+}
+
+#floatingToolbar {
+  position: sticky;
+  bottom: 0;
   display: flex;
   justify-content: space-around;
   background-color: #444; /* More contrasting background color */
@@ -280,24 +299,6 @@ body {
 /* Tag input styling */
 #noteTags {
   width: 70%;
-}
-
-#contentContainer {
-  position: relative;
-  flex: 1; /* Make the container grow to fill available space */
-  display: flex;
-  flex-direction: column;
-}
-
-#noteContent {
-  flex: 1; /* Make the content area grow to fill available space */
-  width: 100%;
-  resize: none;
-  overflow-y: auto; /* Allow scrolling if content overflows */
-}
-
-#noteContent.placeholder {
-  color: #888; /* Style for placeholder text */
 }
 
 /* Styles for the delete button in note */
