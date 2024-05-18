@@ -9,43 +9,44 @@ body {
   overflow: hidden;
   background-color: #1e1e2f;
   color: #e5e5e5;
+  font-size: 1.2rem; /* Base font size */
 }
 
 /* Header title styles */
 .header-title {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   animation: fadeIn 1s ease-in-out;
 }
 
 .header-title h1 {
   margin: 0;
-  font-size: 3em;
+  font-size: 4rem;
   color: #ffffff;
-  letter-spacing: 2px;
+  letter-spacing: 0.2rem;
   animation: glow 2s ease-in-out infinite alternate;
 }
 
 .header-title p {
-  margin: 5px 0 0 0;
-  font-size: 1.2em;
+  margin: 0.5rem 0 0 0;
+  font-size: 1.6rem;
   color: #bbbbbb;
 }
 
 /* Make the header glow */
 @keyframes glow {
   from {
-    text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 60px #ff00ff, 0 0 70px #ff00ff;
+    text-shadow: 0 0 0.625rem #ffffff, 0 0 1.25rem #ffffff, 0 0 1.875rem #ff00ff, 0 0 2.5rem #ff00ff, 0 0 3.125rem #ff00ff, 0 0 3.75rem #ff00ff, 0 0 4.375rem #ff00ff;
   }
   to {
-    text-shadow: 0 0 20px #ffffff, 0 0 30px #ff00ff, 0 0 40px #ff00ff, 0 0 50px #ff00ff, 0 0 60px #ff00ff, 0 0 70px #ff00ff, 0 0 80px #ff00ff;
+    text-shadow: 0 0 1.25rem #ffffff, 0 0 1.875rem #ff00ff, 0 0 2.5rem #ff00ff, 0 0 3.125rem #ff00ff, 0 0 3.75rem #ff00ff, 0 0 4.375rem #ff00ff, 0 0 5rem #ff00ff;
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
   }
   to {
     opacity: 1;
@@ -53,39 +54,33 @@ body {
   }
 }
 
-/* Heading styles */
-h2 {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
-
 /* Sidebar styles */
 .sidebar {
-  width: 200px;
+  width: 15rem;
   background-color: #2a2a40;
   color: #fff;
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 1.5rem;
   border-right: 1px solid #333;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.3);
 }
 
 .sidebar button {
   background: none;
   border: none;
   color: #e5e5e5;
-  padding: 15px;
+  padding: 1rem;
   cursor: pointer;
   text-align: left;
-  font-size: 16px;
+  font-size: 1.4rem;
   transition: transform 0.3s, background 0.3s, color 0.3s;
 }
 
 .sidebar button:hover,
 .sidebar button:focus {
   background-color: #3d3d57;
-  color: #fff;
+  color: #ff00ff; /* Match pink glow */
   transform: scale(1.1);
   outline: none;
 }
@@ -93,11 +88,11 @@ h2 {
 /* Main content styles */
 .main-content {
   flex: 1;
-  padding: 20px;
+  padding: 2rem;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
   animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -105,17 +100,17 @@ h2 {
 .search-bar {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 }
 
 #searchInput {
   width: 80%;
-  padding: 10px;
-  border-radius: 25px;
+  padding: 0.75rem;
+  border-radius: 2rem;
   border: 1px solid #555;
   background-color: #2a2a40;
   color: #e5e5e5;
-  font-size: 16px;
+  font-size: 1.4rem;
   transition: width 0.3s ease-in-out;
 }
 
@@ -128,45 +123,49 @@ h2 {
 #notesContainer {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.5rem;
 }
 
 /* Individual note styles */
 .note {
   background-color: #2a2a40;
   border: 1px solid #444;
-  padding: 15px;
-  border-radius: 10px;
+  padding: 1.5rem;
+  border-radius: 1rem;
   cursor: pointer;
   transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
   animation: slideIn 0.5s ease-in-out;
 }
 
 .note h2 {
-  margin: 0 0 10px 0;
+  margin: 0 0 0.75rem 0;
   color: #ffffff;
+  font-size: 1.8rem;
 }
 
 .note p {
-  margin: 0 0 10px 0;
+  margin: 0 0 0.75rem 0;
   color: #bbbbbb;
+  font-size: 1.4rem;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* Show only 3 lines in list view*/
+  -webkit-line-clamp: 3; /* Show only 3 lines in list view */
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
 }
 
 .note small {
   color: #777;
+  font-size: 1.2rem;
 }
 
 .note:hover,
 .note:focus {
   transform: scale(1.02);
   background-color: #3d3d57;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   outline: none;
+  color: #ff00ff; /* Match pink glow */
 }
 
 /* Note editor styles */
@@ -180,37 +179,69 @@ h2 {
   left: 10%;
   width: 80%;
   height: 80%;
-  padding: 20px;
+  padding: 2rem;
   background-color: #2a2a40;
   border: 1px solid #444;
-  border-radius: 10px;
+  border-radius: 1rem;
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
   animation: fadeIn 0.5s ease-in-out;
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
 /* Toolbar styles in the note editor */
 .editor-toolbar {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
 .editor-toolbar button {
   background: none;
   border: none;
   color: #e5e5e5;
-  padding: 10px;
+  padding: 0.75rem;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.4rem;
   transition: transform 0.3s, color 0.3s;
 }
 
 .editor-toolbar button:hover,
 .editor-toolbar button:focus {
-  color: #fff;
+  color: #ff00ff; /* Match pink glow */
+  transform: scale(1.1);
+  outline: none;
+}
+
+/* Floating toolbar styles */
+#floatingToolbar {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  background-color: #444; /* More contrasting background color */
+  border-top: 1px solid #555;
+  padding: 0.25rem; /* Smaller padding */
+  margin-top: 1rem; /* Add margin to position it below the content area */
+  z-index: 1001;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+#floatingToolbar button {
+  background: none;
+  border: none;
+  color: #e5e5e5;
+  padding: 0.25rem; /* Smaller padding */
+  cursor: pointer;
+  font-size: 1.2rem; /* Smaller font size */
+  transition: transform 0.3s, color 0.3s;
+}
+
+#floatingToolbar button:hover,
+#floatingToolbar button:focus {
+  color: #ff00ff; /* Match pink glow */
   transform: scale(1.1);
   outline: none;
 }
@@ -220,94 +251,83 @@ h2 {
 #noteDate,
 #noteTags,
 #noteContent {
-  padding: 10px;
+  padding: 1rem;
   border: 1px solid #555;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   background-color: #1e1e2f;
   color: #e5e5e5;
-  font-size: 16px;
+  font-size: 1.4rem;
 }
 
 #noteTitle {
-  font-size: 26px;
+  font-size: 2rem;
 }
 
-/* flex container for date and tags */
+/* Flex container for date and tags */
 #date-tags-container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  gap: 1rem; /* Add space between date and tag */
 }
-/* date input styiing */
+
+/* Date input styling */
 #noteDate {
-  width: 15%;
+  width: 20%;
 }
-/* tag input styling */
+
+/* Tag input styling */
 #noteTags {
   width: 70%;
 }
 
-
-/* Editor options styles */
-.editor-options {
-  display: flex;
-  justify-content: space-around;
-  position: absolute;
-  width: 50%;
-  bottom: 10%;
-  left: 25%;
-  right: 25%;
-  background-color: #2a2a40;
-
-  
-  /*
-  margin-top: 10px;*/
-}
-
-/*container for editor options and notecontent*/
 #contentContainer {
   position: relative;
+  flex: 1; /* Make the container grow to fill available space */
+  display: flex;
+  flex-direction: column;
 }
 
 #noteContent {
-  flex: 1;
+  flex: 1; /* Make the content area grow to fill available space */
   width: 100%;
-  height: 250px;
   resize: none;
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
-/* potential styiling to make edit options appear and disappear upon focusing on the note content container, will develop later...
-#noteContent:focus + .editor-options {
+#noteContent.placeholder {
+  color: #888; /* Style for placeholder text */
+}
+
+/* Styles for the delete button in note */
+.note .note-header {
   display: flex;
-  justify-content: space-around;
-  animation: fadeIn 0.3s ease-in-out;
-}*/
+  justify-content: space-between;
+  align-items: center;
+}
 
-
-.editor-options button {
+.note .delete-note {
   background: none;
   border: none;
   color: #e5e5e5;
-  padding: 10px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 1.4rem;
   transition: transform 0.3s, color 0.3s;
 }
 
-.editor-options button:hover,
-.editor-options button:focus {
-  color: #fff;
-  transform: scale(1.1);
+.note .delete-note:hover,
+.note .delete-note:focus {
+  color: #ff00ff; /* Match pink glow */
+  transform: scale(1.2);
   outline: none;
 }
-
 
 /* Keyframes for animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(1.25rem);
   }
   to {
     opacity: 1;
@@ -329,43 +349,51 @@ h2 {
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .sidebar {
-    width: 100px;
+    width: 8rem;
   }
 
   .sidebar button {
-    font-size: 14px;
-    padding: 10px;
+    font-size: 1.2rem;
+    padding: 0.75rem;
+  }
+
+  .header-title h1 {
+    font-size: 2.5rem;
+  }
+
+  .header-title p {
+    font-size: 1.2rem;
   }
 
   #noteEditor {
     top: 5%;
     left: 5%;
-    width: 90%;
-    height: 90%;
+    width: 85%;
+    height: 85%;
+    padding: 1rem;
+  }
+
+  #noteTitle {
+    font-size: 1.5rem;
+  }
+
+  #date-tags-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem; /* Add space between date and tag */
+  }
+
+  #noteDate {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
+  #noteTags {
+    width: 100%;
+  }
+
+  #floatingToolbar {
+    bottom: 1rem;
+    padding: 0.5rem;
   }
 }
-
-/* Styles for the delete button in note */
-.note .note-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.note .delete-note {
-  background: none;
-  border: none;
-  color: #e5e5e5;
-  cursor: pointer;
-  font-size: 18px;
-  transition: transform 0.3s, color 0.3s;
-}
-
-.note .delete-note:hover,
-.note .delete-note:focus {
-  color: #ff4c4c;
-  transform: scale(1.2);
-  outline: none;
-}
-
-
