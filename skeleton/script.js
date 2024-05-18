@@ -1,4 +1,4 @@
-let notes = []; // Array to store notes
+let notes = []; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
 
 
@@ -18,7 +18,7 @@ const underlineButton = document.getElementById("makeUnderlineButton");
 const italicButton = document.getElementById("makeItalicButton");
 const boldButton = document.getElementById("makeBoldButton")
 
-// Event listeners
+// Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
   showNoteEditor();
 });
@@ -27,11 +27,18 @@ deleteNoteButton.addEventListener("click", deleteNote);
 cancelButton.addEventListener("click", hideNoteEditor);
 searchInput.addEventListener("input", filterNotes);
 
+// Event listeners for changing text styles within note editor
 underlineButton.addEventListener("click", function() {applyStyle('underline');});
 italicButton.addEventListener("click", function() {applyStyle('italic');});
 boldButton.addEventListener("click", function() {applyStyle('bold');});
 
-// Show note editor with optional note data and index
+
+
+
+// Show note editor that uses default params when adding new note,
+// and pass in existing note to edit existing one
+// noteEditor DOM element is shown, and if existing note is edited,
+// its existing data is displayed
 function showNoteEditor(note = { title: "", content: "", tags: "", date: new Date().toISOString().substring(0, 10) }, index = null) {
   editingNoteIndex = index;
   noteTitle.value = note.title;
@@ -41,13 +48,13 @@ function showNoteEditor(note = { title: "", content: "", tags: "", date: new Dat
   noteEditor.classList.remove("hidden"); // Show the note editor
 }
 
-// Hide note editor and clear fields
+// Hide note editor and clear note editor fields
 function hideNoteEditor() {
   noteEditor.classList.add("hidden"); // Hide the note editor
   clearNoteEditor();
 }
 
-// Clear note editor fields
+// Empties out note editor input areas for next use after hiding
 function clearNoteEditor() {
   noteTitle.value = "";
   noteContent.innerHTML = ""; // Clears the prev content when making a new note
@@ -87,7 +94,10 @@ function applyStyle(style)
 }
 
 
-// Save note and update notes array
+// Save note values from note editor text input areas into a note object,
+// and updates note in "notes" array if already existing, or appends to
+// notes array if new
+// after saving, notes are rendered and note editor is hiddne
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
@@ -111,7 +121,10 @@ function saveNote() {
   hideNoteEditor();
 }
 
-// Delete note and update notes array
+
+// Delete note from "notes" array with browser confirmation
+// after deletion, notes are rerendered, and note editor is hidden
+// since note is deleted from editor screen
 function deleteNote() {
   if (editingNoteIndex !== null) {
     if (confirm("Are you sure you want to delete this note?")) {
@@ -122,7 +135,10 @@ function deleteNote() {
   }
 }
 
-// Delete note by index
+
+// Also deletes note from "notes" array, but uses button from
+// render list. Notes in list correspond to index, which is passed in
+// to aid with deletion
 function deleteNoteByIndex(event, index) {
   event.stopPropagation(); // Prevent click event from propagating to parent elements
   if (confirm("Are you sure you want to delete this note?")) {
@@ -131,7 +147,13 @@ function deleteNoteByIndex(event, index) {
   }
 }
 
-// Render notes to the container
+
+// Render notes to the notes container
+// Renders all notes if no search filter, but can be filtered
+// to reduce search.
+// Appends notes to the notes container in the order of filtering, 
+// which is by title, then tags, then text
+// each note displays all related text, as well as an edit and delete button
 function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filteredtextNotes = []) {
   notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
 
@@ -189,7 +211,13 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
 }
 
 
+
 // Filter notes based on search input
+// Filters by title first, then tags and then text
+// the three filters have no overlap, and highest of order
+// takes the note if search filter works for multiple of tag, title, text
+// this occurs on input of search filter change, and new notes are automatically
+// rendered after filtering
 function filterNotes() {
   const query = searchInput.value.toLowerCase();
 
