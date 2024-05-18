@@ -13,6 +13,9 @@ const noteContent = document.getElementById("noteContent");
 const noteTags = document.getElementById("noteTags");
 const noteDate = document.getElementById("noteDate");
 const notesContainer = document.getElementById("notesContainer");
+const underlineButton = document.getElementById("makeUnderlineButton");
+const italicButton = document.getElementById("makeItalicButton");
+const boldButton = document.getElementById("makeBoldButton")
 
 // Event listeners
 addNoteButton.addEventListener("click", () => {
@@ -22,6 +25,10 @@ saveNoteButton.addEventListener("click", saveNote);
 deleteNoteButton.addEventListener("click", deleteNote);
 cancelButton.addEventListener("click", hideNoteEditor);
 searchInput.addEventListener("input", filterNotes);
+
+underlineButton.addEventListener("click", function() {applyStyle('underline');});
+italicButton.addEventListener("click", function() {applyStyle('italic');});
+boldButton.addEventListener("click", function() {applyStyle('bold');});
 
 // Show note editor with optional note data and index
 function showNoteEditor(note = { title: "", content: "", tags: "", date: new Date().toISOString().substring(0, 10) }, index = null) {
@@ -46,6 +53,38 @@ function clearNoteEditor() {
   noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
 }
+
+// text styling buttons
+function applyStyle(style) 
+{
+  //depreciated method to toggle text styling
+  document.execCommand(style, false, null);
+  /* directly apply html tags (doesn't work) keeping for reference in case
+  console.log('clicked');
+  const start = noteContent.selectionStart;
+  const end = noteContent.selectionEnd;
+  const selectedText = noteContent.innerHTML.substring(start, end);
+  console.log(selectedText);
+  let styledText;
+  switch(style) {
+    case 'underline':
+      styledText = `<u>${selectedText}</u>`;
+      break;
+    case 'italic':
+      styledText = `<i>${selectedText}</i>`;
+      break;
+    case 'bold':
+      styledText = `<b>${selectedText}</b>`;
+      break;
+    default:
+      styledText = selectedText;
+  }
+  //noteContent.setRangeText(styledText, start, end);*/
+
+  //refocus on content editor
+  noteContent.focus();
+}
+
 
 // Save note and update notes array
 function saveNote() {

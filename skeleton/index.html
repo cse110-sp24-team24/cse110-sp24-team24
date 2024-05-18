@@ -56,29 +56,40 @@
         placeholder="Title"
         aria-label="Note Title"
       />
-      <label for="noteDate">Date</label>
-      <input type="date" id="noteDate" aria-label="Note Date" />
-      <label for="noteContent">Content</label>
-      <textarea
-        id="noteContent"
-        placeholder="Write your note here..."
-        aria-label="Note Content"
-      ></textarea>
-      <label for="noteTags">Tags</label>
-      <input
-        type="text"
-        id="noteTags"
-        placeholder="Tags (comma separated)"
-        aria-label="Note Tags"
-      />
-      <!-- Additional options for adding multimedia content to the note -->
-      <div class="editor-options">
-        <button id="addImageButton" aria-label="Add Image">🖼️ Add Image</button>
-        <button id="addVideoButton" aria-label="Add Video">📹 Add Video</button>
-        <button id="addCodeBlockButton" aria-label="Add Code Block">
-          🖥️ Add Code Block
-        </button>
-        <!-- More options can be added here -->
+
+      <div id="date-tags-container">
+        <label for="noteDate">Date</label>
+        <input type="date" id="noteDate" aria-label="Note Date" />
+
+        <label for="noteTags">Tags</label>
+        <input
+          type="text"
+          id="noteTags"
+          placeholder="Tags (comma separated)"
+          aria-label="Note Tags"
+        />
+      </div>
+
+
+      <div id="contentContainer">
+        <label for="noteContent">Content</label>
+        <!--replaced textarea element with contenteditable div container, ctonent is now in the div innerHTML and not the textarea value -->
+        <div
+          id="noteContent"
+          contenteditable="true"
+          placeholder="Write your note here..."
+          aria-label="Note Content"
+        ></div>
+        <!-- Additional options for adding multimedia content to the note -->
+        <div class="editor-options">
+          <button id="makeUnderlineButton" aria-label="Underline" title="Underline"><u> U </u></button>
+          <button id="makeItalicButton" aria-label="Italics" title="Italicize"><i> I </i></button>
+          <button id="makeBoldButton" aria-label="Bold" title="Bold"><b> B </b></button>
+          <button id="addImageButton" aria-label="Add Image" title="Insert Image"> 🖼️ </button>
+          <button id="addVideoButton" aria-label="Add Video" title="Insert Video"> 📹 </button>
+          <button id="addCodeBlockButton" aria-label="Add Code Block" title="Insert Code Block"> 🖥️ </button>
+          <!-- More options can be added here -->
+        </div>
       </div>
     </div>
     <script src="script.js"></script>
