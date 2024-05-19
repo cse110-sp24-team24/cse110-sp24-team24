@@ -33,7 +33,22 @@ italicButton.addEventListener("click", function() {applyStyle('italic');});
 boldButton.addEventListener("click", function() {applyStyle('bold');});
 
 
+// Call loadNotes when the page is loaded
+window.onload = loadNotes;
 
+// Function to be called when the page is loaded
+function loadNotes() {
+  // Load notes from local storage
+  const notesString = localStorage.getItem("notes");
+
+  // Parse the JSON string to an array
+  const notesArray = JSON.parse(notesString);
+
+  // If the array is null (i.e., there were no notes in local storage), use an empty array
+  notes = notesArray || [];
+
+  renderNotes();
+}
 
 // Show note editor that uses default params when adding new note,
 // and pass in existing note to edit existing one
@@ -116,6 +131,8 @@ function saveNote() {
   } else {
     notes.push(note); // Add new note
   }
+   // Save notes to local storage
+   localStorage.setItem("notes", JSON.stringify(notes));
 
   renderNotes();
   hideNoteEditor();
@@ -129,6 +146,10 @@ function deleteNote() {
   if (editingNoteIndex !== null) {
     if (confirm("Are you sure you want to delete this note?")) {
       notes.splice(editingNoteIndex, 1); // Remove note from array
+
+     // Save the remaining notes back to local storage
+     localStorage.setItem("notes", JSON.stringify(notes));
+
       renderNotes();
       hideNoteEditor();
     }
@@ -143,6 +164,9 @@ function deleteNoteByIndex(event, index) {
   event.stopPropagation(); // Prevent click event from propagating to parent elements
   if (confirm("Are you sure you want to delete this note?")) {
     notes.splice(index, 1); // Remove note from array
+
+    // Save the remaining notes back to local storage
+    localStorage.setItem("notes", JSON.stringify(notes));
     renderNotes();
   }
 }
