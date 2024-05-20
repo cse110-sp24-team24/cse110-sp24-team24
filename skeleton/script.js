@@ -32,10 +32,22 @@ underlineButton.addEventListener("click", function() {applyStyle('underline');})
 italicButton.addEventListener("click", function() {applyStyle('italic');});
 boldButton.addEventListener("click", function() {applyStyle('bold');});
 
+// Call loadNotes when the page is loaded
+window.onload = loadNotes;
 
+// Function to be called when the page is loaded
+function loadNotes() {
+  // Load notes from local storage
+  const notesString = localStorage.getItem("notes");
 
+  // Parse the JSON string to an array
+  const notesArray = JSON.parse(notesString);
 
+  // If the array is null (i.e., there were no notes in local storage), use an empty array
+  notes = notesArray || [];
 
+  renderNotes();
+}
 
 /* Show note editor that uses default params when adding new note,
  * and pass in existing note to edit existing one
@@ -71,6 +83,7 @@ function clearNoteEditor() {
 /* text styling buttons
  * @param {string} style
  */
+
 function applyStyle(style) 
 {
   //depreciated method to toggle text styling
@@ -101,13 +114,12 @@ function applyStyle(style)
   noteContent.focus();
 }
 
-
-
 /* Save note values from note editor text input areas into a note object,
  * and updates note in "notes" array if already existing, or appends to
  * notes array if new
  * after saving, notes are rendered and note editor is hidden
  */
+
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
@@ -126,11 +138,12 @@ function saveNote() {
   } else {
     notes.push(note); // Add new note
   }
+   // Save notes to local storage
+   localStorage.setItem("notes", JSON.stringify(notes));
 
   renderNotes();
   hideNoteEditor();
 }
-
 
 /* Delete note from "notes" array with browser confirmation
  * after deletion, notes are rerendered, and note editor is hidden
@@ -140,13 +153,14 @@ function deleteNote() {
   if (editingNoteIndex !== null) {
     if (confirm("Are you sure you want to delete this note?")) {
       notes.splice(editingNoteIndex, 1); // Remove note from array
+
+     // Save the remaining notes back to local storage
+     localStorage.setItem("notes", JSON.stringify(notes));
       renderNotes();
       hideNoteEditor();
     }
   }
 }
-
-
 
 /* Also deletes note from "notes" array, but uses button from
  * render list. Notes in list correspond to index, which is passed in
@@ -158,10 +172,13 @@ function deleteNoteByIndex(event, index) {
   event.stopPropagation(); // Prevent click event from propagating to parent elements
   if (confirm("Are you sure you want to delete this note?")) {
     notes.splice(index, 1); // Remove note from array
+
+    // Save the remaining notes back to local storage
+    localStorage.setItem("notes", JSON.stringify(notes));
+
     renderNotes();
   }
 }
-
 
 /* Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
@@ -230,9 +247,6 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
   });
 }
 
-
-
-
 /**
  * Filter notes based on search input
  * Filters by title first, then tags and then text
@@ -263,3 +277,4 @@ function filterNotes() {
   // Render filtered notes
   renderNotes(filteredtitleNotes, filteredtagNotes, filteredtextNotes);
 }
+
