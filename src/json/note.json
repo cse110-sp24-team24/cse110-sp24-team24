@@ -1,0 +1,7 @@
+{
+  "id": "a_note_id",
+  "title": "string",
+  "date": "YYYY-MM-DD",
+  "tags": ["tag1", "tag2", "tag3"],
+  "content": "long string"
+}
