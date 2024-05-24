@@ -168,17 +168,17 @@ function deleteNote() {
  * @param {event} event
  * @param {number} index
  */
-function deleteNoteByIndex(event, index) {
-  event.stopPropagation(); // Prevent click event from propagating to parent elements
-  if (confirm("Are you sure you want to delete this note?")) {
-    notes.splice(index, 1); // Remove note from array
+// function deleteNoteByIndex(event, index) {
+//   event.stopPropagation(); // Prevent click event from propagating to parent elements
+//   if (confirm("Are you sure you want to delete this note?")) {
+//     notes.splice(index, 1); // Remove note from array
 
-    // Save the remaining notes back to local storage
-    localStorage.setItem("notes", JSON.stringify(notes));
+//     // Save the remaining notes back to local storage
+//     localStorage.setItem("notes", JSON.stringify(notes));
 
-    renderNotes();
-  }
-}
+//     renderNotes();
+//   }
+// }
 
 /* Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
