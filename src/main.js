@@ -18,7 +18,6 @@ async function main() {
   });
 }
 
-
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -29,7 +28,5 @@ const createWindow = () => {
   });
   win.loadFile("./index.html");
 };
-
-
 
 main();
