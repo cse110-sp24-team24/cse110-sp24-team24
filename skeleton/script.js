@@ -17,6 +17,8 @@ const notesContainer = document.getElementById("notesContainer");
 const underlineButton = document.getElementById("makeUnderlineButton");
 const italicButton = document.getElementById("makeItalicButton");
 const boldButton = document.getElementById("makeBoldButton")
+const TagCreateButton = document.getElementById("tag-create")
+const tagList = document.getElementById('tag-list');
 
 // Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
@@ -31,6 +33,19 @@ searchInput.addEventListener("input", filterNotes);
 underlineButton.addEventListener("click", function() {applyStyle('underline');});
 italicButton.addEventListener("click", function() {applyStyle('italic');});
 boldButton.addEventListener("click", function() {applyStyle('bold');});
+
+//Event Listener for clicking the create tag button
+TagCreateButton.addEventListener("click", addTag);
+
+//Shortcuts for keys 
+document.addEventListener("DOMContentLoaded", function(){
+  //Shorcut "Enter" to add tag on click
+  noteTags.addEventListener("keydown", function(event){
+    if(event.key === 'Enter'){
+      addTag();
+    }
+  });
+});
 
 // Call loadNotes when the page is loaded
 window.onload = loadNotes;
@@ -60,7 +75,7 @@ function showNoteEditor(note = { title: "", content: "", tags: "", date: new Dat
   editingNoteIndex = index;
   noteTitle.value = note.title;
   noteContent.innerHTML = note.content;
-  noteTags.value = note.tags;
+  noteTags.innerHTML = note.tags;
   noteDate.value = note.date;
   noteEditor.classList.remove("hidden"); // Show the note editor
 }
@@ -75,8 +90,11 @@ function hideNoteEditor() {
 function clearNoteEditor() {
   noteTitle.value = "";
   noteContent.innerHTML = ""; // Clears the prev content when making a new note
-  noteTags.value = "";
+  //noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
+  // Clear the tags list
+  tagList.innerHTML = '';
+
 }
 
 // 
@@ -123,7 +141,7 @@ function applyStyle(style)
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
-  const tags = noteTags.value.trim();
+  const tags = tagList.innerHTML.trim();
   const date = noteDate.value;
 
   if (!title || !content) {
@@ -179,7 +197,30 @@ function deleteNoteByIndex(event, index) {
     renderNotes();
   }
 }
+/* Add a tag to the list
+ */
+function addTag(){
+  if(noteTags.value === ''){
+    alert("Tag input cannot be empty if you want to add a tag.");
+  }
+  else{
+    // Add event listener to the add button
+    const newTag = document.createElement('li');
 
+    // Set the list item's content to the input's value
+    newTag.textContent = noteTags.value;
+
+    // Add the list item to the list
+    tagList.appendChild(newTag);
+
+    // Save the tags
+    localStorage.setItem("notes", JSON.stringify(notes));
+
+    // Clear the input
+    noteTags.value = '';
+  }
+
+}
 /* Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
  * to reduce search.
@@ -209,6 +250,7 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
       showNoteEditor(note, index); // Edit note on click
     });
     notesContainer.appendChild(noteElement);
+
   });
 
   filteredtagNotes.forEach((note, index) => {

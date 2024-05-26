@@ -266,6 +266,9 @@ body {
 }
 
 /* Input styles in the note editor */
+#tag-color,
+#tag-drop,
+#tag-create,
 #noteTitle,
 #noteDate,
 #noteTags,
@@ -295,10 +298,46 @@ body {
 #noteDate {
   width: 20%;
 }
-
 /* Tag input styling */
 #noteTags {
-  width: 70%;
+  width: 60%;
+}
+
+/* Tag add button styling */
+#tag-create{
+  width: 5%;
+}
+#tag-create:hover{
+  background-color: #3d3d57;
+  transform: scale(1.1);
+  outline: none;
+
+}
+/* Tag drop down styling*/
+#tag-drop{
+  width: 5%;
+
+}
+/* Tag color change styling*/
+#tag-color{
+  width: 5%;
+
+}
+
+/* Tag storage styling */
+#tag-list{
+  list-style-type: none;
+  display: flex;
+  gap: 10px; 
+}
+
+#tag-list li{
+  padding: 20px;
+  border: 1px solid #555;
+  border-radius: 0.5rem;
+  background-color: #1e1e2f;
+  color: #e5e5e5;
+  font-size: 15px;
 }
 
 /* Styles for the delete button in note */
@@ -390,7 +429,7 @@ body {
   }
 
   #noteTags {
-    width: 100%;
+    width: 100%
   }
 
   #floatingToolbar {
