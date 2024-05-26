@@ -1,7 +1,6 @@
 let notes = []; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
 
-
 // Get DOM elements
 const addNoteButton = document.getElementById("addNoteButton");
 const saveNoteButton = document.getElementById("saveNoteButton");
@@ -16,9 +15,9 @@ const noteDate = document.getElementById("noteDate");
 const notesContainer = document.getElementById("notesContainer");
 const underlineButton = document.getElementById("makeUnderlineButton");
 const italicButton = document.getElementById("makeItalicButton");
-const boldButton = document.getElementById("makeBoldButton")
-const TagCreateButton = document.getElementById("tag-create")
-const tagList = document.getElementById('tag-list');
+const boldButton = document.getElementById("makeBoldButton");
+const TagCreateButton = document.getElementById("tag-create");
+const tagList = document.getElementById("tag-list");
 
 // Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
@@ -30,18 +29,24 @@ cancelButton.addEventListener("click", hideNoteEditor);
 searchInput.addEventListener("input", filterNotes);
 
 // Event listeners for changing text styles within note editor
-underlineButton.addEventListener("click", function() {applyStyle('underline');});
-italicButton.addEventListener("click", function() {applyStyle('italic');});
-boldButton.addEventListener("click", function() {applyStyle('bold');});
+underlineButton.addEventListener("click", function () {
+  applyStyle("underline");
+});
+italicButton.addEventListener("click", function () {
+  applyStyle("italic");
+});
+boldButton.addEventListener("click", function () {
+  applyStyle("bold");
+});
 
 //Event Listener for clicking the create tag button
 TagCreateButton.addEventListener("click", addTag);
 
-//Shortcuts for keys 
-document.addEventListener("DOMContentLoaded", function(){
+//Shortcuts for keys
+document.addEventListener("DOMContentLoaded", function () {
   //Shorcut "Enter" to add tag on click
-  noteTags.addEventListener("keydown", function(event){
-    if(event.key === 'Enter'){
+  noteTags.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
       addTag();
     }
   });
@@ -71,7 +76,15 @@ function loadNotes() {
  * @param {object} note
  * @param {number} index
  */
-function showNoteEditor(note = { title: "", content: "", tags: "", date: new Date().toISOString().substring(0, 10) }, index = null) {
+function showNoteEditor(
+  note = {
+    title: "",
+    content: "",
+    tags: "",
+    date: new Date().toISOString().substring(0, 10),
+  },
+  index = null
+) {
   editingNoteIndex = index;
   noteTitle.value = note.title;
   noteContent.innerHTML = note.content;
@@ -93,17 +106,15 @@ function clearNoteEditor() {
   //noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
   // Clear the tags list
-  tagList.innerHTML = '';
-
+  tagList.innerHTML = "";
 }
 
-// 
+//
 /* text styling buttons
  * @param {string} style
  */
 
-function applyStyle(style) 
-{
+function applyStyle(style) {
   //depreciated method to toggle text styling
   document.execCommand(style, false, null);
   /* directly apply html tags (doesn't work) keeping for reference in case
@@ -156,8 +167,8 @@ function saveNote() {
   } else {
     notes.push(note); // Add new note
   }
-   // Save notes to local storage
-   localStorage.setItem("notes", JSON.stringify(notes));
+  // Save notes to local storage
+  localStorage.setItem("notes", JSON.stringify(notes));
 
   renderNotes();
   hideNoteEditor();
@@ -172,8 +183,8 @@ function deleteNote() {
     if (confirm("Are you sure you want to delete this note?")) {
       notes.splice(editingNoteIndex, 1); // Remove note from array
 
-     // Save the remaining notes back to local storage
-     localStorage.setItem("notes", JSON.stringify(notes));
+      // Save the remaining notes back to local storage
+      localStorage.setItem("notes", JSON.stringify(notes));
       renderNotes();
       hideNoteEditor();
     }
@@ -186,26 +197,25 @@ function deleteNote() {
  * @param {event} event
  * @param {number} index
  */
-function deleteNoteByIndex(event, index) {
-  event.stopPropagation(); // Prevent click event from propagating to parent elements
-  if (confirm("Are you sure you want to delete this note?")) {
-    notes.splice(index, 1); // Remove note from array
+// function deleteNoteByIndex(event, index) {
+//   event.stopPropagation(); // Prevent click event from propagating to parent elements
+//   if (confirm("Are you sure you want to delete this note?")) {
+//     notes.splice(index, 1); // Remove note from array
 
-    // Save the remaining notes back to local storage
-    localStorage.setItem("notes", JSON.stringify(notes));
+//     // Save the remaining notes back to local storage
+//     localStorage.setItem("notes", JSON.stringify(notes));
 
-    renderNotes();
-  }
-}
+//     renderNotes();
+//   }
+// }
 /* Add a tag to the list
  */
-function addTag(){
-  if(noteTags.value === ''){
+function addTag() {
+  if (noteTags.value === "") {
     alert("Tag input cannot be empty if you want to add a tag.");
-  }
-  else{
+  } else {
     // Add event listener to the add button
-    const newTag = document.createElement('li');
+    const newTag = document.createElement("li");
 
     // Set the list item's content to the input's value
     newTag.textContent = noteTags.value;
@@ -217,14 +227,13 @@ function addTag(){
     localStorage.setItem("notes", JSON.stringify(notes));
 
     // Clear the input
-    noteTags.value = '';
+    noteTags.value = "";
   }
-
 }
 /* Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
  * to reduce search.
- * Appends notes to the notes container in the order of filtering, 
+ * Appends notes to the notes container in the order of filtering,
  * which is by title, then tags, then text
  * each note displays all related text, as well as an edit and delete button
  * @param {list} filteredtitleNotes
@@ -232,7 +241,11 @@ function addTag(){
  * @param {list} filteredtextNotes
  */
 
-function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filteredtextNotes = []) {
+function renderNotes(
+  filteredtitleNotes = notes,
+  filteredtagNotes = [],
+  filteredtextNotes = []
+) {
   notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
 
   filteredtitleNotes.forEach((note, index) => {
@@ -250,7 +263,6 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
       showNoteEditor(note, index); // Edit note on click
     });
     notesContainer.appendChild(noteElement);
-
   });
 
   filteredtagNotes.forEach((note, index) => {
@@ -269,7 +281,6 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
     });
     notesContainer.appendChild(noteElement);
   });
-
 
   filteredtextNotes.forEach((note, index) => {
     const noteElement = document.createElement("div");
@@ -300,23 +311,21 @@ function renderNotes(filteredtitleNotes = notes, filteredtagNotes = [], filtered
 function filterNotes() {
   const query = searchInput.value.toLowerCase();
 
-  let filteredtitleNotes = notes.filter(
-    (note) =>
-      note.title.toLowerCase().includes(query)
+  let filteredtitleNotes = notes.filter((note) =>
+    note.title.toLowerCase().includes(query)
   );
   let filteredtagNotes = notes.filter(
     (note) =>
       note.tags.toLowerCase().includes(query) &&
-      (!filteredtitleNotes.includes(note))
+      !filteredtitleNotes.includes(note)
   );
   let filteredtextNotes = notes.filter(
     (note) =>
       note.content.toLowerCase().includes(query) &&
-      (!filteredtitleNotes.includes(note)) &&
-      (!filteredtagNotes.includes(note))
+      !filteredtitleNotes.includes(note) &&
+      !filteredtagNotes.includes(note)
   );
 
   // Render filtered notes
   renderNotes(filteredtitleNotes, filteredtagNotes, filteredtextNotes);
 }
-

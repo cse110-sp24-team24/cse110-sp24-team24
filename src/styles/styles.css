@@ -36,10 +36,24 @@ body {
 /* Make the header glow */
 @keyframes glow {
   from {
-    text-shadow: 0 0 0.625rem #ffffff, 0 0 1.25rem #ffffff, 0 0 1.875rem #ff00ff, 0 0 2.5rem #ff00ff, 0 0 3.125rem #ff00ff, 0 0 3.75rem #ff00ff, 0 0 4.375rem #ff00ff;
+    text-shadow:
+      0 0 0.625rem #ffffff,
+      0 0 1.25rem #ffffff,
+      0 0 1.875rem #ff00ff,
+      0 0 2.5rem #ff00ff,
+      0 0 3.125rem #ff00ff,
+      0 0 3.75rem #ff00ff,
+      0 0 4.375rem #ff00ff;
   }
   to {
-    text-shadow: 0 0 1.25rem #ffffff, 0 0 1.875rem #ff00ff, 0 0 2.5rem #ff00ff, 0 0 3.125rem #ff00ff, 0 0 3.75rem #ff00ff, 0 0 4.375rem #ff00ff, 0 0 5rem #ff00ff;
+    text-shadow:
+      0 0 1.25rem #ffffff,
+      0 0 1.875rem #ff00ff,
+      0 0 2.5rem #ff00ff,
+      0 0 3.125rem #ff00ff,
+      0 0 3.75rem #ff00ff,
+      0 0 4.375rem #ff00ff,
+      0 0 5rem #ff00ff;
   }
 }
 
@@ -74,7 +88,10 @@ body {
   cursor: pointer;
   text-align: left;
   font-size: 1.4rem;
-  transition: transform 0.3s, background 0.3s, color 0.3s;
+  transition:
+    transform 0.3s,
+    background 0.3s,
+    color 0.3s;
 }
 
 .sidebar button:hover,
@@ -133,7 +150,10 @@ body {
   padding: 1.5rem;
   border-radius: 1rem;
   cursor: pointer;
-  transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    background 0.3s,
+    box-shadow 0.3s;
   animation: slideIn 0.5s ease-in-out;
 }
 
@@ -205,7 +225,9 @@ body {
   padding: 0.75rem;
   cursor: pointer;
   font-size: 1.4rem;
-  transition: transform 0.3s, color 0.3s;
+  transition:
+    transform 0.3s,
+    color 0.3s;
 }
 
 .editor-toolbar button:hover,
@@ -255,7 +277,9 @@ body {
   padding: 0.25rem; /* Smaller padding */
   cursor: pointer;
   font-size: 1.2rem; /* Smaller font size */
-  transition: transform 0.3s, color 0.3s;
+  transition:
+    transform 0.3s,
+    color 0.3s;
 }
 
 #floatingToolbar button:hover,
@@ -304,34 +328,31 @@ body {
 }
 
 /* Tag add button styling */
-#tag-create{
+#tag-create {
   width: 5%;
 }
-#tag-create:hover{
+#tag-create:hover {
   background-color: #3d3d57;
   transform: scale(1.1);
   outline: none;
-
 }
 /* Tag drop down styling*/
-#tag-drop{
+#tag-drop {
   width: 5%;
-
 }
 /* Tag color change styling*/
-#tag-color{
+#tag-color {
   width: 5%;
-
 }
 
 /* Tag storage styling */
-#tag-list{
+#tag-list {
   list-style-type: none;
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
-#tag-list li{
+#tag-list li {
   padding: 20px;
   border: 1px solid #555;
   border-radius: 0.5rem;
@@ -353,7 +374,9 @@ body {
   color: #e5e5e5;
   cursor: pointer;
   font-size: 1.4rem;
-  transition: transform 0.3s, color 0.3s;
+  transition:
+    transform 0.3s,
+    color 0.3s;
 }
 
 .note .delete-note:hover,
@@ -429,7 +452,7 @@ body {
   }
 
   #noteTags {
-    width: 100%
+    width: 100%;
   }
 
   #floatingToolbar {
@@ -437,4 +460,3 @@ body {
     padding: 0.5rem;
   }
 }
-
