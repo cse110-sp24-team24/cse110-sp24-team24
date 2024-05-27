@@ -1,4 +1,11 @@
-let notes = []; // Array to store notes for displaying (can factor in notes storage later)
+let notes = [
+  {
+    title: "",
+    content: "",
+    tags: [],
+    date: new Date().toISOString().substring(0, 10),
+  }
+]; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
 
 // Get DOM elements
@@ -80,7 +87,7 @@ function showNoteEditor(
   note = {
     title: "",
     content: "",
-    tags: "",
+    tags: [],
     date: new Date().toISOString().substring(0, 10),
   },
   index = null
@@ -88,7 +95,14 @@ function showNoteEditor(
   editingNoteIndex = index;
   noteTitle.value = note.title;
   noteContent.innerHTML = note.content;
-  noteTags.innerHTML = note.tags;
+  //noteTags.innerHTML = note.tags;
+
+  // grab the prevoiusly added tags and repopulate if you are editing a note with tags already
+  for (let tag of note.tags) {
+    const tagItem = document.createElement('li');
+    tagItem.textContent = tag;
+    tagList.appendChild(tagItem);
+  }
   noteDate.value = note.date;
   noteEditor.classList.remove("hidden"); // Show the note editor
 }
@@ -152,7 +166,7 @@ function applyStyle(style) {
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
-  const tags = tagList.innerHTML.trim();
+  const tags = Array.from(tagList.getElementsByTagName('li')).map(li => li.textContent);
   const date = noteDate.value;
 
   if (!title || !content) {
@@ -166,6 +180,11 @@ function saveNote() {
     notes[editingNoteIndex] = note; // Update existing note
   } else {
     notes.push(note); // Add new note
+  }
+  //if the user forgets to add a tag, the note will still be saved if typed into the bar
+  if(noteTags.value !== "") {
+    alert("Tag input cannot be empty if you want to add a tag.");
+    return;
   }
   // Save notes to local storage
   localStorage.setItem("notes", JSON.stringify(notes));
@@ -222,6 +241,10 @@ function addTag() {
 
     // Add the list item to the list
     tagList.appendChild(newTag);
+    // Add the new tag to the tags array of the currently edited note
+    if (editingNoteIndex !== null) {
+      notes[editingNoteIndex].tags.push(noteTags.value);
+    }
 
     // Save the tags
     localStorage.setItem("notes", JSON.stringify(notes));
