@@ -169,8 +169,8 @@ function saveNote() {
   const tags = Array.from(tagList.getElementsByTagName('li')).map(li => li.textContent);
   const date = noteDate.value;
 
-  if (!title || !content) {
-    alert("Title and content cannot be empty.");
+  if (!title || !content || noteTags.value !== "") {
+    alert("Title and content Tag bar cannot be empty.");
     return;
   }
 
@@ -180,11 +180,6 @@ function saveNote() {
     notes[editingNoteIndex] = note; // Update existing note
   } else {
     notes.push(note); // Add new note
-  }
-  //if the user forgets to add a tag, the note will still be saved if typed into the bar
-  if(noteTags.value !== "") {
-    alert("Tag input cannot be empty if you want to add a tag.");
-    return;
   }
   // Save notes to local storage
   localStorage.setItem("notes", JSON.stringify(notes));
