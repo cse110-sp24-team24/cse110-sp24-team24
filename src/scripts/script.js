@@ -169,8 +169,19 @@ function saveNote() {
   const tags = Array.from(tagList.getElementsByTagName('li')).map(li => li.textContent);
   const date = noteDate.value;
 
-  if (!title || !content || noteTags.value !== "") {
-    alert("Title and content Tag bar cannot be empty.");
+  /*
+  *Alert
+  * if title or content of the note is empty
+  * if the tag text box is not empty
+  * You should add the tag in first
+  */ 
+  if (!title || !content ) {
+    alert("Title and content cannot be empty.");
+    return;
+  }
+
+  if (noteTags.value !== "") {
+    alert("You should add the tag first.");
     return;
   }
 
