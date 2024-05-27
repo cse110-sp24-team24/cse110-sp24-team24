@@ -332,18 +332,7 @@ function filterNotes() {
   let filteredtitleNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(query)
   );
-  let filteredtagNotes = notes.filter(
-    (note) =>
-      note.tags.toLowerCase().includes(query) &&
-      !filteredtitleNotes.includes(note)
-  );
-  let filteredtextNotes = notes.filter(
-    (note) =>
-      note.content.toLowerCase().includes(query) &&
-      !filteredtitleNotes.includes(note) &&
-      !filteredtagNotes.includes(note)
-  );
 
   // Render filtered notes
-  renderNotes(filteredtitleNotes, filteredtagNotes, filteredtextNotes);
+  renderNotes(filteredtitleNotes);
 }
