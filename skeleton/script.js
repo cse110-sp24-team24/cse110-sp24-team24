@@ -38,7 +38,7 @@ window.onload = loadNotes;
 // Function to be called when the page is loaded
 function loadNotes() {
   // Load notes from local storage
-  const notesString = localStorage.getItem("notes");
+  const notesString = localStorage.getItem("notes"); //change localStorage to 
 
   // Parse the JSON string to an array
   const notesArray = JSON.parse(notesString);
@@ -138,11 +138,15 @@ function saveNote() {
   } else {
     notes.push(note); // Add new note
   }
-   // Save notes to local storage
-   localStorage.setItem("notes", JSON.stringify(notes));
-
-  renderNotes();
-  hideNoteEditor();
+  // Save notes to the file system
+  fileStorage.saveNotes(notes)
+    .then(() => {
+      renderNotes();
+      hideNoteEditor();
+    })
+    .catch((error) => {
+      console.error("Failed to save notes:", error);
+    });;
 }
 
 /* Delete note from "notes" array with browser confirmation

@@ -18,6 +18,15 @@ async function saveNotes(notes) {
   }
 }
 
-async function readNotes() {}
+// Implement reading notes from the file system
+async function readNotes() {
+    try {
+      const data = await fs.readFile(dataPath, 'utf-8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+}
 
 export default { saveNotes, readNotes }; //access via import fileStorage from ./fileStorage.js
