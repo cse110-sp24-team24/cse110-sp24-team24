@@ -219,7 +219,8 @@ function deleteNote() {
   */
 }
 
-// !!! NOTEEE do we still need this? deleteNoteByIndex()
+// !!! NOTEEE Do we still need deleteNoteByIndex() ?
+//            We are using deleteNote to delete notes via their uniqueID rather than index
 
 /* Also deletes note from "notes" array, but uses button from
  * render list. Notes in list correspond to index, which is passed in
@@ -258,16 +259,7 @@ function renderNotes(
   notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
 
   filteredtitleNotes.forEach((note) => {
-    const noteElement = document.createElement("div");
-    noteElement.className = "note";
-    noteElement.innerHTML = `
-      <div class="note-header">
-        <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote('${note.uniqueID}')">🗑️</button>
-      </div>
-      <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags}</small>
-    `;
+    const noteElement = createNoteElement(note);
     noteElement.addEventListener("click", () => {
       showNoteEditor(note); // Edit note on click
     });
@@ -275,16 +267,7 @@ function renderNotes(
   });
 
   filteredtagNotes.forEach((note) => {
-    const noteElement = document.createElement("div");
-    noteElement.className = "note";
-    noteElement.innerHTML = `
-    <div class="note-header">
-      <h2>${note.title}</h2>
-      <button class="delete-note" aria-label="Delete Note" onclick="deleteNote('${note.uniqueID}')">🗑️</button>
-    </div>
-    <p>${note.content}</p>
-    <small>${note.date} - Tags: ${note.tags}</small>
-    `;
+    const noteElement = createNoteElement(note);
     noteElement.addEventListener("click", () => {
       showNoteEditor(note); // Edit note on click
     });
@@ -292,9 +275,18 @@ function renderNotes(
   });
 
   filteredtextNotes.forEach((note) => {
-    const noteElement = document.createElement("div");
-    noteElement.className = "note";
-    noteElement.innerHTML = `
+    const noteElement = createNoteElement(note);
+    noteElement.addEventListener("click", () => {
+      showNoteEditor(note); // Edit note on click
+    });
+    notesContainer.appendChild(noteElement);
+  });
+}
+
+function createNoteElement(note) {
+  const noteElement = document.createElement("div");
+  noteElement.className = "note";
+  noteElement.innerHTML = `
     <div class="note-header">
       <h2>${note.title}</h2>
       <button class="delete-note" aria-label="Delete Note" onclick="deleteNote('${note.uniqueID}')">🗑️</button>
@@ -302,11 +294,7 @@ function renderNotes(
     <p>${note.content}</p>
     <small>${note.date} - Tags: ${note.tags}</small>
     `;
-    noteElement.addEventListener("click", () => {
-      showNoteEditor(note); // Edit note on click
-    });
-    notesContainer.appendChild(noteElement);
-  });
+  return noteElement;
 }
 
 /**
