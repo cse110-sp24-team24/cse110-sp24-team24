@@ -4,7 +4,7 @@ let notes = [
     content: "",
     tags: [],
     date: new Date().toISOString().substring(0, 10),
-  }
+  },
 ]; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
 
@@ -23,8 +23,16 @@ const notesContainer = document.getElementById("notesContainer");
 const underlineButton = document.getElementById("makeUnderlineButton");
 const italicButton = document.getElementById("makeItalicButton");
 const boldButton = document.getElementById("makeBoldButton");
-const TagCreateButton = document.getElementById("tag-create");
+const tagCreateButton = document.getElementById("tag-create");
 const tagList = document.getElementById("tag-list");
+const tagDropdownButton = document.getElementById("tag-dropdown");
+const tagDropdownContainer = document.getElementById("tag-dropdown-container");
+const tagDropdownList = document.getElementById("tag-dropdown-list");
+const filterButton = document.getElementById("filterButton");
+const filterDropdownContainer = document.getElementById(
+  "filter-dropdown-container"
+);
+const filterDropdownList = document.getElementById("filter-dropdown-list");
 
 // Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
@@ -47,7 +55,24 @@ boldButton.addEventListener("click", function () {
 });
 
 //Event Listener for clicking the create tag button
-TagCreateButton.addEventListener("click", addTag);
+tagCreateButton.addEventListener("click", addTag);
+
+tagDropdownButton.addEventListener("click", () => {
+  if (tagDropdownContainer.classList.contains("hidden")) {
+    showTagDropdown();
+  } else {
+    hideTagDropdown();
+  }
+});
+
+filterButton.addEventListener("click", (event) => {
+  event.stopPropagation(); // Prevent click event from propagating
+  if (filterDropdownContainer.classList.contains("hidden")) {
+    showFilterDropdown();
+  } else {
+    hideFilterDropdown();
+  }
+});
 
 //Shortcuts for keys
 document.addEventListener("DOMContentLoaded", function () {
@@ -57,6 +82,24 @@ document.addEventListener("DOMContentLoaded", function () {
       addTag();
     }
   });
+});
+
+document.addEventListener("click", (event) => {
+  if (
+    !tagDropdownContainer.contains(event.target) &&
+    !tagDropdownButton.contains(event.target)
+  ) {
+    hideTagDropdown();
+  }
+});
+
+document.addEventListener("click", (event) => {
+  if (
+    !filterDropdownContainer.contains(event.target) &&
+    !filterButton.contains(event.target)
+  ) {
+    hideFilterDropdown();
+  }
 });
 
 // Call loadNotes when the page is loaded
@@ -99,7 +142,7 @@ function showNoteEditor(
 
   // grab the prevoiusly added tags and repopulate if you are editing a note with tags already
   for (let tag of note.tags) {
-    const tagItem = document.createElement('li');
+    const tagItem = document.createElement("li");
     tagItem.textContent = tag;
     tagList.appendChild(tagItem);
   }
@@ -166,16 +209,18 @@ function applyStyle(style) {
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
-  const tags = Array.from(tagList.getElementsByTagName('li')).map(li => li.textContent);
+  const tags = Array.from(tagList.getElementsByTagName("li")).map(
+    (li) => li.textContent
+  );
   const date = noteDate.value;
 
   /*
-  *Alert
-  * if title or content of the note is empty
-  * if the tag text box is not empty
-  * You should add the tag in first
-  */ 
-  if (!title || !content ) {
+   *Alert
+   * if title or content of the note is empty
+   * if the tag text box is not empty
+   * You should add the tag in first
+   */
+  if (!title || !content) {
     alert("Title and content cannot be empty.");
     return;
   }
@@ -236,20 +281,27 @@ function deleteNote() {
 /* Add a tag to the list
  */
 function addTag() {
-  if (noteTags.value === "") {
+  const tagText = noteTags.value.trim();
+  if (tagText === "") {
     alert("Tag input cannot be empty if you want to add a tag.");
   } else {
-    // Add event listener to the add button
-    const newTag = document.createElement("li");
+    let tags = JSON.parse(localStorage.getItem("tags")) || [];
+    if (!tags.includes(tagText)) {
+      // Add event listener to the add button
+      const newTag = document.createElement("li");
 
-    // Set the list item's content to the input's value
-    newTag.textContent = noteTags.value;
+      // Set the list item's content to the input's value
+      newTag.textContent = tagText;
 
-    // Add the list item to the list
-    tagList.appendChild(newTag);
-    // Add the new tag to the tags array of the currently edited note
-    if (editingNoteIndex !== null) {
-      notes[editingNoteIndex].tags.push(noteTags.value);
+      // Add the list item to the list
+      tagList.appendChild(newTag);
+      // Add the new tag to the tags array of the currently edited note
+      if (editingNoteIndex !== null) {
+        notes[editingNoteIndex].tags.push(tagText);
+      }
+
+      tags.push(tagText);
+      localStorage.setItem("tags", JSON.stringify(tags));
     }
 
     // Save the tags
@@ -259,6 +311,44 @@ function addTag() {
     noteTags.value = "";
   }
 }
+
+function showTagDropdown() {
+  tagDropdownContainer.classList.remove("hidden");
+  tagDropdownButton.innerHTML = "&#9652;"; // Change icon to up arrow
+  loadTags();
+}
+
+function hideTagDropdown() {
+  tagDropdownContainer.classList.add("hidden");
+  tagDropdownButton.innerHTML = "&#9662;"; // Change icon to down arrow
+}
+
+function loadTags() {
+  const tagsString = localStorage.getItem("tags");
+  const tagsArray = JSON.parse(tagsString) || [];
+  tagDropdownList.innerHTML = ""; // Clear existing items
+
+  tagsArray.forEach((tag) => {
+    const tagItem = document.createElement("li");
+    tagItem.textContent = tag;
+    tagItem.addEventListener("click", () => addTagFromDropdown(tag));
+    tagDropdownList.appendChild(tagItem);
+  });
+}
+
+function addTagFromDropdown(tag) {
+  const tagItem = document.createElement("li");
+  tagItem.textContent = tag;
+  tagList.appendChild(tagItem);
+
+  if (editingNoteIndex !== null) {
+    notes[editingNoteIndex].tags.push(tag);
+  }
+
+  localStorage.setItem("notes", JSON.stringify(notes));
+  hideTagDropdown();
+}
+
 /* Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
  * to reduce search.
@@ -346,4 +436,36 @@ function filterNotes() {
 
   // Render filtered notes
   renderNotes(filteredtitleNotes);
+}
+
+function showFilterDropdown() {
+  filterDropdownContainer.classList.remove("hidden");
+  filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
+  loadFilterTags();
+}
+
+function hideFilterDropdown() {
+  filterDropdownContainer.classList.add("hidden");
+  filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
+}
+
+// Load tags from localStorage and populate the filter dropdown
+function loadFilterTags() {
+  const tagsString = localStorage.getItem("tags");
+  const tagsArray = JSON.parse(tagsString) || [];
+  filterDropdownList.innerHTML = ""; // Clear existing items
+
+  tagsArray.forEach((tag) => {
+    const tagItem = document.createElement("li");
+    tagItem.textContent = tag;
+    tagItem.addEventListener("click", () => filterNotesByTag(tag));
+    filterDropdownList.appendChild(tagItem);
+  });
+}
+
+// Filter notes by the selected tag
+function filterNotesByTag(selectedTag) {
+  const filteredNotes = notes.filter((note) => note.tags.includes(selectedTag));
+  renderNotes(filteredNotes);
+  hideFilterDropdown();
 }

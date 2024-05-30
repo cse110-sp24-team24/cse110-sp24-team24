@@ -31,6 +31,12 @@
           placeholder="Search..."
           aria-label="Search"
         />
+        <button id="filterButton" aria-label="Filter">&#9662;</button>
+        <div id="filter-dropdown-container" class="hidden">
+          <ul id="filter-dropdown-list">
+            <!-- Tag options will be dynamically inserted here -->
+          </ul>
+        </div>
       </div>
       <!-- Container for displaying notes -->
       <div id="notesContainer">
@@ -76,7 +82,12 @@
         - drop down
          -->
         <button id="tag-create" aria-label="Button 1">+</button>
-        <button id="tag-drop" aria-label="Button 1">drop</button>
+        <button id="tag-dropdown" aria-label="Button 1">&#9662;</button>
+        <div id="tag-dropdown-container" class="hidden">
+          <ul id="tag-dropdown-list">
+            <!-- Tag options will be dynamically inserted here -->
+          </ul>
+        </div>
       </div>
 
       <ul id="tag-list">
