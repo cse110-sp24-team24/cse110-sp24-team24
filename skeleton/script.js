@@ -41,17 +41,20 @@ boldButton.addEventListener("click", function () {
 window.onload = loadNotes;
 
 // Function to be called when the page is loaded
-function loadNotes() {
-  // Load notes from local storage
-  const notesString = localStorage.getItem("notes"); //change localStorage to
+async function loadNotes() {
+  try {
+    // Load notes from the file system
+    const notesArray = await fileStorage.readNotes();
 
-  // Parse the JSON string to an array
-  const notesArray = JSON.parse(notesString);
+    // If the array is null (i.e., there were no notes in the file system), use an empty array
+    notes = notesArray || [];
 
-  // If the array is null (i.e., there were no notes in local storage), use an empty array
-  notes = notesArray || [];
-
-  renderNotes();
+    renderNotes();
+  } catch (error) {
+    console.error("Failed to load notes:", error);
+    notes = [];
+    renderNotes();
+  }
 }
 
 /**
