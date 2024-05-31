@@ -1,3 +1,4 @@
+//TODO create tests
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import path from "path";
@@ -7,7 +8,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
 
-//TODO create tests
 /**
  * Save the notes to local storage. 
  * @param {object[]} notes 
@@ -21,7 +21,6 @@ async function saveNotes(notes) {
   }
 }
 
-// Implement reading notes from the file system
 /** 
  * Return the notes saved in local storage.
  * @returns {object[]}
