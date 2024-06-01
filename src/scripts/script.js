@@ -33,16 +33,14 @@ const filterDropdownContainer = document.getElementById(
   "filter-dropdown-container"
 );
 const filterDropdownList = document.getElementById("filter-dropdown-list");
-const tagColorButton = document.getElementById('tag-color');
+const tagColorButton = document.getElementById("tag-color");
 
-// Event listener for tag color 
-tagColorButton.addEventListener("change", (event) =>
-      {
-        console.log(noteTags.style.backgroundColor); // fine
-        console.log(event.target.value);
-        noteTags.style.backgroundColor = event.target.value;
-      });
-
+// Event listener for tag color
+tagColorButton.addEventListener("change", (event) => {
+  console.log(noteTags.style.backgroundColor); // fine
+  console.log(event.target.value);
+  noteTags.style.backgroundColor = event.target.value;
+});
 
 // Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
@@ -456,12 +454,14 @@ function filterNotes() {
 
 function showFilterDropdown() {
   filterDropdownContainer.classList.remove("hidden");
+  filterDropdownContainer.classList.add("visible");
   filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
   loadFilterTags();
 }
 
 function hideFilterDropdown() {
   filterDropdownContainer.classList.add("hidden");
+  filterDropdownContainer.classList.remove("visible");
   filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
 }
 

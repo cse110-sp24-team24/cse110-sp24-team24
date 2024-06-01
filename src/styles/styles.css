@@ -139,20 +139,23 @@ body {
 
 #filter-dropdown-container {
   position: absolute;
-  top: 100%;
-  left: 0;
+  top: 20%;
+  left: 19%;
   background-color: #2a2a40;
   border: 1px solid #444;
   border-radius: 0.5rem;
-  width: 100%;
+  width: 70%;
   max-height: 150px;
   overflow-y: auto;
   z-index: 1000;
-  display: none; /* Initially hidden */
 }
 
 #filter-dropdown-container.hidden {
   display: none;
+}
+
+#filter-dropdown-container.visible {
+  display: block;
 }
 
 #filter-dropdown-list {
