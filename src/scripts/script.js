@@ -33,6 +33,16 @@ const filterDropdownContainer = document.getElementById(
   "filter-dropdown-container"
 );
 const filterDropdownList = document.getElementById("filter-dropdown-list");
+const tagColorButton = document.getElementById('tag-color');
+
+// Event listener for tag color 
+tagColorButton.addEventListener("change", (event) =>
+      {
+        console.log(noteTags.style.backgroundColor); // fine
+        console.log(event.target.value);
+        noteTags.style.backgroundColor = event.target.value;
+      });
+
 
 // Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
@@ -57,6 +67,7 @@ boldButton.addEventListener("click", function () {
 //Event Listener for clicking the create tag button
 tagCreateButton.addEventListener("click", addTag);
 
+//Event Listener for clicking tag dropdown button
 tagDropdownButton.addEventListener("click", () => {
   if (tagDropdownContainer.classList.contains("hidden")) {
     showTagDropdown();
@@ -292,6 +303,11 @@ function addTag() {
 
       // Set the list item's content to the input's value
       newTag.textContent = tagText;
+
+      // Set background COLOR
+      newTag.style.background = noteTags.style.backgroundColor;
+      // Clear color of input box for tags
+      noteTags.style.backgroundColor = "";
 
       // Add the list item to the list
       tagList.appendChild(newTag);

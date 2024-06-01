@@ -10,7 +10,7 @@
     <!-- Links the external CSS stylesheet for styling the webpage -->
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
-  <body>
+  <body> 
     <!-- Sidebar with navigation buttons -->
     <div class="sidebar">
       <button id="homeButton" aria-label="Home">🏠 Home</button>
@@ -66,11 +66,17 @@
         <label for="noteDate">Date</label>
         <input type="date" id="noteDate" aria-label="Note Date" />
 
-        <label for="noteTags">Tags</label>
-        <!-- Button for tag color change-->
-        <button id="tag-color" aria-label="Button 1">color</button>
+        <!-- Tag color picker -->
+        <label>Choose a tag color:</label>
+        <select name="tag-color" id="tag-color">
+          <option value="red">Red</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+        </select>
 
-        <input
+          <input
           type="text"
           id="noteTags"
           placeholder="create tag"
@@ -134,7 +140,7 @@
         </button>
       </div>
     </div>
-
+        
     <script src="./scripts/script.js"></script>
   </body>
 </html>

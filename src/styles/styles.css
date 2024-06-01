@@ -359,7 +359,7 @@ body {
 }
 /* Tag input styling */
 #noteTags {
-  width: 60%;
+  width: 100%;
 }
 
 /* Tag add button styling */
@@ -377,7 +377,7 @@ body {
 }
 /* Tag color change styling*/
 #tag-color {
-  width: 5%;
+  width: 15%;
 }
 
 /* Tag storage styling */
