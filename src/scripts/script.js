@@ -2,10 +2,19 @@ let notes = [
   {
     title: "",
     content: "",
-    tags: [],
+    tags: {
+      content: "",
+      color: "",
+    },
     date: new Date().toISOString().substring(0, 10),
   },
 ]; // Array to store notes for displaying (can factor in notes storage later)
+let tags = [
+  {
+    content: "",
+    color: "",
+  },
+];
 let editingNoteIndex = null; // Index of the note currently being edited
 
 // Get DOM elements
@@ -139,7 +148,12 @@ function showNoteEditor(
   note = {
     title: "",
     content: "",
-    tags: [],
+    tags: [
+      {
+        content: "",
+        color: "",
+      },
+    ],
     date: new Date().toISOString().substring(0, 10),
   },
   index = null
@@ -155,12 +169,16 @@ function showNoteEditor(
   // grab the prevoiusly added tags and repopulate if you are editing a note with tags already
   for (let tag of note.tags) {
     const tagItem = document.createElement("li");
-    tagItem.textContent = tag;
+    tagItem.textContent = tag.content;
+    tagItem.style.backgroundColor = tag.color;
+    // tag.content, tag.color
 
     const removeButton = document.createElement("button");
     removeButton.className = "remove-tag-button";
     removeButton.innerHTML = "&#10005;"; // Unicode for "X"
-    removeButton.addEventListener("click", () => removeTag(tagItem, tag));
+    removeButton.addEventListener("click", () =>
+      removeTag(tagItem, tag.content)
+    );
 
     tagItem.appendChild(removeButton);
     tagList.appendChild(tagItem);
@@ -226,9 +244,12 @@ function applyStyle(style) {
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
-  const tags = Array.from(tagList.getElementsByTagName("li")).map((li) =>
-    li.childNodes[0].textContent.trim()
-  );
+  const tags = Array.from(tagList.getElementsByTagName("li")).map((li) => {
+    return {
+      content: li.childNodes[0].textContent.trim(),
+      color: li.style.backgroundColor,
+    };
+  });
   const date = noteDate.value;
 
   /*
@@ -299,10 +320,11 @@ function deleteNote() {
  */
 function addTag() {
   const tagText = noteTags.value.trim();
+  const tagColor = noteTags.style.backgroundColor;
   if (tagText === "") {
     alert("Tag input cannot be empty if you want to add a tag.");
   } else {
-    let tags = JSON.parse(localStorage.getItem("tags")) || [];
+    tags = JSON.parse(localStorage.getItem("tags")) || [];
     if (!tags.includes(tagText)) {
       // Add event listener to the add button
       const newTag = document.createElement("li");
@@ -311,7 +333,7 @@ function addTag() {
       newTag.textContent = tagText;
 
       // Set background COLOR
-      newTag.style.background = noteTags.style.backgroundColor;
+      newTag.style.backgroundColor = tagColor;
 
       // Clear color of input box for tags
       noteTags.style.backgroundColor = "";
@@ -333,7 +355,7 @@ function addTag() {
         notes[editingNoteIndex].tags.push(tagText);
       }
 
-      tags.push(tagText);
+      tags.push({ content: tagText, color: tagColor });
       localStorage.setItem("tags", JSON.stringify(tags));
     }
 
@@ -351,7 +373,9 @@ function removeTag(tagElement, tagText) {
 
   // Remove the tag from the tags array of the currently edited note
   if (editingNoteIndex !== null) {
-    const tagIndex = notes[editingNoteIndex].tags.indexOf(tagText);
+    const tagIndex = notes[editingNoteIndex].tags.findIndex(
+      (tag) => tag.content === tagText
+    );
     if (tagIndex > -1) {
       notes[editingNoteIndex].tags.splice(tagIndex, 1);
     }
@@ -373,21 +397,34 @@ function hideTagDropdown() {
 }
 
 function loadTags() {
-  const tagsString = localStorage.getItem("tags");
-  const tagsArray = JSON.parse(tagsString) || [];
+  tags = JSON.parse(localStorage.getItem("tags"));
+  console.log(tags);
   tagDropdownList.innerHTML = ""; // Clear existing items
 
-  tagsArray.forEach((tag) => {
+  tags.forEach((tag) => {
     const tagItem = document.createElement("li");
-    tagItem.textContent = tag;
+    tagItem.textContent = tag.content;
+    tagItem.backgroundColor = tag.color;
     tagItem.addEventListener("click", () => addTagFromDropdown(tag));
     tagDropdownList.appendChild(tagItem);
   });
 }
 
 function addTagFromDropdown(tag) {
+  const currNote = notes[editingNoteIndex];
+  console.log(tag);
+  console.log(currNote);
+  if (currNote) {
+    currNote.tags.forEach((currTag) => {
+      if (currTag.content === tag.content) {
+        return;
+      }
+    });
+  }
+
   const tagItem = document.createElement("li");
-  tagItem.textContent = tag;
+  tagItem.textContent = tag.content;
+  tagItem.backgroundColor = tag.color;
   tagList.appendChild(tagItem);
 
   if (editingNoteIndex !== null) {
@@ -409,57 +446,19 @@ function addTagFromDropdown(tag) {
  * @param {list} filteredtextNotes
  */
 
-function renderNotes(
-  filteredtitleNotes = notes,
-  filteredtagNotes = [],
-  filteredtextNotes = []
-) {
+function renderNotes(filteredNotes = notes) {
   notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
-
-  filteredtitleNotes.forEach((note, index) => {
+  filteredNotes.forEach((note, index) => {
     const noteElement = document.createElement("div");
     noteElement.className = "note";
+
     noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
         <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
       </div>
       <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags}</small>
-    `;
-    noteElement.addEventListener("click", () => {
-      showNoteEditor(note, index); // Edit note on click
-    });
-    notesContainer.appendChild(noteElement);
-  });
-
-  filteredtagNotes.forEach((note, index) => {
-    const noteElement = document.createElement("div");
-    noteElement.className = "note";
-    noteElement.innerHTML = `
-      <div class="note-header">
-        <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
-      </div>
-      <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags}</small>
-    `;
-    noteElement.addEventListener("click", () => {
-      showNoteEditor(note, index); // Edit note on click
-    });
-    notesContainer.appendChild(noteElement);
-  });
-
-  filteredtextNotes.forEach((note, index) => {
-    const noteElement = document.createElement("div");
-    noteElement.className = "note";
-    noteElement.innerHTML = `
-      <div class="note-header">
-        <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
-      </div>
-      <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags}</small>
+      <small>${note.date} - Tags: ${note.tags.map((tag) => tag.content).join(", ")}</small>
     `;
     noteElement.addEventListener("click", () => {
       showNoteEditor(note, index); // Edit note on click
@@ -502,21 +501,23 @@ function hideFilterDropdown() {
 
 // Load tags from localStorage and populate the filter dropdown
 function loadFilterTags() {
-  const tagsString = localStorage.getItem("tags");
-  const tagsArray = JSON.parse(tagsString) || [];
+  tags = JSON.parse(localStorage.getItem("tags"));
   filterDropdownList.innerHTML = ""; // Clear existing items
 
-  tagsArray.forEach((tag) => {
+  tags.forEach((tag) => {
     const tagItem = document.createElement("li");
-    tagItem.textContent = tag;
-    tagItem.addEventListener("click", () => filterNotesByTag(tag));
+    tagItem.textContent = tag.content;
+    tagItem.backgroundColor = tag.color;
+    tagItem.addEventListener("click", () => filterNotesByTag(tag.content));
     filterDropdownList.appendChild(tagItem);
   });
 }
 
 // Filter notes by the selected tag
 function filterNotesByTag(selectedTag) {
-  const filteredNotes = notes.filter((note) => note.tags.includes(selectedTag));
+  const filteredNotes = notes.filter((note) =>
+    note.tags.some((tag) => tag.content === selectedTag)
+  );
   renderNotes(filteredNotes);
   hideFilterDropdown();
 }
