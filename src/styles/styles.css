@@ -398,6 +398,22 @@ body {
   background-color: #1e1e2f;
   color: #e5e5e5;
   font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#tag-list li .remove-tag-button {
+  background: none;
+  border: none;
+  color: #e5e5e5;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#tag-list li .remove-tag-button:hover {
+  color: #ff0000;
 }
 
 #tag-dropdown-container {

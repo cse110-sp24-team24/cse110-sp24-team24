@@ -147,16 +147,24 @@ function showNoteEditor(
   editingNoteIndex = index;
   noteTitle.value = note.title;
   noteContent.innerHTML = note.content;
+  noteDate.value = note.date;
+  noteEditor.classList.remove("hidden"); // Show the note editor
   //noteTags.innerHTML = note.tags;
+  tagList.innerHTML = "";
 
   // grab the prevoiusly added tags and repopulate if you are editing a note with tags already
   for (let tag of note.tags) {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag;
+
+    const removeButton = document.createElement("button");
+    removeButton.className = "remove-tag-button";
+    removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+    removeButton.addEventListener("click", () => removeTag(tagItem, tag));
+
+    tagItem.appendChild(removeButton);
     tagList.appendChild(tagItem);
   }
-  noteDate.value = note.date;
-  noteEditor.classList.remove("hidden"); // Show the note editor
 }
 
 // Hide note editor and clear note editor fields
@@ -218,8 +226,8 @@ function applyStyle(style) {
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
-  const tags = Array.from(tagList.getElementsByTagName("li")).map(
-    (li) => li.textContent
+  const tags = Array.from(tagList.getElementsByTagName("li")).map((li) =>
+    li.childNodes[0].textContent.trim()
   );
   const date = noteDate.value;
 
@@ -304,11 +312,22 @@ function addTag() {
 
       // Set background COLOR
       newTag.style.background = noteTags.style.backgroundColor;
+
       // Clear color of input box for tags
       noteTags.style.backgroundColor = "";
 
+      // Create a remove button to remove the tag
+      const removeButton = document.createElement("button");
+      removeButton.className = "remove-tag-button";
+      removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+      removeButton.addEventListener("click", () => removeTag(newTag, tagText));
+
+      // Add the button to the tag list item
+      newTag.appendChild(removeButton);
+
       // Add the list item to the list
       tagList.appendChild(newTag);
+
       // Add the new tag to the tags array of the currently edited note
       if (editingNoteIndex !== null) {
         notes[editingNoteIndex].tags.push(tagText);
@@ -323,6 +342,22 @@ function addTag() {
 
     // Clear the input
     noteTags.value = "";
+  }
+}
+
+function removeTag(tagElement, tagText) {
+  // Remove the tag element from the DOM
+  tagElement.remove();
+
+  // Remove the tag from the tags array of the currently edited note
+  if (editingNoteIndex !== null) {
+    const tagIndex = notes[editingNoteIndex].tags.indexOf(tagText);
+    if (tagIndex > -1) {
+      notes[editingNoteIndex].tags.splice(tagIndex, 1);
+    }
+
+    // Save the updated notes
+    localStorage.setItem("notes", JSON.stringify(notes));
   }
 }
 
