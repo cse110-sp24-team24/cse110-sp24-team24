@@ -36,6 +36,8 @@ function initializeNoteApp() {
   window.onload = loadNotes;
 }
 
+initializeNoteApp();
+
 noteContent.addEventListener("keydown", (event) => {
   console.log(document.activeElement.id);
   if (event.key.toLowerCase() == "tab") {
@@ -54,6 +56,7 @@ noteContent.addEventListener("keydown", (event) => {
     tabSel.addRange(tabRange);
   }
 });
+
 
 // clears notes array (for testing)
 function clearNotes(){
