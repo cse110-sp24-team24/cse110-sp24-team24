@@ -330,7 +330,7 @@ function addTag() {
     return;
   }
 
-  if (tags.some((tag) => tag.content === tagText)) {
+  if (tags.some((tag) => tag.content === tagText && tag.color === tagColor)) {
     alert("Cannot add duplicate tag.");
     return;
   }
@@ -415,7 +415,7 @@ function loadTags() {
   tags.forEach((tag) => {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag.content;
-    tagItem.style.backgroundColor = tag.color; 
+    tagItem.style.backgroundColor = tag.color;
     tagItem.addEventListener("click", () => addTagFromDropdown(tag));
     tagDropdownList.appendChild(tagItem);
   });
@@ -435,7 +435,9 @@ function addTagFromDropdown(tag) {
 
   if (
     Array.from(tagList.getElementsByTagName("li")).some(
-      (li) => li.childNodes[0].textContent.trim() === tag.content
+      (li) =>
+        li.childNodes[0].textContent.trim() === tag.content &&
+        li.style.backgroundColor === tag.color
     )
   ) {
     alert("Cannot add duplicate tag.");
