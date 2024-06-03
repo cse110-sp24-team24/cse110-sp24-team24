@@ -302,6 +302,15 @@ body {
   font-size: 1.4rem;
 }
 
+div:has(> pre > code) {
+  display: block;
+  background-color: black;
+}
+
+pre code {
+  font-family: "Courier New", Courier, monospace;
+}
+
 #noteTitle {
   font-size: 2rem;
 }

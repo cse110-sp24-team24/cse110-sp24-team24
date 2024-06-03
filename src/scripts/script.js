@@ -16,6 +16,7 @@ const notesContainer = document.getElementById("notesContainer");
 const underlineButton = document.getElementById("makeUnderlineButton");
 const italicButton = document.getElementById("makeItalicButton");
 const boldButton = document.getElementById("makeBoldButton");
+const insertCodeButton = document.getElementById("insertCodeBlockButton");
 
 // Event listeners for adding, deleting and filtering notes
 addNoteButton.addEventListener("click", () => {
@@ -35,6 +36,28 @@ italicButton.addEventListener("click", function () {
 });
 boldButton.addEventListener("click", function () {
   applyStyle("bold");
+});
+insertCodeButton.addEventListener("click", function () {
+  insertCode();
+});
+
+noteContent.addEventListener("keydown", (event) => {
+  console.log(document.activeElement.id);
+  if (event.key.toLowerCase() == "tab") {
+    console.log("tab pressed");
+    event.preventDefault();
+    const tabSel = window.getSelection();
+    const tabRange = tabSel.getRangeAt(0);
+
+    const tabNode = document.createTextNode("\t");
+
+    tabRange.insertNode(tabNode);
+
+    tabRange.setStartAfter(tabNode);
+    tabRange.setEndAfter(tabNode);
+    tabSel.removeAllRanges();
+    tabSel.addRange(tabRange);
+  }
 });
 
 // Call loadNotes when the page is loaded
@@ -96,34 +119,59 @@ function clearNoteEditor() {
 /* text styling buttons
  * @param {string} style
  */
-
 function applyStyle(style) {
   //depreciated method to toggle text styling
   document.execCommand(style, false, null);
-  /* directly apply html tags (doesn't work) keeping for reference in case
-  console.log('clicked');
-  const start = noteContent.selectionStart;
-  const end = noteContent.selectionEnd;
-  const selectedText = noteContent.innerHTML.substring(start, end);
-  console.log(selectedText);
-  let styledText;
-  switch(style) {
-    case 'underline':
-      styledText = `<u>${selectedText}</u>`;
-      break;
-    case 'italic':
-      styledText = `<i>${selectedText}</i>`;
-      break;
-    case 'bold':
-      styledText = `<b>${selectedText}</b>`;
-      break;
-    default:
-      styledText = selectedText;
-  }
-  //noteContent.setRangeText(styledText, start, end);*/
-
   //refocus on content editor
   noteContent.focus();
+}
+
+// called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
+function insertCode() {
+  // create code block element
+  const codeContainer = document.createElement("div");
+  codeContainer.className = "codeBlock";
+  const codeBlock = document.createElement("pre");
+  const codeEl = document.createElement("code");
+  codeEl.contentEditable = "true";
+  codeEl.innerText = "// write code here...";
+  codeBlock.append(codeEl);
+  codeContainer.append(codeBlock);
+  /* 
+  codeEl.addEventListener("keydown", (event) => {
+    if (event.key.toLowerCase() == "tab") {
+      console.log("tab pressed");
+      event.preventDefault();
+      const tabSel = window.getSelection();
+      const tabRange = tabSel.getRangeAt(0);
+  
+      const tabNode = document.createTextNode("\t");
+  
+      tabRange.insertNode(tabNode);
+  
+      tabRange.setStartAfter(tabNode);
+      tabRange.setEndAfter(tabNode);
+      tabSel.removeAllRanges();
+      tabSel.addRange(tabRange);
+    }
+  });*/
+
+  //zerowidthspace so that user can continue typing after code block
+  const zeroWidthSpace = document.createTextNode("\u200B");
+
+  //insert code block and select into code block
+  const sel = window.getSelection();
+  if (sel.rangeCount > 0) {
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(codeContainer);
+    range.collapse(false);
+    range.insertNode(zeroWidthSpace);
+    range.setStart(codeEl, 0);
+    range.setEnd(codeEl, 0);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
 }
 
 /* Save note values from note editor text input areas into a note object,
