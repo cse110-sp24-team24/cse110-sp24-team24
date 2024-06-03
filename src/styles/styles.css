@@ -358,11 +358,11 @@ body {
 
 /* Date input styling */
 #noteDate {
-  width: 40%;
+  width: 30%;
 }
 /* Tag input styling */
 #noteTags {
-  width: 60%;
+  width: 30%;
 }
 
 /* Tag add button styling */
