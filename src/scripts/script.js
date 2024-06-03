@@ -377,6 +377,10 @@ function addTag() {
   // Clear the input
   noteTags.value = "";
   noteTags.style.backgroundColor = "";
+  
+  /** reset tag color choice */
+  const resetTagColor = document.querySelector("form");
+  resetTagColor.reset(); 
 }
 
 function removeTag(tagElement, tagText) {

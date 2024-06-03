@@ -67,8 +67,9 @@
         <input type="date" id="noteDate" aria-label="Note Date" />
 
         <!-- Tag color picker -->
-        <label>Choose a tag color:</label>
-        <select name="tag-color" id="tag-color">
+        <form>
+        <select required name="tag-color" id="tag-color">
+          <option value="" disable selected hidden>Choose a tag color</option>
           <option value="">Default</option>
           <option value="red">Red</option>
           <option value="orange">Orange</option>
@@ -76,7 +77,8 @@
           <option value="green">Green</option>
           <option value="blue">Blue</option>
         </select>
-
+        </form>
+        
         <input
           type="text"
           id="noteTags"
