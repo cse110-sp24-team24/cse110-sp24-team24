@@ -343,9 +343,6 @@ function addTag() {
   // Set background COLOR
   newTag.style.backgroundColor = tagColor;
 
-  // Clear color of input box for tags
-  // noteTags.style.backgroundColor = "";
-
   // Create a remove button to remove the tag
   const removeButton = document.createElement("button");
   removeButton.className = "remove-tag-button";
@@ -376,6 +373,7 @@ function addTag() {
 
   // Clear the input
   noteTags.value = "";
+  // Clear color of input box for tags
   noteTags.style.backgroundColor = "";
 }
 
@@ -445,7 +443,7 @@ function addTagFromDropdown(tag) {
   }
   const tagItem = document.createElement("li");
   tagItem.textContent = tag.content;
-  tagItem.backgroundColor = tag.color;
+  tagItem.style.backgroundColor = tag.color;
 
   // Create a remove button to remove the tag
   const removeButton = document.createElement("button");
@@ -542,7 +540,7 @@ function loadFilterTags() {
   tags.forEach((tag) => {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag.content;
-    tagItem.backgroundColor = tag.color;
+    tagItem.style.backgroundColor = tag.color;
     tagItem.addEventListener("click", () => filterNotesByTag(tag.content));
     filterDropdownList.appendChild(tagItem);
   });
