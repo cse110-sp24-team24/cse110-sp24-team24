@@ -271,7 +271,7 @@ function renderNotes(
         <h2>${note.title}</h2>
         <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
       </div>
-      <small>${note.date} - Tags: ${note.tags}</small>
+      <small>Date: ${note.date} &nbsp &nbsp Tags: ${note.tags}</small>
     `;
     noteElement.addEventListener("click", () => {
       showNoteEditor(note, index);
