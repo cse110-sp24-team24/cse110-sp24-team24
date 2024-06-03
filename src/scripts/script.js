@@ -1,43 +1,40 @@
 let notes = []; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
 
-// Get DOM elements
-const addNoteButton = document.getElementById("addNoteButton");
-const saveNoteButton = document.getElementById("saveNoteButton");
-const deleteNoteButton = document.getElementById("deleteNoteButton");
-const cancelButton = document.getElementById("cancelButton");
-const searchInput = document.getElementById("searchInput");
-const noteEditor = document.getElementById("noteEditor");
-const noteTitle = document.getElementById("noteTitle");
-const noteContent = document.getElementById("noteContent");
-const noteTags = document.getElementById("noteTags");
-const noteDate = document.getElementById("noteDate");
-const notesContainer = document.getElementById("notesContainer");
-const underlineButton = document.getElementById("makeUnderlineButton");
-const italicButton = document.getElementById("makeItalicButton");
-const boldButton = document.getElementById("makeBoldButton");
-const insertCodeButton = document.getElementById("insertCodeBlockButton");
+function initializeNoteApp() {
+  // Get DOM elements
+  const addNoteButton = document.getElementById("addNoteButton");
+  const saveNoteButton = document.getElementById("saveNoteButton");
+  const deleteNoteButton = document.getElementById("deleteNoteButton");
+  const cancelButton = document.getElementById("cancelButton");
+  const searchInput = document.getElementById("searchInput");
+  const noteEditor = document.getElementById("noteEditor");
+  const noteTitle = document.getElementById("noteTitle");
+  const noteContent = document.getElementById("noteContent");
+  const noteTags = document.getElementById("noteTags");
+  const noteDate = document.getElementById("noteDate");
+  const notesContainer = document.getElementById("notesContainer");
+  const underlineButton = document.getElementById("makeUnderlineButton");
+  const italicButton = document.getElementById("makeItalicButton");
+  const boldButton = document.getElementById("makeBoldButton");
+  const insertCodeButton = document.getElementById("insertCodeBlockButton");
 
-// Event listeners for adding, deleting and filtering notes
-addNoteButton.addEventListener("click", showNoteEditor);
-saveNoteButton.addEventListener("click", saveNote);
-deleteNoteButton.addEventListener("click", deleteNote);
-cancelButton.addEventListener("click", hideNoteEditor);
-searchInput.addEventListener("input", filterNotes);
+  // Event listeners for adding, deleting and filtering notes
+  addNoteButton.addEventListener("click", showNoteEditor);
+  saveNoteButton.addEventListener("click", saveNote);
+  deleteNoteButton.addEventListener("click", deleteNote);
+  cancelButton.addEventListener("click", hideNoteEditor);
+  searchInput.addEventListener("input", filterNotes);
 
-// Event listeners for changing text styles within note editor
-underlineButton.addEventListener("click", function () {
-  applyStyle("underline");
-});
-italicButton.addEventListener("click", function () {
-  applyStyle("italic");
-});
-boldButton.addEventListener("click", function () {
-  applyStyle("bold");
-});
-insertCodeButton.addEventListener("click", function () {
-  insertCode();
-});
+  // Event listeners for changing text styles within note editor
+  underlineButton.addEventListener("click", () => applyStyle("underline"));
+  italicButton.addEventListener("click", () => applyStyle("italic"));
+  boldButton.addEventListener("click", () => applyStyle("bold"));
+  insertCodeButton.addEventListener("click", insertCode);
+
+  // Call loadNotes when the page is loaded
+  window.onload = loadNotes;
+}
 
 noteContent.addEventListener("keydown", (event) => {
   console.log(document.activeElement.id);
@@ -58,8 +55,15 @@ noteContent.addEventListener("keydown", (event) => {
   }
 });
 
-// Call loadNotes when the page is loaded
-window.onload = loadNotes;
+// clears notes array (for testing)
+function clearNotes(){
+  notes = [];
+}
+
+//returns notes array (for testing)
+function getNotes(){
+  return notes;
+}
 
 // Function to be called when the page is loaded
 function loadNotes() {
@@ -307,3 +311,18 @@ function filterNotes() {
   // Render filtered notes
   renderNotes(filteredtitleNotes, filteredtagNotes, filteredtextNotes);
 }
+
+// Export functions and variables for testing
+module.exports = {
+  initializeNoteApp,
+  loadNotes,
+  saveNote,
+  deleteNote,
+  showNoteEditor,
+  hideNoteEditor,
+  clearNoteEditor,
+  filterNotes,
+  renderNotes,
+  clearNotes,
+  getNotes,
+};
