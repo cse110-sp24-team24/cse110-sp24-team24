@@ -99,10 +99,10 @@ function showNoteEditor(
   index = null
 ) {
   editingNoteIndex = index;
-  noteTitle.value = note.title;
-  noteContent.innerHTML = note.content;
-  noteTags.value = note.tags;
-  noteDate.value = note.date;
+  noteTitle.value = note.title || "";
+  noteContent.innerHTML = note.content || "";
+  noteTags.value = note.tags || "";
+  noteDate.value = note.date || new Date().toISOString().substring(0, 10);
   noteEditor.classList.remove("hidden"); // Show the note editor
 }
 
