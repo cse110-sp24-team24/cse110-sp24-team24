@@ -1,29 +1,23 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Specifies the character encoding for the HTML document -->
     <meta charset="UTF-8" />
-    <!-- Sets the viewport to make the website responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Sets the title of the webpage -->
+    <meta name="description" content="Dev Journal - Your Personal Developer Notebook" />
+    <meta name="keywords" content="Dev Journal, Developer Notebook, Notes, Journal" />
     <title>Dev Journal</title>
-    <!-- Links the external CSS stylesheet for styling the webpage -->
     <link rel="stylesheet" href="./styles/styles.css" />
   </head>
   <body>
-    <!-- Sidebar with navigation buttons -->
-    <div class="sidebar">
+    <nav class="sidebar" role="navigation">
       <button id="homeButton" aria-label="Home">🏠 Home</button>
       <button id="addNoteButton" aria-label="Add Note">➕ Add Note</button>
-    </div>
-    <!-- Main content area -->
-    <div class="main-content">
-      <!-- Header with the title of the webpage -->
+    </nav>
+    <main class="main-content">
       <header class="header-title">
         <h1>Dev Journal</h1>
         <p>Your Personal Developer Notebook</p>
       </header>
-      <!-- Search bar for searching notes -->
       <div class="search-bar">
         <input
           type="text"
@@ -32,22 +26,19 @@
           aria-label="Search"
         />
       </div>
-      <!-- Container for displaying notes -->
-      <div id="notesContainer">
+
+      <section id="notesContainer">
         <h2>Your Journals:</h2>
         <!-- Notes will be dynamically inserted here -->
-      </div>
-    </div>
-    <div id="noteEditor" class="hidden">
-      <!-- Toolbar with options for saving, deleting, or canceling a note -->
+      </section>
+    </main>
+
+    <section id="noteEditor" class="hidden" aria-hidden="true">
       <div class="editor-toolbar">
         <button id="saveNoteButton" aria-label="Save Note">💾 Save</button>
-        <button id="deleteNoteButton" aria-label="Delete Note">
-          🗑️ Delete
-        </button>
+        <button id="deleteNoteButton" aria-label="Delete Note">🗑️ Delete</button>
         <button id="cancelButton" aria-label="Cancel">❌ Cancel</button>
       </div>
-      <!-- Input fields for the note's title, date, content, and tags -->
       <label for="noteTitle">Title</label>
       <input
         type="text"
@@ -55,11 +46,9 @@
         placeholder="Title"
         aria-label="Note Title"
       />
-
       <div id="date-tags-container">
         <label for="noteDate">Date</label>
         <input type="date" id="noteDate" aria-label="Note Date" />
-
         <label for="noteTags">Tags</label>
         <input
           type="text"
@@ -68,7 +57,6 @@
           aria-label="Note Tags"
         />
       </div>
-
       <div id="contentContainer">
         <label for="noteContent">Content</label>
         <div
@@ -78,8 +66,6 @@
           aria-label="Note Content"
         ></div>
       </div>
-
-      <!-- Floating toolbar for formatting tools -->
       <div id="floatingToolbar" class="editor-options">
         <button
           id="makeUnderlineButton"
@@ -94,7 +80,7 @@
         <button id="makeBoldButton" aria-label="Bold" title="Bold">
           <b>B</b>
         </button>
-        <button
+        <!-- <button
           id="insertImageButton"
           aria-label="Insert Image"
           title="Insert Image"
@@ -107,17 +93,17 @@
           title="Insert Video"
         >
           📹
-        </button>
+        </button> -->
         <button
           id="insertCodeBlockButton"
           aria-label="Insert Code Block"
           title="Insert Code Block"
         >
-          🖥️
+          >_
         </button>
       </div>
-    </div>
-
+    </section>
+    
     <script src="./scripts/script.js"></script>
   </body>
 </html>
