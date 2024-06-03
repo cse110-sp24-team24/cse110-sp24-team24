@@ -15,6 +15,8 @@ let tags = [
     color: "",
   },
 ];
+notes = JSON.parse(localStorage.getItem("notes")) || [];
+tags = JSON.parse(localStorage.getItem("tags")) || [];
 let editingNoteIndex = null; // Index of the note currently being edited
 
 // Get DOM elements
@@ -323,48 +325,54 @@ function addTag() {
   const tagColor = noteTags.style.backgroundColor;
   if (tagText === "") {
     alert("Tag input cannot be empty if you want to add a tag.");
-  } else {
-    tags = JSON.parse(localStorage.getItem("tags")) || [];
-    if (!tags.includes(tagText)) {
-      // Add event listener to the add button
-      const newTag = document.createElement("li");
-
-      // Set the list item's content to the input's value
-      newTag.textContent = tagText;
-
-      // Set background COLOR
-      newTag.style.backgroundColor = tagColor;
-
-      // Clear color of input box for tags
-      noteTags.style.backgroundColor = "";
-
-      // Create a remove button to remove the tag
-      const removeButton = document.createElement("button");
-      removeButton.className = "remove-tag-button";
-      removeButton.innerHTML = "&#10005;"; // Unicode for "X"
-      removeButton.addEventListener("click", () => removeTag(newTag, tagText));
-
-      // Add the button to the tag list item
-      newTag.appendChild(removeButton);
-
-      // Add the list item to the list
-      tagList.appendChild(newTag);
-
-      // Add the new tag to the tags array of the currently edited note
-      if (editingNoteIndex !== null) {
-        notes[editingNoteIndex].tags.push(tagText);
-      }
-
-      tags.push({ content: tagText, color: tagColor });
-      localStorage.setItem("tags", JSON.stringify(tags));
-    }
-
-    // Save the tags
-    localStorage.setItem("notes", JSON.stringify(notes));
-
-    // Clear the input
-    noteTags.value = "";
+    return;
   }
+
+  if (tags.some((tag) => tag.content === tagText)) {
+    alert("Cannot add duplicate tag.");
+    return;
+  }
+  // Add event listener to the add button
+  const newTag = document.createElement("li");
+
+  // Set the list item's content to the input's value
+  newTag.textContent = tagText;
+
+  // Set background COLOR
+  newTag.style.backgroundColor = tagColor;
+
+  // Clear color of input box for tags
+  // noteTags.style.backgroundColor = "";
+
+  // Create a remove button to remove the tag
+  const removeButton = document.createElement("button");
+  removeButton.className = "remove-tag-button";
+  removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+  removeButton.addEventListener("click", () => removeTag(newTag, tagText));
+
+  // Add the button to the tag list item
+  newTag.appendChild(removeButton);
+
+  // Add the list item to the list
+  tagList.appendChild(newTag);
+
+  // Add the new tag to the tags array of the currently edited note
+  if (editingNoteIndex !== null) {
+    notes[editingNoteIndex].tags.push({
+      content: tagText,
+      color: tagColor,
+    });
+  }
+
+  tags.push({ content: tagText, color: tagColor });
+  localStorage.setItem("tags", JSON.stringify(tags));
+
+  // Save the tags
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+  // Clear the input
+  noteTags.value = "";
+  noteTags.style.backgroundColor = "";
 }
 
 function removeTag(tagElement, tagText) {
@@ -397,7 +405,6 @@ function hideTagDropdown() {
 }
 
 function loadTags() {
-  tags = JSON.parse(localStorage.getItem("tags"));
   console.log(tags);
   tagDropdownList.innerHTML = ""; // Clear existing items
 
@@ -422,13 +429,35 @@ function addTagFromDropdown(tag) {
     });
   }
 
+  if (
+    Array.from(tagList.getElementsByTagName("li")).some(
+      (li) => li.childNodes[0].textContent.trim() === tag.content
+    )
+  ) {
+    alert("Cannot add duplicate tag.");
+    return;
+  }
   const tagItem = document.createElement("li");
   tagItem.textContent = tag.content;
   tagItem.backgroundColor = tag.color;
+
+  // Create a remove button to remove the tag
+  const removeButton = document.createElement("button");
+  removeButton.className = "remove-tag-button";
+  removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+  removeButton.addEventListener("click", () =>
+    removeTag(tagItem, tagItem.textContent)
+  );
+
+  // Add the button to the tag list item
+  tagItem.appendChild(removeButton);
   tagList.appendChild(tagItem);
 
   if (editingNoteIndex !== null) {
-    notes[editingNoteIndex].tags.push(tag);
+    notes[editingNoteIndex].tags.push({
+      content: tag.content,
+      color: tag.color,
+    });
   }
 
   localStorage.setItem("notes", JSON.stringify(notes));
