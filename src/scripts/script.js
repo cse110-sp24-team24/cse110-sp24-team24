@@ -330,7 +330,7 @@ function addTag() {
     return;
   }
 
-  if (tags.some((tag) => tag.content === tagText)) {
+  if (tags.some((tag) => tag.content === tagText && tag.color === tagColor)) {
     alert("Cannot add duplicate tag.");
     return;
   }
@@ -342,9 +342,6 @@ function addTag() {
 
   // Set background COLOR
   newTag.style.backgroundColor = tagColor;
-
-  // Clear color of input box for tags
-  // noteTags.style.backgroundColor = "";
 
   // Create a remove button to remove the tag
   const removeButton = document.createElement("button");
@@ -376,6 +373,7 @@ function addTag() {
 
   // Clear the input
   noteTags.value = "";
+  // Clear color of input box for tags
   noteTags.style.backgroundColor = "";
   
   /** reset tag color choice */
@@ -419,7 +417,7 @@ function loadTags() {
   tags.forEach((tag) => {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag.content;
-    tagItem.style.backgroundColor = tag.color; 
+    tagItem.style.backgroundColor = tag.color;
     tagItem.addEventListener("click", () => addTagFromDropdown(tag));
     tagDropdownList.appendChild(tagItem);
   });
@@ -439,7 +437,9 @@ function addTagFromDropdown(tag) {
 
   if (
     Array.from(tagList.getElementsByTagName("li")).some(
-      (li) => li.childNodes[0].textContent.trim() === tag.content
+      (li) =>
+        li.childNodes[0].textContent.trim() === tag.content &&
+        li.style.backgroundColor === tag.color
     )
   ) {
     alert("Cannot add duplicate tag.");
@@ -447,7 +447,7 @@ function addTagFromDropdown(tag) {
   }
   const tagItem = document.createElement("li");
   tagItem.textContent = tag.content;
-  tagItem.backgroundColor = tag.color;
+  tagItem.style.backgroundColor = tag.color;
 
   // Create a remove button to remove the tag
   const removeButton = document.createElement("button");
@@ -544,7 +544,7 @@ function loadFilterTags() {
   tags.forEach((tag) => {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag.content;
-    tagItem.backgroundColor = tag.color;
+    tagItem.style.backgroundColor = tag.color;
     tagItem.addEventListener("click", () => filterNotesByTag(tag.content));
     filterDropdownList.appendChild(tagItem);
   });
