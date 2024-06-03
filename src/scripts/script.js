@@ -415,7 +415,7 @@ function loadTags() {
   tags.forEach((tag) => {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag.content;
-    tagItem.backgroundColor = tag.color;
+    tagItem.style.backgroundColor = tag.color; 
     tagItem.addEventListener("click", () => addTagFromDropdown(tag));
     tagDropdownList.appendChild(tagItem);
   });
