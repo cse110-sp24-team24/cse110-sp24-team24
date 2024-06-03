@@ -357,7 +357,8 @@ function addTag() {
 
   // Add the list item to the list
   tagList.appendChild(newTag);
-
+  //remove this because, its saving ter tags to the note, even when you hit cancel
+  /*
   // Add the new tag to the tags array of the currently edited note
   if (editingNoteIndex !== null) {
     notes[editingNoteIndex].tags.push({
@@ -365,12 +366,13 @@ function addTag() {
       color: tagColor,
     });
   }
+  */
 
   tags.push({ content: tagText, color: tagColor });
   localStorage.setItem("tags", JSON.stringify(tags));
 
   // Save the tags
-  localStorage.setItem("notes", JSON.stringify(notes));
+  //localStorage.setItem("notes", JSON.stringify(notes));
 
   // Clear the input
   noteTags.value = "";
@@ -391,7 +393,7 @@ function removeTag(tagElement, tagText) {
     }
 
     // Save the updated notes
-    localStorage.setItem("notes", JSON.stringify(notes));
+    //localStorage.setItem("notes", JSON.stringify(notes));
   }
 }
 
@@ -462,7 +464,7 @@ function addTagFromDropdown(tag) {
     });
   }
 
-  localStorage.setItem("notes", JSON.stringify(notes));
+  //localStorage.setItem("notes", JSON.stringify(notes));
   hideTagDropdown();
 }
 
