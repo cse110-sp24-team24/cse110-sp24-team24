@@ -169,22 +169,24 @@ function showNoteEditor(
   tagList.innerHTML = "";
 
   // grab the prevoiusly added tags and repopulate if you are editing a note with tags already
-  for (let tag of note.tags) {
-    const tagItem = document.createElement("li");
-    tagItem.textContent = tag.content;
-    tagItem.style.backgroundColor = tag.color;
-    // tag.content, tag.color
+  note.tags.forEach((tag) => {
+    if (tag.content.trim() !== "") {
+      const tagItem = document.createElement("li");
+      tagItem.textContent = tag.content;
+      tagItem.style.backgroundColor = tag.color;
+      // tag.content, tag.color
 
-    const removeButton = document.createElement("button");
-    removeButton.className = "remove-tag-button";
-    removeButton.innerHTML = "&#10005;"; // Unicode for "X"
-    removeButton.addEventListener("click", () =>
-      removeTag(tagItem, tag.content)
-    );
+      const removeButton = document.createElement("button");
+      removeButton.className = "remove-tag-button";
+      removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+      removeButton.addEventListener("click", () =>
+        removeTag(tagItem, tag.content)
+      );
 
-    tagItem.appendChild(removeButton);
-    tagList.appendChild(tagItem);
-  }
+      tagItem.appendChild(removeButton);
+      tagList.appendChild(tagItem);
+    }
+  });
 }
 
 // Hide note editor and clear note editor fields
