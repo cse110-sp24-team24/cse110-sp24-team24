@@ -442,8 +442,8 @@ function loadTags() {
 }
 /**
  * adds the tag fromt he drop down list and populate the tag list
- * @param {string} tag 
- * @returns 
+ * @param {string} tag
+ * @returns
  */
 function addTagFromDropdown(tag) {
   const currNote = notes[editingNoteIndex];
@@ -590,6 +590,13 @@ function filterNotesByTag(selectedTag) {
   const filteredNotes = notes.filter((note) =>
     note.tags.some((tag) => tag.content === selectedTag)
   );
-  renderNotes(filteredNotes);
+
+  if (filteredNotes.length === 0) {
+    notesContainer.innerHTML = `<h2>Your Journals:</h2>
+      <h3> There are no notes with this tag.</h3>`;
+  } else {
+    renderNotes(filteredNotes);
+  }
+
   hideFilterDropdown();
 }
