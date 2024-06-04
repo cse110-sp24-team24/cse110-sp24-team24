@@ -183,9 +183,6 @@ function clearNoteEditor() {
 }
 
 //
-/* text styling buttons
- * @param {string} style
- */
 /**
  * Given a style in the form of a string (either "bold", "underline", or "italic"), toggle text styling in the respective format
  * @param {string} style - the style indicated by which button is pressed
@@ -206,11 +203,10 @@ function applyStyle(style) {
   noteContent.focus();
 }
 
-/* text styling buttons
- * @param {string} style
+/* update the formatting to reflect the toolbar button indicators
+ * on every note content input and click
  */
 function loadStyle(){
-  console.log('hi')
   var bold = document.queryCommandState('bold');
   var italic = document.queryCommandState('italic');
   var underline = document.queryCommandState('underline');
