@@ -9,10 +9,10 @@ const __dirname = dirname(__filename);
 const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
 
 /**
- * Save the notes to local storage. 
- * @param {object[]} notes 
+ * Save the notes to file storage.
+ * @param {object} notes
  */
-async function saveNotes(notes) {
+async function updateNotesFile(notes) {
   const jsonData = JSON.stringify(notes);
   try {
     await fs.writeFile(dataPath, jsonData);
@@ -21,18 +21,18 @@ async function saveNotes(notes) {
   }
 }
 
-/** 
- * Return the notes saved in local storage.
- * @returns {object[]}
+/**
+ * Return the notes saved in file storage.
+ * @returns {object}
  */
-async function readNotes() {
-    try {
-      const data = await fs.readFile(dataPath, 'utf-8');
-      return JSON.parse(data);
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
+async function readNotesFile() {
+  try {
+    const data = await fs.readFile(dataPath, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
 }
 
-export default { saveNotes, readNotes }; //access via import fileStorage from ./fileStorage.js
+export default { updateNotesFile, readNotesFile }; //access via import fileStorage from ./fileStorage.js
