@@ -324,7 +324,11 @@ function deleteNote() {
 //     renderNotes();
 //   }
 // }
-/* Add a tag to the list
+
+/**  Adds a tag to the note tags list
+ * Tags are stored in the tags array, and are displayed in the tag list
+ * The background color is also set from reading fromt he select tag color
+ * Clear the input box of the tag, upon asdding the tag
  */
 function addTag() {
   const tagText = noteTags.value.trim();
@@ -402,18 +406,26 @@ function removeTag(tagElement, tagText) {
     //localStorage.setItem("notes", JSON.stringify(notes));
   }
 }
-
+/**
+ * Shows the tag dropdown
+ * upon clicking the arrow button changes the icon to up arrow
+ */
 function showTagDropdown() {
   tagDropdownContainer.classList.remove("hidden");
   tagDropdownButton.innerHTML = "&#9652;"; // Change icon to up arrow
   loadTags();
 }
-
+/**
+ * Hides the tag dropdown
+ * Upon clicking the arrow button changes the icon to down arrow
+ */
 function hideTagDropdown() {
   tagDropdownContainer.classList.add("hidden");
   tagDropdownButton.innerHTML = "&#9662;"; // Change icon to down arrow
 }
-
+/**
+ * Load tags from local storage and populate the tag dropdown
+ */
 function loadTags() {
   console.log(tags);
   tagDropdownList.innerHTML = ""; // Clear existing items
@@ -426,7 +438,11 @@ function loadTags() {
     tagDropdownList.appendChild(tagItem);
   });
 }
-
+/**
+ * adds the tag fromt he drop down list and populate the tag list
+ * @param {string} tag 
+ * @returns 
+ */
 function addTagFromDropdown(tag) {
   const currNote = notes[editingNoteIndex];
   console.log(tag);
