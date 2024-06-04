@@ -57,21 +57,50 @@ function styleToggle(button){
 initializeNoteApp();
 
 noteContent.addEventListener("keydown", (event) => {
-  console.log(document.activeElement.id);
-  if (event.key.toLowerCase() == "tab") {
-    console.log("tab pressed");
+  // if the selection is inside a code block, get the code block the section is in
+  let selectedInCodeBlock = getClosestAncestorEl(".codeBlock");
+
+  // if the tab key press occurs inside of a codeblock, the tab will replace the tab navigation functionality and instead produce a '\t' inside the code block
+  if (event.key.toLowerCase() == "tab" && selectedInCodeBlock) {
+    // prevent the default behavior of pressing tab
     event.preventDefault();
+
+    // get the user's selection
     const tabSel = window.getSelection();
     const tabRange = tabSel.getRangeAt(0);
 
+    // create and insert '\t' tab text node
     const tabNode = document.createTextNode("\t");
-
     tabRange.insertNode(tabNode);
 
+    // select after the tab text node
     tabRange.setStartAfter(tabNode);
     tabRange.setEndAfter(tabNode);
     tabSel.removeAllRanges();
     tabSel.addRange(tabRange);
+  }
+
+  // if the delete key press occurs inside of a codeblock, then make sure that if the codeblock is to be empty the codeblock is removed
+  if (
+    (event.key.toLowerCase() == "delete" ||
+      event.key.toLowerCase() == "backspace") &&
+    selectedInCodeBlock
+  ) {
+    // checks if the delete will delete the last character in the code block
+    if (selectedInCodeBlock.innerText.length == 1) {
+      // prevent the default behavior of delete
+      event.preventDefault();
+
+      // empty the code block container
+      selectedInCodeBlock.innerHTML = "";
+
+      // remove the zerowidthspace text node after the code block
+      if (selectedInCodeBlock.nextSibling.data == "\u200B")
+        selectedInCodeBlock.nextSibling.remove();
+
+      // remove the code block element
+      selectedInCodeBlock.remove();
+    }
   }
 });
 
@@ -155,6 +184,10 @@ function clearNoteEditor() {
 /* text styling buttons
  * @param {string} style
  */
+/**
+ * Given a style in the form of a string (either "bold", "underline", or "italic"), toggle text styling in the respective format
+ * @param {string} style - the style indicated by which button is pressed
+ */
 function applyStyle(style) {
   let underlineButton = document.getElementById("makeUnderlineButton");
   let italicButton = document.getElementById("makeItalicButton");
@@ -178,8 +211,19 @@ function applyStyle(style) {
   noteContent.focus();
 }
 
-// called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
+/**
+ * called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
+ */
 function insertCode() {
+  // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise refocus on the note content and exit the function
+  if (
+    !getClosestAncestorEl("#noteContent") ||
+    getClosestAncestorEl(".codeBlock")
+  ) {
+    noteContent.focus();
+    return;
+  }
+
   // create code block element
   const codeContainer = document.createElement("div");
   codeContainer.className = "codeBlock";
@@ -189,24 +233,6 @@ function insertCode() {
   codeEl.innerText = "// write code here...";
   codeBlock.append(codeEl);
   codeContainer.append(codeBlock);
-  /* 
-  codeEl.addEventListener("keydown", (event) => {
-    if (event.key.toLowerCase() == "tab") {
-      console.log("tab pressed");
-      event.preventDefault();
-      const tabSel = window.getSelection();
-      const tabRange = tabSel.getRangeAt(0);
-  
-      const tabNode = document.createTextNode("\t");
-  
-      tabRange.insertNode(tabNode);
-  
-      tabRange.setStartAfter(tabNode);
-      tabRange.setEndAfter(tabNode);
-      tabSel.removeAllRanges();
-      tabSel.addRange(tabRange);
-    }
-  });*/
 
   //zerowidthspace so that user can continue typing after code block
   const zeroWidthSpace = document.createTextNode("\u200B");
@@ -224,6 +250,32 @@ function insertCode() {
     sel.removeAllRanges();
     sel.addRange(range);
   }
+}
+
+/**
+ * Given a string in the form of a css selector, search for any ancestor elements from the user's sleection that matches the given selector
+ * @param {string} selector - css selector to search by for the ancestor elements
+ * @returns {Element} The ancestor element that matches the given selector, null of not found
+ */
+function getClosestAncestorEl(selector) {
+  const sel = window.getSelection();
+  if (sel.rangeCount > 0) {
+    const range = sel.getRangeAt(0);
+    let node = range.commonAncestorContainer;
+
+    if (node.nodeType != Node.ELEMENT_NODE) {
+      node = node.parentElement;
+    }
+
+    while (node && node != document) {
+      if (node.matches(selector)) {
+        return node;
+      } else {
+        node = node.parentElement;
+      }
+    }
+  }
+  return null;
 }
 
 /* Save note values from note editor text input areas into a note object,
