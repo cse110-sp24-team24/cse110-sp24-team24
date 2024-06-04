@@ -327,6 +327,8 @@ function deleteNote() {
 /* Add a tag to the list
  */
 function addTag() {
+  tags = JSON.parse(localStorage.getItem("tags")) || [];
+
   const tagText = noteTags.value.trim();
   const tagColor = noteTags.style.backgroundColor;
   if (tagText === "") {
@@ -379,10 +381,10 @@ function addTag() {
   noteTags.value = "";
   // Clear color of input box for tags
   noteTags.style.backgroundColor = "";
-  
+
   /** reset tag color choice */
   const resetTagColor = document.querySelector("form");
-  resetTagColor.reset(); 
+  resetTagColor.reset();
 }
 
 function removeTag(tagElement, tagText) {
@@ -542,7 +544,7 @@ function hideFilterDropdown() {
 
 // Load tags from localStorage and populate the filter dropdown
 function loadFilterTags() {
-  tags = JSON.parse(localStorage.getItem("tags"));
+  tags = JSON.parse(localStorage.getItem("tags")) || [];
   filterDropdownList.innerHTML = ""; // Clear existing items
 
   tags.forEach((tag) => {
