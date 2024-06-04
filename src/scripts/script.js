@@ -95,23 +95,18 @@ function initializeNoteApp() {
   window.onload = loadNotes;
 }
 
-
 /* Toggle note content styling button's class to "on" or "off"
  * button class represents style on UI for whether style is applied
  * or not
  * @param {DOM element} button
  */
-function styleToggle(button){
-  if(button.className == "on"){
+function styleToggle(button) {
+  if (button.className == "on") {
     button.className = "off";
   } else {
     button.className = "on";
   }
 }
-
-
-
-
 
 initializeNoteApp();
 
@@ -161,8 +156,6 @@ function showNoteEditor(
   noteTags.value = note.tags || "";
   noteDate.value = note.date || new Date().toISOString().substring(0, 10);
   noteEditor.classList.remove("hidden"); // Show the note editor
-
-
 }
 
 // Hide note editor and clear note editor fields
@@ -170,11 +163,10 @@ function hideNoteEditor() {
   noteEditor.classList.add("hidden"); // Hide the note editor
   clearNoteEditor();
 
-
   boldButton.className = "off";
   italicButton.className = "off";
   underlineButton.className = "off";
-  document.execCommand('removeFormat', false, null);
+  document.execCommand("removeFormat", false, null);
 }
 
 // Empties out note editor input areas for next use after hiding
@@ -183,8 +175,6 @@ function clearNoteEditor() {
   noteContent.innerHTML = ""; // Clears the prev content when making a new note
   noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
-
-
 }
 
 //
@@ -193,16 +183,15 @@ function clearNoteEditor() {
  * @param {string} style - the style indicated by which button is pressed
  */
 function applyStyle(style) {
-
   //depreciated method to toggle text styling
-  if(style == "bold"){
+  if (style == "bold") {
     styleToggle(boldButton);
   }
 
-  if(style == "underline"){
+  if (style == "underline") {
     styleToggle(underlineButton);
   }
-  if(style == "italic"){
+  if (style == "italic") {
     styleToggle(italicButton);
   }
   noteContent.focus();
@@ -211,40 +200,39 @@ function applyStyle(style) {
 /* update the formatting to reflect the toolbar button indicators
  * on every note content input and click
  */
-function loadStyle(){
-  var bold = document.queryCommandState('bold');
-  var italic = document.queryCommandState('italic');
-  var underline = document.queryCommandState('underline');
-  if(underlineButton.className == "on"){
-    if(!underline){
-      document.execCommand('underline', false, null);
+function loadStyle() {
+  var bold = document.queryCommandState("bold");
+  var italic = document.queryCommandState("italic");
+  var underline = document.queryCommandState("underline");
+  if (underlineButton.className == "on") {
+    if (!underline) {
+      document.execCommand("underline", false, null);
     }
   } else {
-    if(underline){
-      document.execCommand('underline', false, null);
+    if (underline) {
+      document.execCommand("underline", false, null);
     }
   }
 
-  if(boldButton.className == "on"){
-    if(!bold){
-      document.execCommand('bold', false, null);
+  if (boldButton.className == "on") {
+    if (!bold) {
+      document.execCommand("bold", false, null);
     }
   } else {
-    if(bold){
-      document.execCommand('bold', false, null);
+    if (bold) {
+      document.execCommand("bold", false, null);
     }
   }
 
-  if(italicButton.className == "on"){
-    if(!italic){
-      document.execCommand('italic', false, null);
+  if (italicButton.className == "on") {
+    if (!italic) {
+      document.execCommand("italic", false, null);
     }
   } else {
-    if(italic){
-      document.execCommand('italic', false, null);
+    if (italic) {
+      document.execCommand("italic", false, null);
     }
   }
-  
 }
 
 /**
