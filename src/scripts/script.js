@@ -45,6 +45,7 @@ const filterDropdownContainer = document.getElementById(
 );
 const filterDropdownList = document.getElementById("filter-dropdown-list");
 const tagColorButton = document.getElementById("tag-color");
+const homeButton = document.getElementById("homeButton");
 
 // Event listener for tag color
 tagColorButton.addEventListener("change", (event) => {
@@ -124,6 +125,11 @@ document.addEventListener("click", (event) => {
   ) {
     hideFilterDropdown();
   }
+});
+
+homeButton.addEventListener("click", () => {
+  searchInput.value = ""; // Clear search input
+  renderNotes(notes); // Render all notes
 });
 
 // Call loadNotes when the page is loaded
