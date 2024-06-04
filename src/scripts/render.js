@@ -197,11 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
       noteElement
         .querySelector("button")
-        .addEventListener("click", async () => {
+        .addEventListener("click", async (event) => {
           event.stopPropagation()
           await deleteNote(note.ID);
         });
-      noteElement.addEventListener("click", (event) => {
+      noteElement.addEventListener("click", () => {
         showNoteEditor(note); // Edit note on click
       });
       notesContainer.appendChild(noteElement);
