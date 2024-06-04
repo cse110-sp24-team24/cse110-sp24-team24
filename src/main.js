@@ -24,6 +24,7 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, "./scripts/preload.js"),
+      nodeIntegration:true,
     },
   });
   win.loadFile("./index.html");

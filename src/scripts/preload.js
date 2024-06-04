@@ -26,9 +26,9 @@ function generateID() {
 async function createNote(title, content, tags, date) {
   //TODO createNewID for the note and add id as a property of the note {id: someID, data:{note....}}
   initNotesIfNull();
-  let newId = generateID();
-  await updateNote(newId, title, content, tags, date);
-  return newId;
+  let newID = generateID();
+  await updateNote(newID, title, content, tags, date);
+  return newID;
 }
 
 //readNote
@@ -36,29 +36,29 @@ async function readNotes() {
   initNotesIfNull();
   return notes;
 }
-async function readNote(noteId) {
+async function readNote(noteID) {
     initNotesIfNull();
-    return notes[noteId];
+    return notes[noteID];
   }
 
 //updateNote
-async function updateNote(noteId, title, content, tags, date) {
+async function updateNote(noteID, title, content, tags, date) {
   initNotesIfNull();
   let newNote = {
-    id: generateID(),
+    ID: generateID(),
     title: title,
     content: content,
     tags: tags,
     date: date,
   };
-  notes[newNote.id] = newNote;
+  notes[newNote.ID] = newNote;
   updateFileStorage();
 }
 
 //deleteNote()
-async function deleteNote(noteId) {
+async function deleteNote(noteID) {
   initNotesIfNull();
-  delete notes[noteId];
+  delete notes[noteID];
 }
 
 async function initNotesIfNull() {
