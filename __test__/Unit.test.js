@@ -29,6 +29,9 @@ global.localStorage = {
   setItem: jest.fn(),
 };
 
+// Mock document.execCommand
+document.execCommand = jest.fn();
+
 // Import the functions from the script
 const { initializeNoteApp, clearNotes, loadNotes, saveNote, deleteNote, showNoteEditor, hideNoteEditor, clearNoteEditor, filterNotes, renderNotes, getNotes } = require('../src/scripts/script');
 
