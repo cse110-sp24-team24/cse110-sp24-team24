@@ -1,58 +1,46 @@
-let notes = []; // Array to store notes for displaying (can factor in notes storage later)
-let editingNoteIndex = null; // Index of the note currently being edited
+const notes = window.notes;
 
-// Get DOM elements
-const addNoteButton = document.getElementById("addNoteButton");
-const saveNoteButton = document.getElementById("saveNoteButton");
-const deleteNoteButton = document.getElementById("deleteNoteButton");
-const cancelButton = document.getElementById("cancelButton");
-const searchInput = document.getElementById("searchInput");
-const noteEditor = document.getElementById("noteEditor");
-const noteTitle = document.getElementById("noteTitle");
-const noteContent = document.getElementById("noteContent");
-const noteTags = document.getElementById("noteTags");
-const noteDate = document.getElementById("noteDate");
-const notesContainer = document.getElementById("notesContainer");
-const underlineButton = document.getElementById("makeUnderlineButton");
-const italicButton = document.getElementById("makeItalicButton");
-const boldButton = document.getElementById("makeBoldButton");
-
-// Event listeners for adding, deleting and filtering notes
-addNoteButton.addEventListener("click", () => {
-  showNoteEditor();
-});
-saveNoteButton.addEventListener("click", saveNote);
-deleteNoteButton.addEventListener("click", deleteNote);
-cancelButton.addEventListener("click", hideNoteEditor);
-searchInput.addEventListener("input", filterNotes);
-
-// Event listeners for changing text styles within note editor
-underlineButton.addEventListener("click", function () {
-  applyStyle("underline");
-});
-italicButton.addEventListener("click", function () {
-  applyStyle("italic");
-});
-boldButton.addEventListener("click", function () {
-  applyStyle("bold");
-});
-
-// Call loadNotes when the page is loaded
-window.onload = loadNotes;
-
-// Function to be called when the page is loaded
-function loadNotes() {
-  // Load notes from local storage
-  const notesString = localStorage.getItem("notes"); //change localStorage to 
-
-  // Parse the JSON string to an array
-  const notesArray = JSON.parse(notesString);
-
-  // If the array is null (i.e., there were no notes in local storage), use an empty array
-  notes = notesArray || [];
-
+document.addEventListener("DOMContentLoaded", () => {
   renderNotes();
-}
+
+  // Get DOM elements
+  const addNoteButton = document.getElementById("addNoteButton");
+  const saveNoteButton = document.getElementById("saveNoteButton");
+  const deleteNoteButton = document.getElementById("deleteNoteButton");
+  const cancelButton = document.getElementById("cancelButton");
+  const searchInput = document.getElementById("searchInput");
+  const noteEditor = document.getElementById("noteEditor");
+  const noteTitle = document.getElementById("noteTitle");
+  const noteContent = document.getElementById("noteContent");
+  const noteTags = document.getElementById("noteTags");
+  const noteDate = document.getElementById("noteDate");
+  const notesContainer = document.getElementById("notesContainer");
+  const underlineButton = document.getElementById("makeUnderlineButton");
+  const italicButton = document.getElementById("makeItalicButton");
+  const boldButton = document.getElementById("makeBoldButton");
+
+  // Event listeners for adding, deleting and filtering notes
+  addNoteButton.addEventListener("click", () => {
+    showNoteEditor();
+  });
+  saveNoteButton.addEventListener("click", saveNote);
+  deleteNoteButton.addEventListener("click", deleteNote);
+  cancelButton.addEventListener("click", hideNoteEditor);
+  searchInput.addEventListener("input", filterNotes);
+
+  // Event listeners for changing text styles within note editor
+  underlineButton.addEventListener("click", function () {
+    applyStyle("underline");
+  });
+  italicButton.addEventListener("click", function () {
+    applyStyle("italic");
+  });
+  boldButton.addEventListener("click", function () {
+    applyStyle("bold");
+  });
+
+  
+});
 
 /* Show note editor that uses default params when adding new note,
  * and pass in existing note to edit existing one
@@ -151,14 +139,15 @@ function saveNote() {
     notes.push(note); // Add new note
   }
   // Save notes to the file system
-  fileStorage.saveNotes(notes)
+  fileStorage
+    .saveNotes(notes)
     .then(() => {
       renderNotes();
       hideNoteEditor();
     })
     .catch((error) => {
       console.error("Failed to save notes:", error);
-    });;
+    });
 }
 
 /* Delete note from "notes" array with browser confirmation

@@ -6,6 +6,7 @@ await initNotesIfNull();
 contextBridge.exposeInMainWorld("notes", {
   createNote,
   readNotes,
+  readNote,
   updateNote,
   deleteNote,
 });
@@ -35,6 +36,10 @@ async function readNotes() {
   initNotesIfNull();
   return notes;
 }
+async function readNote(noteId) {
+    initNotesIfNull();
+    return notes[noteId];
+  }
 
 //updateNote
 async function updateNote(noteId, title, content, tags, date) {
