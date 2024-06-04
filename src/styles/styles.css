@@ -451,3 +451,19 @@ pre code {
     padding: 0.5rem;
   }
 }
+
+/* No script warning box */
+.noscript-warning {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffcccc;
+  color: #cc0000;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #cc0000;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  z-index: 1000;
+}
