@@ -1,4 +1,3 @@
-
 // preload requires .mjs extension https://www.electronjs.org/docs/latest/tutorial/esm#esm-preload-scripts-must-have-the-mjs-extension
 import fileStorage from "./fileStorage.js";
 import { contextBridge } from "electron";
