@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Specifies the character encoding for the HTML document -->
@@ -42,37 +42,74 @@
       <!-- Toolbar with options for saving, deleting, or canceling a note -->
       <div class="editor-toolbar">
         <button id="saveNoteButton" aria-label="Save Note">💾 Save</button>
-        <button id="deleteNoteButton" aria-label="Delete Note">🗑️ Delete</button>
+        <button id="deleteNoteButton" aria-label="Delete Note">
+          🗑️ Delete
+        </button>
         <button id="cancelButton" aria-label="Cancel">❌ Cancel</button>
       </div>
       <!-- Input fields for the note's title, date, content, and tags -->
       <label for="noteTitle">Title</label>
-      <input type="text" id="noteTitle" placeholder="Title" aria-label="Note Title" />
-    
+      <input
+        type="text"
+        id="noteTitle"
+        placeholder="Title"
+        aria-label="Note Title"
+      />
+
       <div id="date-tags-container">
         <label for="noteDate">Date</label>
         <input type="date" id="noteDate" aria-label="Note Date" />
-    
+
         <label for="noteTags">Tags</label>
-        <input type="text" id="noteTags" placeholder="Tags (comma separated)" aria-label="Note Tags" />
+        <input
+          type="text"
+          id="noteTags"
+          placeholder="Tags (comma separated)"
+          aria-label="Note Tags"
+        />
       </div>
-    
+
       <div id="contentContainer">
         <label for="noteContent">Content</label>
-        <div id="noteContent" contenteditable="true" placeholder="Write your note here..." aria-label="Note Content"></div>
+        <div
+          id="noteContent"
+          contenteditable="true"
+          placeholder="Write your note here..."
+          aria-label="Note Content"
+        ></div>
       </div>
-    
+
       <!-- Floating toolbar for formatting tools -->
       <div id="floatingToolbar" class="editor-options">
-        <button id="makeUnderlineButton" aria-label="Underline" title="Underline"><u>U</u></button>
-        <button id="makeItalicButton" aria-label="Italic" title="Italic"><i>I</i></button>
-        <button id="makeBoldButton" aria-label="Bold" title="Bold"><b>B</b></button>
-        <button id="addImageButton" aria-label="Add Image" title="Insert Image">🖼️</button>
-        <button id="addVideoButton" aria-label="Add Video" title="Insert Video">📹</button>
-        <button id="addCodeBlockButton" aria-label="Add Code Block" title="Insert Code Block">🖥️</button>
+        <button
+          id="makeUnderlineButton"
+          aria-label="Underline"
+          title="Underline"
+        >
+          <u>U</u>
+        </button>
+        <button id="makeItalicButton" aria-label="Italic" title="Italic">
+          <i>I</i>
+        </button>
+        <button id="makeBoldButton" aria-label="Bold" title="Bold">
+          <b>B</b>
+        </button>
+        <button id="addImageButton" aria-label="Add Image" title="Insert Image">
+          🖼️
+        </button>
+        <button id="addVideoButton" aria-label="Add Video" title="Insert Video">
+          📹
+        </button>
+        <button
+          id="addCodeBlockButton"
+          aria-label="Add Code Block"
+          title="Insert Code Block"
+        >
+          🖥️
+        </button>
       </div>
-    </div>    
-    
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
