@@ -1,5 +1,8 @@
 let notes = []; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
+let underlineButton = document.getElementById("makeUnderlineButton");
+let italicButton = document.getElementById("makeItalicButton");
+let boldButton = document.getElementById("makeBoldButton");
 
 function initializeNoteApp() {
   // Get DOM elements
@@ -31,6 +34,8 @@ function initializeNoteApp() {
   italicButton.addEventListener("click", () => applyStyle("italic"));
   boldButton.addEventListener("click", () => applyStyle("bold"));
   insertCodeButton.addEventListener("click", insertCode);
+  noteContent.addEventListener("keydown", loadStyle);
+  noteContent.addEventListener("focus", loadStyle);
 
   // Call loadNotes when the page is loaded
   window.onload = loadNotes;
@@ -160,9 +165,6 @@ function hideNoteEditor() {
   noteEditor.classList.add("hidden"); // Hide the note editor
   clearNoteEditor();
 
-  let underlineButton = document.getElementById("makeUnderlineButton");
-  let italicButton = document.getElementById("makeItalicButton");
-  let boldButton = document.getElementById("makeBoldButton");
 
   boldButton.className = "off";
   italicButton.className = "off";
@@ -189,26 +191,59 @@ function clearNoteEditor() {
  * @param {string} style - the style indicated by which button is pressed
  */
 function applyStyle(style) {
-  let underlineButton = document.getElementById("makeUnderlineButton");
-  let italicButton = document.getElementById("makeItalicButton");
-  let boldButton = document.getElementById("makeBoldButton");
-
 
   //depreciated method to toggle text styling
   if(style == "bold"){
     styleToggle(boldButton);
   }
-  console.log(boldButton.className);
+
   if(style == "underline"){
     styleToggle(underlineButton);
   }
   if(style == "italic"){
     styleToggle(italicButton);
   }
-
-  document.execCommand(style, false, null);
-  //refocus on content editor
   noteContent.focus();
+}
+
+/* text styling buttons
+ * @param {string} style
+ */
+function loadStyle(){
+  console.log('hi')
+  var bold = document.queryCommandState('bold');
+  var italic = document.queryCommandState('italic');
+  var underline = document.queryCommandState('underline');
+  if(underlineButton.className == "on"){
+    if(!underline){
+      document.execCommand('underline', false, null);
+    }
+  } else {
+    if(underline){
+      document.execCommand('underline', false, null);
+    }
+  }
+
+  if(boldButton.className == "on"){
+    if(!bold){
+      document.execCommand('bold', false, null);
+    }
+  } else {
+    if(bold){
+      document.execCommand('bold', false, null);
+    }
+  }
+
+  if(italicButton.className == "on"){
+    if(!italic){
+      document.execCommand('italic', false, null);
+    }
+  } else {
+    if(italic){
+      document.execCommand('italic', false, null);
+    }
+  }
+  
 }
 
 /**
