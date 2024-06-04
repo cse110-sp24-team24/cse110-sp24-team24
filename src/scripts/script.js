@@ -511,14 +511,27 @@ function renderNotes(filteredNotes = notes) {
     const noteElement = document.createElement("div");
     noteElement.className = "note";
 
+    // Create a container for tags
+    const tagsContainer = document.createElement("div");
+    tagsContainer.className = "tags-container";
+    note.tags.forEach((tag) => {
+      const tagElement = document.createElement("span");
+      tagElement.className = "tag";
+      tagElement.textContent = tag.content;
+      tagElement.style.backgroundColor = tag.color;
+      tagsContainer.appendChild(tagElement);
+    });
+
     noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
         <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
       </div>
       <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags.map((tag) => tag.content).join(", ")}</small>
+      <small>${note.date}</small>
     `;
+    // Append the tags container to the note element
+    noteElement.appendChild(tagsContainer);
     noteElement.addEventListener("click", () => {
       showNoteEditor(note, index); // Edit note on click
     });

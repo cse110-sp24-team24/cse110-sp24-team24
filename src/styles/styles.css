@@ -446,6 +446,20 @@ body {
   background-color: #3d3d57;
 }
 
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
 /* Styles for the delete button in note */
 .note .note-header {
   display: flex;
