@@ -397,22 +397,22 @@ function addTag() {
   resetTagColor.reset();
 }
 
-function removeTag(tagElement, tagText) {
+function removeTag(tagElement/* , tagText */) {
   // Remove the tag element from the DOM
   tagElement.remove();
 
   // Remove the tag from the tags array of the currently edited note
-  if (editingNoteIndex !== null) {
-    const tagIndex = notes[editingNoteIndex].tags.findIndex(
-      (tag) => tag.content === tagText
-    );
-    if (tagIndex > -1) {
-      notes[editingNoteIndex].tags.splice(tagIndex, 1);
-    }
+  // if (editingNoteIndex !== null) {
+  //   const tagIndex = notes[editingNoteIndex].tags.findIndex(
+  //     (tag) => tag.content === tagText
+  //   );
+  //   if (tagIndex > -1) {
+  //     notes[editingNoteIndex].tags.splice(tagIndex, 1);
+  //   }
 
-    // Save the updated notes
-    //localStorage.setItem("notes", JSON.stringify(notes));
-  }
+  //   // Save the updated notes
+  //   //localStorage.setItem("notes", JSON.stringify(notes));
+  // }
 }
 /**
  * Shows the tag dropdown
@@ -489,12 +489,12 @@ function addTagFromDropdown(tag) {
   tagItem.appendChild(removeButton);
   tagList.appendChild(tagItem);
 
-  if (editingNoteIndex !== null) {
-    notes[editingNoteIndex].tags.push({
-      content: tag.content,
-      color: tag.color,
-    });
-  }
+  // if (editingNoteIndex !== null) {
+  //   notes[editingNoteIndex].tags.push({
+  //     content: tag.content,
+  //     color: tag.color,
+  //   });
+  // }
 
   //localStorage.setItem("notes", JSON.stringify(notes));
   hideTagDropdown();
