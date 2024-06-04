@@ -1,5 +1,8 @@
 let notes = []; // Array to store notes for displaying (can factor in notes storage later)
 let editingNoteIndex = null; // Index of the note currently being edited
+let underlineButton = document.getElementById("makeUnderlineButton");
+let italicButton = document.getElementById("makeItalicButton");
+let boldButton = document.getElementById("makeBoldButton");
 
 function initializeNoteApp() {
   // Get DOM elements
@@ -31,6 +34,8 @@ function initializeNoteApp() {
   italicButton.addEventListener("click", () => applyStyle("italic"));
   boldButton.addEventListener("click", () => applyStyle("bold"));
   insertCodeButton.addEventListener("click", insertCode);
+  noteContent.addEventListener("keydown", loadStyle);
+  noteContent.addEventListener("focus", loadStyle);
 
   // Event listeners for the note editor with code blocks
   noteContent.addEventListener("keydown", (event) => {
@@ -90,6 +95,24 @@ function initializeNoteApp() {
   window.onload = loadNotes;
 }
 
+
+/* Toggle note content styling button's class to "on" or "off"
+ * button class represents style on UI for whether style is applied
+ * or not
+ * @param {DOM element} button
+ */
+function styleToggle(button){
+  if(button.className == "on"){
+    button.className = "off";
+  } else {
+    button.className = "on";
+  }
+}
+
+
+
+
+
 initializeNoteApp();
 
 // clears notes array (for testing)
@@ -138,12 +161,20 @@ function showNoteEditor(
   noteTags.value = note.tags || "";
   noteDate.value = note.date || new Date().toISOString().substring(0, 10);
   noteEditor.classList.remove("hidden"); // Show the note editor
+
+
 }
 
 // Hide note editor and clear note editor fields
 function hideNoteEditor() {
   noteEditor.classList.add("hidden"); // Hide the note editor
   clearNoteEditor();
+
+
+  boldButton.className = "off";
+  italicButton.className = "off";
+  underlineButton.className = "off";
+  document.execCommand('removeFormat', false, null);
 }
 
 // Empties out note editor input areas for next use after hiding
@@ -152,21 +183,68 @@ function clearNoteEditor() {
   noteContent.innerHTML = ""; // Clears the prev content when making a new note
   noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
+
+
 }
 
 //
-/* text styling buttons
- * @param {string} style
- */
 /**
  * Given a style in the form of a string (either "bold", "underline", or "italic"), toggle text styling in the respective format
  * @param {string} style - the style indicated by which button is pressed
  */
 function applyStyle(style) {
+
   //depreciated method to toggle text styling
-  document.execCommand(style, false, null);
-  //refocus on content editor
+  if(style == "bold"){
+    styleToggle(boldButton);
+  }
+
+  if(style == "underline"){
+    styleToggle(underlineButton);
+  }
+  if(style == "italic"){
+    styleToggle(italicButton);
+  }
   noteContent.focus();
+}
+
+/* update the formatting to reflect the toolbar button indicators
+ * on every note content input and click
+ */
+function loadStyle(){
+  var bold = document.queryCommandState('bold');
+  var italic = document.queryCommandState('italic');
+  var underline = document.queryCommandState('underline');
+  if(underlineButton.className == "on"){
+    if(!underline){
+      document.execCommand('underline', false, null);
+    }
+  } else {
+    if(underline){
+      document.execCommand('underline', false, null);
+    }
+  }
+
+  if(boldButton.className == "on"){
+    if(!bold){
+      document.execCommand('bold', false, null);
+    }
+  } else {
+    if(bold){
+      document.execCommand('bold', false, null);
+    }
+  }
+
+  if(italicButton.className == "on"){
+    if(!italic){
+      document.execCommand('italic', false, null);
+    }
+  } else {
+    if(italic){
+      document.execCommand('italic', false, null);
+    }
+  }
+  
 }
 
 /**
