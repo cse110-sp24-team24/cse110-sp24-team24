@@ -586,7 +586,7 @@ function loadFilterTags() {
     const tagItem = document.createElement("li");
     tagItem.textContent = tag.content;
     tagItem.style.backgroundColor = tag.color;
-    tagItem.addEventListener("click", () => filterNotesByTag(tag.content));
+    tagItem.addEventListener("click", () => filterNotesByTag(tagItem));
     filterDropdownList.appendChild(tagItem);
   });
 }
@@ -594,7 +594,11 @@ function loadFilterTags() {
 // Filter notes by the selected tag
 function filterNotesByTag(selectedTag) {
   const filteredNotes = notes.filter((note) =>
-    note.tags.some((tag) => tag.content === selectedTag)
+    note.tags.some(
+      (tag) =>
+        tag.content === selectedTag.textContent &&
+        tag.color === selectedTag.style.backgroundColor
+    )
   );
 
   if (filteredNotes.length === 0) {
