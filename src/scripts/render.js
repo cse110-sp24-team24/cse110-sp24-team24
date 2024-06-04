@@ -1,46 +1,72 @@
-const notes = window.notes;
+let notes = []; // Array to store notes for displaying (can factor in notes storage later)
+let editingNoteID = null; // Index of the note currently being edited
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderNotes();
+// Get DOM elements
+const addNoteButton = document.getElementById("addNoteButton");
+const saveNoteButton = document.getElementById("saveNoteButton");
+const deleteNoteButton = document.getElementById("deleteNoteButton");
+const cancelButton = document.getElementById("cancelButton");
+const searchInput = document.getElementById("searchInput");
+const noteEditor = document.getElementById("noteEditor");
+const noteTitle = document.getElementById("noteTitle");
+const noteContent = document.getElementById("noteContent");
+const noteTags = document.getElementById("noteTags");
+const noteDate = document.getElementById("noteDate");
+const notesContainer = document.getElementById("notesContainer");
+const underlineButton = document.getElementById("makeUnderlineButton");
+const italicButton = document.getElementById("makeItalicButton");
+const boldButton = document.getElementById("makeBoldButton");
 
-  // Get DOM elements
-  const addNoteButton = document.getElementById("addNoteButton");
-  const saveNoteButton = document.getElementById("saveNoteButton");
-  const deleteNoteButton = document.getElementById("deleteNoteButton");
-  const cancelButton = document.getElementById("cancelButton");
-  const searchInput = document.getElementById("searchInput");
-  const noteEditor = document.getElementById("noteEditor");
-  const noteTitle = document.getElementById("noteTitle");
-  const noteContent = document.getElementById("noteContent");
-  const noteTags = document.getElementById("noteTags");
-  const noteDate = document.getElementById("noteDate");
-  const notesContainer = document.getElementById("notesContainer");
-  const underlineButton = document.getElementById("makeUnderlineButton");
-  const italicButton = document.getElementById("makeItalicButton");
-  const boldButton = document.getElementById("makeBoldButton");
-
-  // Event listeners for adding, deleting and filtering notes
-  addNoteButton.addEventListener("click", () => {
-    showNoteEditor();
-  });
-  saveNoteButton.addEventListener("click", saveNote);
-  deleteNoteButton.addEventListener("click", deleteNote);
-  cancelButton.addEventListener("click", hideNoteEditor);
-  searchInput.addEventListener("input", filterNotes);
-
-  // Event listeners for changing text styles within note editor
-  underlineButton.addEventListener("click", function () {
-    applyStyle("underline");
-  });
-  italicButton.addEventListener("click", function () {
-    applyStyle("italic");
-  });
-  boldButton.addEventListener("click", function () {
-    applyStyle("bold");
-  });
-
-  
+// Event listeners for adding, deleting and filtering notes
+addNoteButton.addEventListener("click", () => {
+  showNoteEditor();
 });
+saveNoteButton.addEventListener("click", saveNote);
+deleteNoteButton.addEventListener("click", deleteNote);
+cancelButton.addEventListener("click", hideNoteEditor);
+searchInput.addEventListener("input", filterNotes);
+
+// Event listeners for changing text styles within note editor
+underlineButton.addEventListener("click", function () {
+  applyStyle("underline");
+});
+italicButton.addEventListener("click", function () {
+  applyStyle("italic");
+});
+boldButton.addEventListener("click", function () {
+  applyStyle("bold");
+});
+
+// Call loadNotes when the page is loaded
+window.onload = loadNotes;
+
+// Function to be called when the page is loaded
+async function loadNotes() {
+  try {
+    // Load notes from the file system
+    const notesArray = await fileStorage.readNotes();
+
+    // If the array is null (i.e., there were no notes in the file system), use an empty array
+    notes = notesArray || [];
+
+    renderNotes();
+  } catch (error) {
+    console.error("Failed to load notes:", error);
+    notes = [];
+    renderNotes();
+  }
+}
+
+/**
+ * Randomly generate a unique ID that will be used to identify each note
+ * See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with-javascript
+ *
+ * @returns {string} ID
+ */
+function createID() {
+  let ID = "id" + Math.random().toString(16).slice(2);
+  return ID;
+}
 
 /* Show note editor that uses default params when adding new note,
  * and pass in existing note to edit existing one
@@ -51,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
  */
 function showNoteEditor(
   note = {
+    uniqueID: "",
     title: "",
     content: "",
     tags: "",
     date: new Date().toISOString().substring(0, 10),
-  },
-  index = null
+  }
 ) {
-  editingNoteIndex = index;
+  editingNoteID = note.uniqueID;
   noteTitle.value = note.title;
   noteContent.innerHTML = note.content;
   noteTags.value = note.tags;
@@ -126,18 +152,26 @@ function saveNote() {
   const tags = noteTags.value.trim();
   const date = noteDate.value;
 
+  // If editing existing note, use its ID, otherwise create a new ID
+  const uniqueID = editingNoteID || createID();
+
   if (!title || !content) {
     alert("Title and content cannot be empty.");
     return;
   }
 
-  const note = { title, content, tags, date };
+  const note = { uniqueID, title, content, tags, date };
 
-  if (editingNoteIndex !== null) {
-    notes[editingNoteIndex] = note; // Update existing note
+  // check this note's uniqueID to determine if it exists at an index in array
+  const existingNoteIndex = notes.findIndex((n) => n.uniqueID === uniqueID);
+
+  // update or create a new note
+  if (existingNoteIndex !== -1) {
+    notes[existingNoteIndex] = note;
   } else {
-    notes.push(note); // Add new note
+    notes.push(note);
   }
+
   // Save notes to the file system
   fileStorage
     .saveNotes(notes)
@@ -155,9 +189,13 @@ function saveNote() {
  * since note is deleted from editor screen
  */
 function deleteNote() {
-  if (editingNoteIndex !== null) {
+  // event.stopPropagation(); // Prevent click event from propagating to parent elements
+
+  const noteIndex = notes.findIndex((note) => note.uniqueID === editingNoteID);
+
+  if (noteIndex !== -1) {
     if (confirm("Are you sure you want to delete this note?")) {
-      notes.splice(editingNoteIndex, 1); // Remove note from array
+      notes.splice(noteIndex, 1); // Remove note from array
 
       // Save the remaining notes back to local storage
       localStorage.setItem("notes", JSON.stringify(notes));
@@ -166,24 +204,6 @@ function deleteNote() {
     }
   }
 }
-
-/* Also deletes note from "notes" array, but uses button from
- * render list. Notes in list correspond to index, which is passed in
- * to aid with deletion
- * @param {event} event
- * @param {number} index
- */
-// function deleteNoteByIndex(event, index) {
-//   event.stopPropagation(); // Prevent click event from propagating to parent elements
-//   if (confirm("Are you sure you want to delete this note?")) {
-//     notes.splice(index, 1); // Remove note from array
-
-//     // Save the remaining notes back to local storage
-//     localStorage.setItem("notes", JSON.stringify(notes));
-
-//     renderNotes();
-//   }
-// }
 
 /* Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
@@ -209,7 +229,7 @@ function renderNotes(
     noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
+        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote">🗑️</button>
       </div>
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
@@ -226,7 +246,7 @@ function renderNotes(
     noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
+        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote">🗑️</button>
       </div>
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
@@ -243,7 +263,7 @@ function renderNotes(
     noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNoteByIndex(event, ${index})">🗑️</button>
+        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote">🗑️</button>
       </div>
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
