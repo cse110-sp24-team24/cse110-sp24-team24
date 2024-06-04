@@ -36,6 +36,24 @@ function initializeNoteApp() {
   window.onload = loadNotes;
 }
 
+
+/* Toggle note content styling button's class to "on" or "off"
+ * button class represents style on UI for whether style is applied
+ * or not
+ * @param {DOM element} button
+ */
+function styleToggle(button){
+  if(button.className == "on"){
+    button.className = "off";
+  } else {
+    button.className = "on";
+  }
+}
+
+
+
+
+
 initializeNoteApp();
 
 noteContent.addEventListener("keydown", (event) => {
@@ -104,12 +122,23 @@ function showNoteEditor(
   noteTags.value = note.tags || "";
   noteDate.value = note.date || new Date().toISOString().substring(0, 10);
   noteEditor.classList.remove("hidden"); // Show the note editor
+
+
 }
 
 // Hide note editor and clear note editor fields
 function hideNoteEditor() {
   noteEditor.classList.add("hidden"); // Hide the note editor
   clearNoteEditor();
+
+  let underlineButton = document.getElementById("makeUnderlineButton");
+  let italicButton = document.getElementById("makeItalicButton");
+  let boldButton = document.getElementById("makeBoldButton");
+
+  boldButton.className = "off";
+  italicButton.className = "off";
+  underlineButton.className = "off";
+  document.execCommand('removeFormat', false, null);
 }
 
 // Empties out note editor input areas for next use after hiding
@@ -118,6 +147,8 @@ function clearNoteEditor() {
   noteContent.innerHTML = ""; // Clears the prev content when making a new note
   noteTags.value = "";
   noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
+
+
 }
 
 //
@@ -125,7 +156,23 @@ function clearNoteEditor() {
  * @param {string} style
  */
 function applyStyle(style) {
+  let underlineButton = document.getElementById("makeUnderlineButton");
+  let italicButton = document.getElementById("makeItalicButton");
+  let boldButton = document.getElementById("makeBoldButton");
+
+
   //depreciated method to toggle text styling
+  if(style == "bold"){
+    styleToggle(boldButton);
+  }
+  console.log(boldButton.className);
+  if(style == "underline"){
+    styleToggle(underlineButton);
+  }
+  if(style == "italic"){
+    styleToggle(italicButton);
+  }
+
   document.execCommand(style, false, null);
   //refocus on content editor
   noteContent.focus();

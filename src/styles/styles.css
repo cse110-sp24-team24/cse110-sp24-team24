@@ -307,6 +307,20 @@ body {
   outline: none;
 }
 
+#floatingToolbar button.on {
+  background: none;
+  border: none;
+  color: maroon;
+  padding: 0.25rem; /* Smaller padding */
+  cursor: pointer;
+  font-size: 1.2rem; /* Smaller font size */
+  transition:
+    transform 0.3s,
+    color 0.3s;
+  transform: scale(1.1);
+}
+
+
 /* Input styles in the note editor */
 #noteTitle,
 #noteDate,
@@ -467,3 +481,4 @@ pre code {
   border-radius: 0.5rem;
   z-index: 1000;
 }
+
