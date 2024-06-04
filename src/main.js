@@ -23,8 +23,8 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "./scripts/preload.js"),
-      nodeIntegration:true,
+      preload: path.join(__dirname, "./scripts/preload.mjs"),
+      nodeIntegration: true,
     },
   });
   win.loadFile("./index.html");

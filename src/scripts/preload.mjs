@@ -1,8 +1,8 @@
-import fileStorage from "./fileStorage";
+import fileStorage from "./fileStorage.js";
 import { contextBridge } from "electron";
 
 let notes = null; // Array to store notes for displaying (can factor in notes storage later)
-await initNotesIfNull();
+await defineNotesIfNull();
 contextBridge.exposeInMainWorld("notes", {
   createNote,
   readNotes,
@@ -25,27 +25,25 @@ function generateID() {
 //createNote
 async function createNote(title, content, tags, date) {
   //TODO createNewID for the note and add id as a property of the note {id: someID, data:{note....}}
-  initNotesIfNull();
+  defineNotesIfNull();
   let newID = generateID();
   await updateNote(newID, title, content, tags, date);
   return newID;
 }
 
 //readNote
-async function readNotes() {
-  initNotesIfNull();
-  return notes;
+function readNotes() {
+  return Object.values(notes);
 }
-async function readNote(noteID) {
-    initNotesIfNull();
-    return notes[noteID];
-  }
+function readNote(noteID) {
+  return notes[noteID];
+}
 
 //updateNote
 async function updateNote(noteID, title, content, tags, date) {
-  initNotesIfNull();
+  defineNotesIfNull();
   let newNote = {
-    ID: generateID(),
+    ID: noteID,
     title: title,
     content: content,
     tags: tags,
@@ -57,11 +55,12 @@ async function updateNote(noteID, title, content, tags, date) {
 
 //deleteNote()
 async function deleteNote(noteID) {
-  initNotesIfNull();
+  defineNotesIfNull();
   delete notes[noteID];
+  updateFileStorage();
 }
 
-async function initNotesIfNull() {
+async function defineNotesIfNull() {
   if (notes == null) {
     try {
       notes = await fileStorage.readNotesFile();
@@ -75,7 +74,7 @@ async function initNotesIfNull() {
 
 async function updateFileStorage() {
   try {
-    await fileStorage.updateNotesFile();
+    await fileStorage.updateNotesFile(notes);
   } catch (err) {
     console.error(err);
     throw new Error(`Unable to save notes to file system. ${err}`);

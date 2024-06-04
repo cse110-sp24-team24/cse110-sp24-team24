@@ -1,13 +1,13 @@
-const notes = window.notes;
-
+//TODO rename noteTitle, Content, Tags and Date to reflect they are specifically for editor noteContent -> noteEditorContent
+//TODO change renderNotes to use a function or for loop instead of copy pasted code 3 times
+//TODO replace the brute force on click and innerHTML with webcomponents
+const notesAPI = window.notes;
+let activeNoteID = null;
 document.addEventListener("DOMContentLoaded", () => {
-  let activeNoteID = null;
-  renderNotes();
-
   // Get DOM elements
   //Note Editor Elements
   const noteEditor = document.getElementById("noteEditor");
-  const noteTitle = document.getElementById("noteTitle"); //TODO these elements should be renamed to something like noteEditorTitle
+  const noteTitle = document.getElementById("noteTitle");
   const noteContent = document.getElementById("noteContent");
   const noteTags = document.getElementById("noteTags");
   const noteDate = document.getElementById("noteDate");
@@ -39,8 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const notesContainer = document.getElementById("notesContainer");
 
-  addNoteButton.addEventListener("click", showNoteEditor);
+  addNoteButton.addEventListener("click", () => showNoteEditor());
   searchInput.addEventListener("input", filterNotes);
+
+  //start
+  renderNotes();
 
   /* Show note editor that uses default params when adding new note,
    * and pass in existing note to edit existing one
@@ -58,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
       date: new Date().toISOString().substring(0, 10),
     }
   ) {
-    activeNoteID = note.uniqueID;
+    activeNoteID = note.ID;
     noteTitle.value = note.title;
     noteContent.innerHTML = note.content;
     noteTags.value = note.tags;
@@ -119,17 +122,23 @@ document.addEventListener("DOMContentLoaded", () => {
    * notes array if new
    * after saving, notes are rendered and note editor is hidden
    */
-  function saveActiveNote() {
+  async function saveActiveNote() {
     const title = noteTitle.value.trim();
     const content = noteContent.innerHTML.trim();
     const tags = noteTags.value.trim();
     const date = noteDate.value;
 
-    if (activeNoteID == null) {
-      notes.createNote(title, content, tags, date);
-    } else {
-      notes.updateNote(activeNoteID, title, content, tags, date);
+    if (!title || !content) {
+      alert("Title and content cannot be empty.");
+      return;
     }
+
+    if (activeNoteID == null) {
+      await notesAPI.createNote(title, content, tags, date);
+    } else {
+      await notesAPI.updateNote(activeNoteID, title, content, tags, date);
+    }
+    renderNotes();
     hideNoteEditor();
   }
 
@@ -137,12 +146,16 @@ document.addEventListener("DOMContentLoaded", () => {
    * after deletion, notes are rerendered, and note editor is hidden
    * since note is deleted from editor screen
    */
-  function deleteActiveNote() {
+  async function deleteActiveNote() {
     // event.stopPropagation(); // Prevent click event from propagating to parent elements
+    deleteNote(activeNoteID);
+  }
+
+  async function deleteNote(noteID) {
     if (confirm("Are you sure you want to delete this note?")) {
-      notes.deleteNote(activeNoteID);
-      renderNotes();
+      await notesAPI.deleteNote(noteID);
       hideNoteEditor();
+      renderNotes();
     }
   }
 
@@ -157,11 +170,19 @@ document.addEventListener("DOMContentLoaded", () => {
    * @param {list} filteredtextNotes
    */
   function renderNotes(
-    filteredTitleNotes = notes.readNotes(),
+    filteredTitleNotes = [],
     filteredTagNotes = [],
     filteredTextNotes = []
   ) {
     notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
+
+    if (
+      filteredTitleNotes.length < 1 &&
+      filteredTitleNotes.length < 1 &&
+      filteredTitleNotes.length < 1
+    ) {
+      filteredTitleNotes = notesAPI.readNotes();
+    }
 
     filteredTitleNotes.forEach((note) => {
       const noteElement = document.createElement("div");
@@ -169,12 +190,18 @@ document.addEventListener("DOMContentLoaded", () => {
       noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote">🗑️</button>
+        <button class="delete-note" aria-label="Delete Note"">🗑️</button> 
       </div>
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
     `;
-      noteElement.addEventListener("click", () => {
+      noteElement
+        .querySelector("button")
+        .addEventListener("click", async () => {
+          event.stopPropagation()
+          await deleteNote(note.ID);
+        });
+      noteElement.addEventListener("click", (event) => {
         showNoteEditor(note); // Edit note on click
       });
       notesContainer.appendChild(noteElement);
@@ -186,11 +213,17 @@ document.addEventListener("DOMContentLoaded", () => {
       noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote">🗑️</button>
+        <button class="delete-note" aria-label="Delete Note">🗑️</button>
       </div>
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
     `;
+      noteElement
+        .querySelector("button")
+        .addEventListener("click", async (event) => {
+          event.stopPropagation()
+          await deleteNote(note.ID);
+        });
       noteElement.addEventListener("click", () => {
         showNoteEditor(note); // Edit note on click
       });
@@ -203,11 +236,17 @@ document.addEventListener("DOMContentLoaded", () => {
       noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
-        <button class="delete-note" aria-label="Delete Note" onclick="deleteNote">🗑️</button>
+        <button class="delete-note" aria-label="Delete Note">🗑️</button>
       </div>
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
     `;
+      noteElement
+        .querySelector("button")
+        .addEventListener("click", async (event) => {
+          event.stopPropagation()
+          await deleteNote(note.ID);
+        });
       noteElement.addEventListener("click", () => {
         showNoteEditor(note); // Edit note on click
       });
@@ -225,6 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   function filterNotes() {
     const query = searchInput.value.toLowerCase();
+    const notes = notesAPI.readNotes();
 
     let filteredtitleNotes = notes.filter((note) =>
       note.title.toLowerCase().includes(query)
