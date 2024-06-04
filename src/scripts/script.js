@@ -32,68 +32,73 @@ function initializeNoteApp() {
   boldButton.addEventListener("click", () => applyStyle("bold"));
   insertCodeButton.addEventListener("click", insertCode);
 
+  // Event listeners for the note editor with code blocks
+  noteContent.addEventListener("keydown", (event) => {
+    // if the selection is inside a code block, get the code block the section is in
+    let selectedInCodeBlock = getClosestAncestorEl(".codeBlock");
+
+    // get the user's selection
+    const sel = window.getSelection();
+    const range = sel.getRangeAt(0);
+
+    // if the tab key press occurs inside of a codeblock, the tab will replace the tab navigation functionality and instead produce a '\t' inside the code block
+    if (event.key.toLowerCase() == "tab" && selectedInCodeBlock) {
+      // prevent the default behavior of pressing tab
+      event.preventDefault();
+
+      // create and insert '\t' tab text node
+      const tabNode = document.createTextNode("\t");
+      range.insertNode(tabNode);
+
+      // select after the tab text node
+      range.setStartAfter(tabNode);
+      range.setEndAfter(tabNode);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    // if the delete key press occurs inside of a codeblock, then make sure that if the codeblock is to be empty the codeblock is removed
+    if (
+      (event.key.toLowerCase() == "delete" ||
+        event.key.toLowerCase() == "backspace") &&
+      selectedInCodeBlock
+    ) {
+      const selectedText = range.toString().replace(/\s/g, "");
+      const codeBlockText = selectedInCodeBlock.innerText.replace(/\s/g, "");
+      // checks if the delete will delete the last character in the code block or at least all text in the code block is selected
+      if (
+        selectedInCodeBlock.innerText.length == 1 ||
+        selectedText.indexOf(codeBlockText) >= 0
+      ) {
+        // prevent the default behavior of delete
+        event.preventDefault();
+
+        // empty the code block container
+        selectedInCodeBlock.innerHTML = "";
+
+        // remove the zerowidthspace text node after the code block
+        if (selectedInCodeBlock.nextSibling.data == "\u200B")
+          selectedInCodeBlock.nextSibling.remove();
+
+        // remove the code block element
+        selectedInCodeBlock.remove();
+      }
+    }
+  });
+
   // Call loadNotes when the page is loaded
   window.onload = loadNotes;
 }
 
 initializeNoteApp();
 
-noteContent.addEventListener("keydown", (event) => {
-  // if the selection is inside a code block, get the code block the section is in
-  let selectedInCodeBlock = getClosestAncestorEl(".codeBlock");
-
-  // if the tab key press occurs inside of a codeblock, the tab will replace the tab navigation functionality and instead produce a '\t' inside the code block
-  if (event.key.toLowerCase() == "tab" && selectedInCodeBlock) {
-    // prevent the default behavior of pressing tab
-    event.preventDefault();
-
-    // get the user's selection
-    const tabSel = window.getSelection();
-    const tabRange = tabSel.getRangeAt(0);
-
-    // create and insert '\t' tab text node
-    const tabNode = document.createTextNode("\t");
-    tabRange.insertNode(tabNode);
-
-    // select after the tab text node
-    tabRange.setStartAfter(tabNode);
-    tabRange.setEndAfter(tabNode);
-    tabSel.removeAllRanges();
-    tabSel.addRange(tabRange);
-  }
-
-  // if the delete key press occurs inside of a codeblock, then make sure that if the codeblock is to be empty the codeblock is removed
-  if (
-    (event.key.toLowerCase() == "delete" ||
-      event.key.toLowerCase() == "backspace") &&
-    selectedInCodeBlock
-  ) {
-    // checks if the delete will delete the last character in the code block
-    if (selectedInCodeBlock.innerText.length == 1) {
-      // prevent the default behavior of delete
-      event.preventDefault();
-
-      // empty the code block container
-      selectedInCodeBlock.innerHTML = "";
-
-      // remove the zerowidthspace text node after the code block
-      if (selectedInCodeBlock.nextSibling.data == "\u200B")
-        selectedInCodeBlock.nextSibling.remove();
-
-      // remove the code block element
-      selectedInCodeBlock.remove();
-    }
-  }
-});
-
-
 // clears notes array (for testing)
-function clearNotes(){
+function clearNotes() {
   notes = [];
 }
 
 //returns notes array (for testing)
-function getNotes(){
+function getNotes() {
   return notes;
 }
 
@@ -214,7 +219,7 @@ function getClosestAncestorEl(selector) {
   const sel = window.getSelection();
   if (sel.rangeCount > 0) {
     const range = sel.getRangeAt(0);
-    let node = range.commonAncestorContainer;
+    let node = range.startContainer;
 
     if (node.nodeType != Node.ELEMENT_NODE) {
       node = node.parentElement;
