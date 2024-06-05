@@ -105,8 +105,9 @@ async function defineNotesIfNull() {
 
 /**
  * Update file storage representation of notes with local representation of notes.
+ * @param {object} notes 
  */
-async function updateFileStorage() {
+async function updateFileStorage(notes) {
   try {
     await fileStorage.updateNotesFile(notes);
   } catch (err) {
