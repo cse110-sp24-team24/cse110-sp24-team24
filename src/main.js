@@ -13,6 +13,8 @@ async function main() {
   createWindow();
 
   app.on("window-all-closed", () => {
+    ipcMain.removeHandler("fileStorage:readNotesFile")
+    ipcMain.removeHandler("fileStorage:updateNotesFile")
     if (process.platform !== "darwin") app.quit();
   });
   app.on("activate", () => {
