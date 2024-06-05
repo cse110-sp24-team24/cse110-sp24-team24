@@ -266,8 +266,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Render filtered notes
     renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
-
-    //render the notes on page load
-    renderNotes();
   }
+  
+  //render the notes on page load
+  renderNotes();
 });
