@@ -2,8 +2,10 @@
 import fileStorage from "./fileStorage.js";
 import { contextBridge } from "electron";
 
-let notes = null; // Array to store notes for displaying (can factor in notes storage later)
+
+let notes = null;
 await defineNotesIfNull();
+// Provide context bridge to expose file to render.js
 contextBridge.exposeInMainWorld("notes", {
   createNote,
   readNotes,
@@ -23,24 +25,45 @@ function generateID() {
   return ID;
 }
 
-//createNote
+/**
+ * Create a new note, generating a noteID, and save it to file storage.
+ * @param {string} title
+ * @param {string} content
+ * @param {string} tags
+ * @param {object} date
+ * @returns {string}
+ */
 async function createNote(title, content, tags, date) {
-  //TODO createNewID for the note and add id as a property of the note {id: someID, data:{note....}}
   defineNotesIfNull();
   let newID = generateID();
   await updateNote(newID, title, content, tags, date);
   return newID;
 }
 
-//readNote
+/**
+ * Return all notes as an array.
+ * @returns {object[]}
+ */
 function readNotes() {
   return Object.values(notes);
 }
+/**
+ * Return note based on noteID.
+ * @param {string} noteID
+ * @returns {object}
+ */
 function readNote(noteID) {
   return notes[noteID];
 }
 
-//updateNote
+/**
+ * Override the note specified by noteID with the specified parameters and update file storage.
+ * @param {string} noteID
+ * @param {string} title
+ * @param {string} content
+ * @param {string} tags
+ * @param {obejct} date
+ */
 async function updateNote(noteID, title, content, tags, date) {
   defineNotesIfNull();
   let newNote = {
@@ -54,13 +77,20 @@ async function updateNote(noteID, title, content, tags, date) {
   updateFileStorage();
 }
 
-//deleteNote()
+/**
+ * Delete the note specified by noteID and update file storage.
+ * @param {object} noteID
+ */
 async function deleteNote(noteID) {
   defineNotesIfNull();
   delete notes[noteID];
   updateFileStorage();
 }
 
+/**
+ * Define local representation of notes from file storage if notes is not already defined.
+ * @returns {object}
+ */
 async function defineNotesIfNull() {
   if (notes == null) {
     try {
@@ -73,6 +103,9 @@ async function defineNotesIfNull() {
   return notes;
 }
 
+/**
+ * Update file storage representation of notes with local representation of notes.
+ */
 async function updateFileStorage() {
   try {
     await fileStorage.updateNotesFile(notes);
