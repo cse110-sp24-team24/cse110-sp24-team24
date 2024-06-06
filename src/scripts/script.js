@@ -1,3 +1,10 @@
+/**
+ * This file contains the main Javascript for rendering the web journal. This
+ * includes functionality to add and remove notes, add and remove tags, filter
+ * by tags and a search bar, and more.
+ */
+
+// Array to store notes for displaying (can factor in notes storage later)
 let notes = [
   {
     title: "",
@@ -8,18 +15,22 @@ let notes = [
     },
     date: new Date().toISOString().substring(0, 10),
   },
-]; // Array to store notes for displaying (can factor in notes storage later)
+];
+
+// Array of JSON objects to store tags
 let tags = [
   {
     content: "",
     color: "",
   },
 ];
+
+// Initially retrieving all the data from local storage.
 notes = JSON.parse(localStorage.getItem("notes")) || [];
 tags = JSON.parse(localStorage.getItem("tags")) || [];
 let editingNoteIndex = null; // Index of the note currently being edited
 
-// Get DOM elements
+// Getting the relevant DOM elements
 const addNoteButton = document.getElementById("addNoteButton");
 const saveNoteButton = document.getElementById("saveNoteButton");
 const deleteNoteButton = document.getElementById("deleteNoteButton");
@@ -90,6 +101,7 @@ tagDropdownButton.addEventListener("click", () => {
   }
 });
 
+// Event listener to display or hide the filter dropdown
 filterButton.addEventListener("click", (event) => {
   event.stopPropagation(); // Prevent click event from propagating
   if (filterDropdownContainer.classList.contains("hidden")) {
@@ -109,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Event listener to hide the tag dropdown if the user clicks outside
 document.addEventListener("click", (event) => {
   if (
     !tagDropdownContainer.contains(event.target) &&
@@ -118,6 +131,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
+// Event listener to hide the filter dropdown if the user clicks outside
 document.addEventListener("click", (event) => {
   if (
     !filterDropdownContainer.contains(event.target) &&
@@ -219,7 +233,6 @@ function clearNoteEditor() {
 /* text styling buttons
  * @param {string} style
  */
-
 function applyStyle(style) {
   //depreciated method to toggle text styling
   document.execCommand(style, false, null);
@@ -254,7 +267,6 @@ function applyStyle(style) {
  * notes array if new
  * after saving, notes are rendered and note editor is hidden
  */
-
 function saveNote() {
   const title = noteTitle.value.trim();
   const content = noteContent.innerHTML.trim();
@@ -337,8 +349,10 @@ function deleteNote() {
  * Clear the input box of the tag, upon asdding the tag
  */
 function addTag() {
+  // retrieve tags from local storage
   tags = JSON.parse(localStorage.getItem("tags")) || [];
 
+  // tag data based on user input
   const tagText = noteTags.value.trim();
   const tagColor = noteTags.style.backgroundColor;
   if (tagText === "") {
@@ -346,10 +360,12 @@ function addTag() {
     return;
   }
 
+  // check for tag duplication
   if (tags.some((tag) => tag.content === tagText && tag.color === tagColor)) {
     alert("Cannot add duplicate tag.");
     return;
   }
+
   // Add event listener to the add button
   const newTag = document.createElement("li");
 
@@ -397,8 +413,8 @@ function addTag() {
   resetTagColor.reset();
 }
 
-function removeTag(tagElement/* , tagText */) {
-  // Remove the tag element from the DOM
+// Remove the tag element from the DOM
+function removeTag(tagElement /* , tagText */) {
   tagElement.remove();
 
   // Remove the tag from the tags array of the currently edited note
@@ -414,6 +430,7 @@ function removeTag(tagElement/* , tagText */) {
   //   //localStorage.setItem("notes", JSON.stringify(notes));
   // }
 }
+
 /**
  * Shows the tag dropdown
  * upon clicking the arrow button changes the icon to up arrow
@@ -423,6 +440,7 @@ function showTagDropdown() {
   tagDropdownButton.innerHTML = "&#9652;"; // Change icon to up arrow
   loadTags();
 }
+
 /**
  * Hides the tag dropdown
  * Upon clicking the arrow button changes the icon to down arrow
@@ -431,6 +449,7 @@ function hideTagDropdown() {
   tagDropdownContainer.classList.add("hidden");
   tagDropdownButton.innerHTML = "&#9662;"; // Change icon to down arrow
 }
+
 /**
  * Load tags from local storage and populate the tag dropdown
  */
@@ -446,6 +465,7 @@ function loadTags() {
     tagDropdownList.appendChild(tagItem);
   });
 }
+
 /**
  * adds the tag fromt he drop down list and populate the tag list
  * @param {string} tag
@@ -510,7 +530,6 @@ function addTagFromDropdown(tag) {
  * @param {list} filteredtagNotes
  * @param {list} filteredtextNotes
  */
-
 function renderNotes(filteredNotes = notes) {
   notesContainer.innerHTML = "<h2>Your Journals:</h2>"; // Clear previous notes
   filteredNotes.forEach((note, index) => {
@@ -564,6 +583,7 @@ function filterNotes() {
   renderNotes(filteredtitleNotes);
 }
 
+// Show the filter dropdown (trigerred by event listener)
 function showFilterDropdown() {
   filterDropdownContainer.classList.remove("hidden");
   filterDropdownContainer.classList.add("visible");
@@ -571,13 +591,18 @@ function showFilterDropdown() {
   loadFilterTags();
 }
 
+// Hide the filter dropdown (trigerred by event listener)
 function hideFilterDropdown() {
   filterDropdownContainer.classList.add("hidden");
   filterDropdownContainer.classList.remove("visible");
   filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
 }
 
-// Load tags from localStorage and populate the filter dropdown
+/**
+ * Load all the tags into the filter, called by showFilterDropdown() when user
+ * clicks on dropdown button. Gets all the tags and creates a list item for
+ * each one.
+ */
 function loadFilterTags() {
   tags = JSON.parse(localStorage.getItem("tags")) || [];
   filterDropdownList.innerHTML = ""; // Clear existing items
@@ -591,7 +616,12 @@ function loadFilterTags() {
   });
 }
 
-// Filter notes by the selected tag
+/**
+ * Filter the notes that are shown by a specific tag. Use the tag item that
+ * is passed in and extract the relevant data from it, and then filter
+ * using that data.
+ * @param {HTMLLIElement} selectedTag
+ */
 function filterNotesByTag(selectedTag) {
   const filteredNotes = notes.filter((note) =>
     note.tags.some(
