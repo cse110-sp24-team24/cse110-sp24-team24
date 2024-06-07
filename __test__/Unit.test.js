@@ -196,6 +196,20 @@ describe("Tag System", () => {
     expect(tagList.children[0].textContent).toContain("Test Tag");
     expect(tagList.children[0].style.backgroundColor).toBe("red");
   });
+  //This test if the inputbox of the tag is empty, then it should put out an alert
+  it('should not add a tag if input is empty', () => {
+    noteTags.value = "";
+    noteTags.style.backgroundColor = "orange";
+    addTag();
+    expect(alert).toHaveBeenCalledWith('Tag input cannot be empty if you want to add a tag.');
+  });
+  //Catch if the tag added will be a duplicate
+  it('should not add a duplicate tag', () => {
+    noteTags.value = "Test Tag";
+    noteTags.style.backgroundColor = "red";
+    addTag();
+    expect(alert).toHaveBeenCalledWith('Cannot add duplicate tag.');
+  });
 
   it("should show the tag dropdown", () => {
     showTagDropdown();
