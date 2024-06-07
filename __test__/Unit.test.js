@@ -1,4 +1,4 @@
-// Need to run following commands to run the tests:
+// Need to run the following commands to run the tests:
 // npm install
 // npm install --save-dev jest-environment-jsdom
 // npm test
@@ -32,128 +32,142 @@ global.localStorage = {
 // Mock document.execCommand
 document.execCommand = jest.fn();
 
-// Import the functions from the script
-const { initializeNoteApp, clearNotes, loadNotes, saveNote, deleteNote, showNoteEditor, hideNoteEditor, clearNoteEditor, filterNotes, renderNotes, getNotes } = require('../src/scripts/script');
+// Mock the notes API
+window.notes = {
+  createNote: jest.fn(),
+  readNotes: jest.fn(() => []), // Return an empty array by default
+  updateNote: jest.fn(),
+  deleteNote: jest.fn(),
+};
+
+const {
+  initializeNoteApp,
+  showNoteEditor,
+  hideNoteEditor,
+  clearNoteEditor,
+  saveActiveNote,
+  deleteActiveNote,
+  deleteNote,
+  renderNotes,
+  filterNotes,
+  createNoteElement
+} = require('../src/scripts/render');
 
 beforeAll(() => {
   initializeNoteApp();
 });
 
+beforeEach(() => {
+  jest.clearAllMocks();
+  document.getElementById("noteEditor").classList.add("hidden");
+  document.getElementById("noteTitle").value = "";
+  document.getElementById("noteContent").innerHTML = "";
+  document.getElementById("noteTags").value = "";
+  document.getElementById("noteDate").value = "";
+  document.getElementById("searchInput").value = "";
+  document.getElementById("notesContainer").innerHTML = "";
+  activeNoteID = null; // Reset activeNoteID before each test
+});
+
 describe('showNoteEditor', () => {
   it('should show the note editor with default values for a new note', () => {
     showNoteEditor();
-    expect(noteTitle.value).toBe('');
-    expect(noteContent.innerHTML).toBe('');
-    expect(noteTags.value).toBe('');
-    expect(noteDate.value).toBe(new Date().toISOString().substring(0, 10));
-    expect(noteEditor.classList.contains('hidden')).toBe(false);
+    expect(document.getElementById("noteTitle").value).toBe('');
+    expect(document.getElementById("noteContent").innerHTML).toBe('');
+    expect(document.getElementById("noteTags").value).toBe('');
+    expect(document.getElementById("noteDate").value).toBe(new Date().toISOString().substring(0, 10));
+    expect(document.getElementById("noteEditor").classList.contains('hidden')).toBe(false);
   });
 
   it('should show the note editor with values for an existing note', () => {
-    const note = { title: 'Existing Note', content: 'Content', tags: 'Tag', date: '2023-05-27' };
-    showNoteEditor(note, 0);
-
-    expect(noteTitle.value).toBe(note.title);
-    expect(noteContent.innerHTML).toBe(note.content);
-    expect(noteTags.value).toBe(note.tags);
-    expect(noteDate.value).toBe(note.date);
-    expect(noteEditor.classList.contains('hidden')).toBe(false);
+    const note = { ID: '1', title: 'Existing Note', content: 'Content', tags: 'Tag', date: '2023-05-27' };
+    showNoteEditor(note);
+    expect(document.getElementById("noteTitle").value).toBe(note.title);
+    expect(document.getElementById("noteContent").innerHTML).toBe(note.content);
+    expect(document.getElementById("noteTags").value).toBe(note.tags);
+    expect(document.getElementById("noteDate").value).toBe(note.date);
+    expect(document.getElementById("noteEditor").classList.contains('hidden')).toBe(false);
   });
 });
 
 describe('hideNoteEditor', () => {
   it('should hide the note editor and clear its fields', () => {
     hideNoteEditor();
-    expect(noteEditor.classList.contains('hidden')).toBe(true);
-    expect(noteTitle.value).toBe('');
-    expect(noteContent.innerHTML).toBe('');
-    expect(noteTags.value).toBe('');
-    expect(noteDate.value).toBe(new Date().toISOString().substring(0, 10));
+    expect(document.getElementById("noteEditor").classList.contains('hidden')).toBe(true);
+    expect(document.getElementById("noteTitle").value).toBe('');
+    expect(document.getElementById("noteContent").innerHTML).toBe('');
+    expect(document.getElementById("noteTags").value).toBe('');
+    expect(document.getElementById("noteDate").value).toBe(new Date().toISOString().substring(0, 10));
   });
 });
 
 describe('renderNotes', () => {
   it('should render the notes correctly', () => {
-    clearNotes();
+    window.notes.readNotes.mockReturnValue([
+      { ID: '1', title: 'Note 1', content: 'Content 1', tags: 'Tag1', date: '2023-05-27' },
+      { ID: '2', title: 'Note 2', content: 'Content 2', tags: 'Tag2', date: '2023-05-28' }
+    ]);
+
     renderNotes();
-    expect(notesContainer.childElementCount).toBe(1);
-    const note1 = { title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' };
-    const note2 = { title: '2', content: '2', tags: '2', date: '2023-05-27' };
-    showNoteEditor();
-    noteTitle.value = note1.title;
-    noteContent.innerHTML = note1.content;
-    noteTags.value = note1.tags;
-    noteDate.value = note1.date;
-    saveNote();
-    showNoteEditor();
-    noteTitle.value = note2.title;
-    noteContent.innerHTML = note2.content;
-    noteTags.value = note2.tags;
-    noteDate.value = note2.date;
-    saveNote();
-    renderNotes();
-    expect(notesContainer.childElementCount).toBe(3);
+    expect(document.getElementById("notesContainer").childElementCount).toBe(3); // including the header
   });
 });
 
 describe('clearNoteEditor', () => {
-  it('sets all input values to empty string', () => {
-    const note = { title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' };
-    showNoteEditor();
-    noteTitle.value = note.title;
-    noteContent.innerHTML = note.content;
-    noteTags.value = note.tags;
-    noteDate.value = note.date;
+  it('should clear all input values in the note editor', () => {
+    const note = { ID: '1', title: 'Existing Note', content: 'Content', tags: 'Tag', date: '2023-05-27' };
+    showNoteEditor(note);
     clearNoteEditor();
-    expect(noteTitle.value).toBe('');
-    expect(noteContent.innerHTML).toBe('');
-    expect(noteTags.value).toBe('');
-    expect(noteDate.value).toBe(new Date().toISOString().substring(0, 10));
+    expect(document.getElementById("noteTitle").value).toBe('');
+    expect(document.getElementById("noteContent").innerHTML).toBe('');
+    expect(document.getElementById("noteTags").value).toBe('');
+    expect(document.getElementById("noteDate").value).toBe(new Date().toISOString().substring(0, 10));
   });
 });
 
-describe('loadandsaveNotes', () => {
-  it('load notes into "notes" array after saving them', () => {
-    clearNotes();
-    const note = { title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' };
-    showNoteEditor();
-    noteTitle.value = note.title;
-    noteContent.innerHTML = note.content;
-    noteTags.value = note.tags;
-    noteDate.value = note.date;
-    expect(getNotes()).toStrictEqual([]);
-    saveNote();
-    expect(getNotes()).toStrictEqual([{ title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' }]);
-    clearNotes();
-    expect(getNotes()).toStrictEqual([]);
-    loadNotes();
-    expect(getNotes()).toStrictEqual([{ title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' }]);
+describe('saveActiveNote', () => {
+
+  it('should call updateNote when saving an existing note', async () => {
+    const note = { ID: '1', title: 'Existing Note', content: 'Content', tags: 'Tag', date: '2023-05-27' };
+    showNoteEditor(note);
+    document.getElementById("noteTitle").value = "Updated Note";
+    document.getElementById("noteContent").innerHTML = "Updated Content";
+
+    await saveActiveNote();
+    expect(window.notes.updateNote).toHaveBeenCalledWith('1', "Updated Note", "Updated Content", "Tag", "2023-05-27");
+  });
+});
+
+describe('deleteActiveNote', () => {
+  it('should call deleteNote for the active note', async () => {
+    const note = { ID: '1', title: 'Existing Note', content: 'Content', tags: 'Tag', date: '2023-05-27' };
+    showNoteEditor(note);
+    jest.spyOn(window, 'confirm').mockImplementation(() => true);
+
+    await deleteActiveNote();
+    expect(window.notes.deleteNote).toHaveBeenCalledWith('1');
   });
 });
 
 describe('deleteNote', () => {
-  it('delete note from notes array', () => {
-    clearNotes();
-    const note1 = { title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' };
-    const note2 = { title: '2', content: '2', tags: '2', date: '2023-05-27' };
-    showNoteEditor();
-    noteTitle.value = note1.title;
-    noteContent.innerHTML = note1.content;
-    noteTags.value = note1.tags;
-    noteDate.value = note1.date;
-    saveNote();
-    expect(getNotes()).toStrictEqual([{ title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' }]);
-    showNoteEditor();
-    noteTitle.value = note2.title;
-    noteContent.innerHTML = note2.content;
-    noteTags.value = note2.tags;
-    noteDate.value = note2.date;
-    saveNote();
-    expect(getNotes()).toStrictEqual([{ title: 'Existing Note', content: 'new stuff', tags: 'Tag', date: '2023-05-27' }, { title: '2', content: '2', tags: '2', date: '2023-05-27' }]);
-    showNoteEditor(note1, 0);
-    // Mock the confirm dialog to simulate user clicking "OK"
+  it('should call deleteNote for a specific note ID', async () => {
+    const note = { ID: '2', title: 'Another Note', content: 'Content', tags: 'Tag', date: '2023-05-28' };
     jest.spyOn(window, 'confirm').mockImplementation(() => true);
-    deleteNote();
-    expect(getNotes()).toStrictEqual([{ title: '2', content: '2', tags: '2', date: '2023-05-27' }]);
+
+    await deleteNote(note.ID);
+    expect(window.notes.deleteNote).toHaveBeenCalledWith('2');
+  });
+});
+
+describe('filterNotes', () => {
+  it('should filter notes based on search input', () => {
+    window.notes.readNotes.mockReturnValue([
+      { ID: '1', title: 'Note 1', content: 'Content 1', tags: 'Tag1', date: '2023-05-27' },
+      { ID: '2', title: 'Note 2', content: 'Content 2', tags: 'Tag2', date: '2023-05-28' }
+    ]);
+
+    document.getElementById("searchInput").value = 'Note 1';
+    filterNotes();
+    expect(document.getElementById("notesContainer").childElementCount).toBe(2); // including the header
   });
 });

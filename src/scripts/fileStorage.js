@@ -31,7 +31,7 @@ async function readNotesFile() {
     return JSON.parse(data);
   } catch (error) {
     console.error(error);
-    return {};
+    return [];
   }
 }
 
