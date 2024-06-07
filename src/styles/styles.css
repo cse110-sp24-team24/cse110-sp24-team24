@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
+/* setting for custom css properties */
 :root {
   --primary-bg-color: #1e1e2f;
   --secondary-bg-color: #2a2a40;
@@ -253,7 +254,43 @@ body {
   outline: none;
 }
 
-/* Floating toolbar styles */
+/* General input styles in the note editor */
+#noteTitle,
+#noteDate,
+#noteTags,
+#noteContent {
+  padding: 1rem;
+  border: 1px solid var(--input-border-color);
+  border-radius: 0.5rem;
+  background-color: var(--primary-bg-color);
+  color: var(--secondary-txt-color);
+  font-size: 1.4rem;
+}
+
+#noteTitle {
+  font-size: 2rem;
+}
+
+/* Flex container for date and tags */
+#date-tags-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem; /* Add space between date and tag */
+}
+
+/* Date input styling */
+#noteDate {
+  width: 20%;
+}
+
+/* Tag input styling */
+#noteTags {
+  width: 70%;
+}
+
+/* note content styles */
 #contentContainer {
   position: relative;
   flex: 1; /* Make the container grow to fill available space */
@@ -263,7 +300,7 @@ body {
 
 #noteContent {
   flex: 1; /* Make the content area grow to fill available space */
-  width: 100%;
+  width: 97.5%;
   resize: none;
   overflow-y: auto; /* Allow scrolling if content overflows */
 }
@@ -272,6 +309,20 @@ body {
   color: var(--content-placeholdertxt-color); /* Style for placeholder text */
 }
 
+/* code block styles*/
+div:has(> pre > code) {
+  display: block;
+  background-color: black;
+  max-height: 250px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+pre code {
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Floating toolbar styles */
 #floatingToolbar {
   position: sticky;
   bottom: 0;
@@ -318,52 +369,6 @@ body {
     transform 0.3s,
     color 0.3s;
   transform: scale(1.1);
-}
-
-
-/* Input styles in the note editor */
-#noteTitle,
-#noteDate,
-#noteTags,
-#noteContent {
-  padding: 1rem;
-  border: 1px solid var(--input-border-color);
-  border-radius: 0.5rem;
-  background-color: var(--primary-bg-color);
-  color: var(--secondary-txt-color);
-  font-size: 1.4rem;
-}
-
-div:has(> pre > code) {
-  display: block;
-  background-color: black;
-}
-
-pre code {
-  font-family: "Courier New", Courier, monospace;
-}
-
-#noteTitle {
-  font-size: 2rem;
-}
-
-/* Flex container for date and tags */
-#date-tags-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  gap: 1rem; /* Add space between date and tag */
-}
-
-/* Date input styling */
-#noteDate {
-  width: 20%;
-}
-
-/* Tag input styling */
-#noteTags {
-  width: 70%;
 }
 
 /* Styles for the delete button in note */
@@ -481,4 +486,3 @@ pre code {
   border-radius: 0.5rem;
   z-index: 1000;
 }
-
