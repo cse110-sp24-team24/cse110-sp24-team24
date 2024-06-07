@@ -589,5 +589,10 @@ module.exports = {
   clearNoteEditor,
   filterNotes,
   renderNotes,
-  addTag
+  addTag,
+  showTagDropdown,
+  hideTagDropdown,
+  removeTag,
+  loadTags,
+  addTagFromDropdown,
 };
