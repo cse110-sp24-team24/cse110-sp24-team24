@@ -1,4 +1,4 @@
-name: GitHub pages
+name: JS Docs Test
 
 on:
   push:
@@ -18,7 +18,6 @@ jobs:
           source_dir: ./src/scripts
           output_dir: ./out
           config_file: conf.json
-          template: minami
           front_page: README.md
 
       - name: Deploy
