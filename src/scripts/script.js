@@ -607,3 +607,11 @@ function filterNotesByTag(selectedTag) {
 
   hideFilterDropdown();
 }
+
+module.exports = {
+  addTag,
+  showTagDropdown,
+  // removeTag,
+  // loadTags,
+  // addTagFromDropdown,
+};
