@@ -23,6 +23,9 @@ jobs:
           config_file: conf.json
           front_page: README.md
 
+      - name: Verify output directory
+        run: ls -R ./out
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
