@@ -1,34 +1,42 @@
-// Unit.test.js
-/*
-import {
-    sum
-} from '../code-to-unit-test/unitTest';
-*/
-const sum = require("../code-to-unit-test/unitTest");
-//Testing to see if the file works
-/*global test*/
-/*eslint no-undef: "error"*/
-test("Sum of 1 + 2", () => {
-  expect(sum(1, 2)).toBe(3);
-});
+// Need to run following commands to run the tests:
+// npm install
+// npm install --save-dev jest-environment-jsdom
+// npm test
+// Mock global functions
+global.alert = jest.fn();
+global.localStorage = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+};
 
-//Testing if you are able to add in a Note
-test("Adding a note", () => {
-  //test to check if we properly added a note
-});
+// Mock document.execCommand
+//document.execCommand = jest.fn();
 
-test("Deleting a note", () => {
-  //test to check deletion
-});
+const { addTag } = require('../src/scripts/script.js');
 
-test("Creating a tag", () => {
-  //test to check creation of tags
-});
+describe('addTag', () => {
+  beforeEach(() => {
+    // Set up mock DOM
+    document.body.innerHTML = `
+      <ul id="tag-list"></ul>
+      <input
+          type="text"
+          id="noteTags"
+          placeholder="create tag"
+          aria-label="Note Tags"
+        />
+    `;
+  });
 
-test("Deleting tags", () => {
-  //test to see the deletion of tags
-});
+  it('adds a tag to the tags array and updates the DOM', () => {
+    const tagText = "Tag";
+    document.getElementById('noteTags').value = tagText;
 
-test("Set amount of Pre-tags", () => {
-  //check the pre-tags assigned
+    // Call the function
+    addTag();
+
+    // Check the result
+    expect(document.querySelector('#tag-list').children.length).toBe(1);
+    expect(document.querySelector('#tag-list').textContent).toContain(tagText);
+  });
 });

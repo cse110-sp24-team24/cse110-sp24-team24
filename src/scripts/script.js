@@ -578,3 +578,16 @@ function filterNotesByTag(selectedTag) {
 
   hideFilterDropdown();
 }
+
+// Export functions and variables for testing
+module.exports = {
+  loadNotes,
+  saveNote,
+  deleteNote,
+  showNoteEditor,
+  hideNoteEditor,
+  clearNoteEditor,
+  filterNotes,
+  renderNotes,
+  addTag
+};
