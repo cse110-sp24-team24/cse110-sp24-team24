@@ -331,19 +331,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const content = noteContent.innerHTML.trim();
     const tags = noteTags.value.trim();
     const date = noteDate.value;
-
+  
     if (!title || !content) {
       alert("Title and content cannot be empty.");
       return;
     }
-
-    if (activeNoteID == null) {
-      await notesAPI.createNote(title, content, tags, date);
-    } else {
-      await notesAPI.updateNote(activeNoteID, title, content, tags, date);
+  
+    try {
+      if (activeNoteID == null) {
+        await notesAPI.createNote(title, content, tags, date);
+      } else {
+        await notesAPI.updateNote(activeNoteID, title, content, tags, date);
+      }
+      renderNotes();
+      hideNoteEditor();
+    } catch (error) {
+      console.error("Error saving note:", error);
     }
-    renderNotes();
-    hideNoteEditor();
   }
 
   /**
@@ -362,9 +366,13 @@ document.addEventListener("DOMContentLoaded", () => {
    */
   async function deleteNote(noteID) {
     if (confirm("Are you sure you want to delete this note?")) {
-      await notesAPI.deleteNote(noteID);
-      hideNoteEditor();
-      renderNotes();
+      try {
+        await notesAPI.deleteNote(noteID);
+        hideNoteEditor();
+        renderNotes();
+      } catch (error) {
+        console.error("Error deleting note:", error);
+      }
     }
   }
 
