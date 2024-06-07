@@ -141,6 +141,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
+// Event listener to bring user back to list view of all notes and reset search fields
 homeButton.addEventListener("click", () => {
   searchInput.value = ""; // Clear search input
   renderNotes(notes); // Render all notes
@@ -213,7 +214,9 @@ function showNoteEditor(
   });
 }
 
-// Hide note editor and clear note editor fields
+/**
+ * Hide note editor and clear note editor fields
+ */
 function hideNoteEditor() {
   noteEditor.classList.add("hidden"); // Hide the note editor
   clearNoteEditor();
@@ -229,34 +232,12 @@ function clearNoteEditor() {
   tagList.innerHTML = "";
 }
 
-//
 /* text styling buttons
  * @param {string} style
  */
 function applyStyle(style) {
   //depreciated method to toggle text styling
   document.execCommand(style, false, null);
-  /* directly apply html tags (doesn't work) keeping for reference in case
-  console.log('clicked');
-  const start = noteContent.selectionStart;
-  const end = noteContent.selectionEnd;
-  const selectedText = noteContent.innerHTML.substring(start, end);
-  console.log(selectedText);
-  let styledText;
-  switch(style) {
-    case 'underline':
-      styledText = `<u>${selectedText}</u>`;
-      break;
-    case 'italic':
-      styledText = `<i>${selectedText}</i>`;
-      break;
-    case 'bold':
-      styledText = `<b>${selectedText}</b>`;
-      break;
-    default:
-      styledText = selectedText;
-  }
-  //noteContent.setRangeText(styledText, start, end);*/
 
   //refocus on content editor
   noteContent.focus();
@@ -325,24 +306,6 @@ function deleteNote() {
   }
 }
 
-/* Also deletes note from "notes" array, but uses button from
- * render list. Notes in list correspond to index, which is passed in
- * to aid with deletion
- * @param {event} event
- * @param {number} index
- */
-// function deleteNoteByIndex(event, index) {
-//   event.stopPropagation(); // Prevent click event from propagating to parent elements
-//   if (confirm("Are you sure you want to delete this note?")) {
-//     notes.splice(index, 1); // Remove note from array
-
-//     // Save the remaining notes back to local storage
-//     localStorage.setItem("notes", JSON.stringify(notes));
-
-//     renderNotes();
-//   }
-// }
-
 /**  Adds a tag to the note tags list
  * Tags are stored in the tags array, and are displayed in the tag list
  * The background color is also set from reading fromt he select tag color
@@ -400,7 +363,10 @@ function addTag() {
   resetTagColor.reset();
 }
 
-// Remove the tag element from the DOM
+/**
+ * Remove the tag element from the DOM
+ * @param {Element} tagElement 
+ */
 function removeTag(tagElement) {
   tagElement.remove();
 }
@@ -441,7 +407,7 @@ function loadTags() {
 }
 
 /**
- * adds the tag fromt he drop down list and populate the tag list
+ * Adds the tag fromt he drop down list and populate the tag list
  * @param {string} tag
  * @returns
  */
@@ -550,7 +516,9 @@ function filterNotes() {
   renderNotes(filteredtitleNotes);
 }
 
-// Show the filter dropdown (trigerred by event listener)
+/**
+ * Shows the filter dropdown (trigerred by event listener)
+ */
 function showFilterDropdown() {
   filterDropdownContainer.classList.remove("hidden");
   filterDropdownContainer.classList.add("visible");
@@ -558,7 +526,10 @@ function showFilterDropdown() {
   loadFilterTags();
 }
 
-// Hide the filter dropdown (trigerred by event listener)
+/**
+ * This function hides the filter dropdown 
+ * (trigerred by event listener)
+ */
 function hideFilterDropdown() {
   filterDropdownContainer.classList.add("hidden");
   filterDropdownContainer.classList.remove("visible");
@@ -608,10 +579,15 @@ function filterNotesByTag(selectedTag) {
   hideFilterDropdown();
 }
 
+// Export functions and variables for testing
 module.exports = {
-  addTag,
-  showTagDropdown,
-  // removeTag,
-  // loadTags,
-  // addTagFromDropdown,
+  loadNotes,
+  saveNote,
+  deleteNote,
+  showNoteEditor,
+  hideNoteEditor,
+  clearNoteEditor,
+  filterNotes,
+  renderNotes,
+  addTag
 };
