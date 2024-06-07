@@ -2,9 +2,10 @@ describe("Testing Window Functionality", () => {
   //launch the app check its on darwin
   //if you close a window with pupeteer confirm the app is still running and make sure you can stil open it
 });
-const {app, BrowserWindow} = require("electron");
-const pie = require("puppeteer-in-electron")
-const puppeteer = require("puppeteer-core");
+import { app, BrowserWindow, ipcMain } from "electron";
+import pie from "puppeteer-in-electron";
+import puppeteer from "puppeteer-core";
+
 
 const main = async () => {
   await pie.initialize(app);
