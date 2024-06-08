@@ -5,6 +5,7 @@
     "@eslint/js": "^9.2.0",
     "babel-jest": "^29.7.0",
     "electron": "^30.0.6",
+    "electron-builder": "^24.13.3",
     "eslint": "^9.2.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.2.0",
@@ -18,17 +19,29 @@
     "lint-check": "npm run style:lint && npm run style:prettier",
     "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
-    "test": "jest"
+    "test": "jest",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "jest": {
     "preset": "jest-puppeteer",
     "verbose": true
   },
+  "build":{
+    "appId": "team24.dev.journal",
+    "productName": "Developer Journal",
+    "mac":{
+
+    },
+    "win":{
+
+    }
+  },
   "type": "module",
   "name": "cse110-sp24-team24",
-  "description": "<hr style=\"border:2px solid gray\">",
+  "description": "A simple and intuitive developer journal application to keep track of your daily coding activities, thoughts, progress, and meeting notes.",
   "version": "1.0.0",
-  "main": "unitTest.js",
+  "main": "src/main.js",
   "keywords": [],
   "author": "",
   "license": "ISC"
