@@ -27,19 +27,10 @@ Team 1 was responsible for implementing the ElectronJS file storage. ElectronJS 
 - Terence Tan
 - Eugenie Ren
 
-## Problem
+**Purpose**:
 
-1. The tagging system from the first sprint, uses commas to seperate them
-
-## Tagging system
-
-1. Create a new function to add tags into a new tag made in index.html.
-2. have the tags be displayed in the editor, by showing it right between the content and the date box
-3. Store the saved tags into a JSON file, upon clicking the save button
-4. You are able to change the color of the tags(if you wish)
-5. Dropdown box that stores all previously added tags from other notes
-6. The search bar now only filters by the title name, also created anothe dropdown box that filters by a specific tag
-7. Home button now resets the filter tag
+Team 2 was responsible for the API structure and implementing the tagging system. During the first week, we were tasked developing a simple CRUD for the developer Journal. We have created a new system that now stores the tags as an array for each saved notes. Also 
+ a dropdown boxallowing the user to choose a color to coordinate with their tag. We also rewrote the filtering of the notes to have the search bar be primarily for the note's title, while searching by tags will be with a dropdown box. Unit testing, we had to rewrite over the original Unit test which team 3 had develope inorder to test the new and improve tagging system that is now stored as an array.
 
 # Sub-Team 3 - UI structure and functionality, text processing and styling, unit testing.
 
