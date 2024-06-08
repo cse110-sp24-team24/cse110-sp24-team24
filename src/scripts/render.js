@@ -571,6 +571,16 @@ function initializeNoteApp() {
       filteredTitleNotes = notesAPI.readNotes();
     }
 
+    const filteredNotes = filteredTitleNotes.filter((note) => {
+      filteredTagNotes.includes(note);
+    });
+
+    if (filteredNotes.length > 0) {
+      [...filteredNotes].forEach((note) => {
+        notesContainer.appendChild(createNoteElement(note));
+      });
+    }
+
     [...filteredTitleNotes, ...filteredTagNotes, ...filteredTextNotes].forEach(
       (note) => {
         notesContainer.appendChild(createNoteElement(note));
@@ -586,18 +596,25 @@ function initializeNoteApp() {
    * this occurs on input of search filter change, and new notes are automatically
    * rendered after filtering
    */
-  function filterNotes() {
+  function filterNotes(tagItem) {
     const query = searchInput.value.toLowerCase();
     const notes = notesAPI.readNotes();
 
     let filteredTitleNotes = notes.filter((note) =>
       note.title.toLowerCase().includes(query)
     );
-    let filteredTagNotes = notes.filter(
-      (note) =>
-        note.tags.toLowerCase().includes(query) &&
-        !filteredTitleNotes.includes(note)
-    );
+
+    let filteredTagNotes = notes;
+    if (tagItem) {
+      filteredTagNotes = notes.filter((note) =>
+        note.tags.some(
+          (tag) =>
+            tag.content === tagItem.textContent &&
+            tag.color === tagItem.style.backgroundColor
+        )
+      );
+    }
+
     let filteredTextNotes = notes.filter(
       (note) =>
         note.content.toLowerCase().includes(query) &&
@@ -607,6 +624,7 @@ function initializeNoteApp() {
 
     // Render filtered notes
     renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
+    hideFilterDropdown();
   }
 
   /**  Adds a tag to the note tags list
@@ -764,10 +782,12 @@ function initializeNoteApp() {
    * Shows the filter dropdown (trigerred by event listener)
    */
   function showFilterDropdown() {
-    filterDropdownContainer.classList.remove("hidden");
-    filterDropdownContainer.classList.add("visible");
-    filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
-    loadFilterTags();
+    if (filterDropdownContainer.classList.contains("hidden")) {
+      filterDropdownContainer.classList.remove("hidden");
+      filterDropdownContainer.classList.add("visible");
+      filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
+      loadFilterTags();
+    }
   }
 
   /**
@@ -775,9 +795,11 @@ function initializeNoteApp() {
    * (trigerred by event listener)
    */
   function hideFilterDropdown() {
-    filterDropdownContainer.classList.add("hidden");
-    filterDropdownContainer.classList.remove("visible");
-    filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
+    if (filterDropdownContainer.classList.contains("visible")) {
+      filterDropdownContainer.classList.add("hidden");
+      filterDropdownContainer.classList.remove("visible");
+      filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
+    }
   }
 
   /**
@@ -793,7 +815,7 @@ function initializeNoteApp() {
       const tagItem = document.createElement("li");
       tagItem.textContent = tag.content;
       tagItem.style.backgroundColor = tag.color;
-      tagItem.addEventListener("click", () => filterNotes());
+      tagItem.addEventListener("click", () => filterNotes(tagItem));
       filterDropdownList.appendChild(tagItem);
     });
   }
