@@ -15,7 +15,7 @@ const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should
 async function updateNotesFile(notes) {
   const jsonData = JSON.stringify(notes);
   try {
-    await fs.writeFile(dataPath, jsonData);
+    await fs.writeFile(dataPath + "/notes", jsonData);
   } catch (error) {
     console.error(error);
   }
@@ -27,7 +27,7 @@ async function updateNotesFile(notes) {
  */
 async function readNotesFile() {
   try {
-    const data = await fs.readFile(dataPath, "utf-8");
+    const data = await fs.readFile(dataPath + "/notes", "utf-8");
     return JSON.parse(data);
   } catch (error) {
     console.error(error);
@@ -35,4 +35,31 @@ async function readNotesFile() {
   }
 }
 
-export default { updateNotesFile, readNotesFile }; //access via import fileStorage from ./fileStorage.js
+/**
+ * Save the tags to file storage.
+ * @param {object} tags
+ */
+async function updateTagsFile(tags) {
+  const jsonData = JSON.stringify(tags);
+  try {
+    await fs.writeFile(dataPath + "/tags", jsonData);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+/**
+ * Return the tags saved in file storage.
+ * @returns {object}
+ */
+async function readTagsFile() {
+  try {
+    const data = await fs.readFile(dataPath + "/tags", "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+}
+
+export default { updateNotesFile, readNotesFile, updateTagsFile, readTagsFile }; //access via import fileStorage from ./fileStorage.js
