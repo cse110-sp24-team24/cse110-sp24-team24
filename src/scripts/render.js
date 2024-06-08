@@ -584,7 +584,7 @@ function renderNotes(
    * this occurs on input of search filter change, and new notes are automatically
    * rendered after filtering
    */
-  function filterNotes(tagItem) {
+  function filterNotes() {
     const query = searchInput.value.toLowerCase();
     const notes = notesAPI.readNotes();
 
@@ -592,26 +592,14 @@ function renderNotes(
       note.title.toLowerCase().includes(query)
     );
 
-    let filteredTagNotes = notes;
-    if (tagItem) {
-      filteredTagNotes = notes.filter((note) =>
-        note.tags.some(
-          (tag) =>
-            tag.content === tagItem.textContent &&
-            tag.color === tagItem.style.backgroundColor
-        )
-      );
-    }
-
     let filteredTextNotes = notes.filter(
       (note) =>
         note.content.toLowerCase().includes(query) &&
-        !filteredTitleNotes.includes(note) &&
-        !filteredTagNotes.includes(note)
+        !filteredTitleNotes.includes(note)
     );
 
     // Render filtered notes
-    renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
+    renderNotes(filteredTitleNotes, filteredTextNotes);
     hideFilterDropdown();
   }
 

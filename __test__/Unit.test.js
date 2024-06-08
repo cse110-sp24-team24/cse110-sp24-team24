@@ -200,6 +200,7 @@ beforeEach(() => {
   document.getElementById("noteEditor").classList.add("hidden");
   document.getElementById("noteTitle").value = "";
   document.getElementById("noteContent").innerHTML = "";
+  //empty out the tag list
   let tagList = document.getElementById("tag-list");
   while (tagList.firstChild) {
     tagList.removeChild(tagList.firstChild);
