@@ -1,10 +1,10 @@
 name: Build/release
 
-on: push
-  branches:
-    - main
-    - deploy 
-    - 
+on: 
+  push:
+    branches:
+      - main
+      - deploy 
 
 jobs:
   release:
