@@ -578,13 +578,13 @@ function renderNotes(
 
   /**
    * Filter notes based on search input
-   * Filters by title first, then tags and then text
-   * the three filters have no overlap, and highest of order
-   * takes the note if search filter works for multiple of tag, title, text
+   * Filters by title first, then text
+   * the two filters have no overlap, and highest of order
+   * takes the note if search filter works for multiple of title, text
    * this occurs on input of search filter change, and new notes are automatically
    * rendered after filtering
    */
-  function filterNotes(tagItem) {
+  function filterNotes() {
     const query = searchInput.value.toLowerCase();
     const notes = notesAPI.readNotes();
 
@@ -592,26 +592,19 @@ function renderNotes(
       note.title.toLowerCase().includes(query)
     );
 
-    let filteredTagNotes = notes;
-    if (tagItem) {
-      filteredTagNotes = notes.filter((note) =>
-        note.tags.some(
-          (tag) =>
-            tag.content === tagItem.textContent &&
-            tag.color === tagItem.style.backgroundColor
-        )
-      );
-    }
-
     let filteredTextNotes = notes.filter(
       (note) =>
         note.content.toLowerCase().includes(query) &&
-        !filteredTitleNotes.includes(note) &&
-        !filteredTagNotes.includes(note)
+        !filteredTitleNotes.includes(note)
     );
 
-    // Render filtered notes
-    renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
+    if (filteredTitleNotes.length === 0 && filteredTextNotes.length === 0) {
+      notesContainer.innerHTML = `<h2>Your Journals:</h2>
+      <h3> There are no notes with this title or text.</h3>`;
+    } else {
+      renderNotes(filteredTitleNotes, filteredTextNotes);
+    }
+
     hideFilterDropdown();
   }
 
