@@ -614,7 +614,7 @@ function initializeNoteApp() {
    * The background color is also set from reading fromt he select tag color
    * Clear the input box of the tag, upon asdding the tag
    */
-  function addTag() {
+  async function addTag() {
     // retrieve tags from local storage
     const tags = notesAPI.readTags();
 
@@ -653,7 +653,11 @@ function initializeNoteApp() {
     // Add the list item to the list
     tagList.appendChild(newTag);
 
-    notesAPI.createTag(tagText, tagColor);
+    try {
+      await notesAPI.createTag(tagText, tagColor);
+    } catch (error) {
+      console.error("Error save tag", error);
+    }
 
     // Clear the input
     noteTags.value = "";
