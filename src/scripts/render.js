@@ -585,6 +585,7 @@ function renderNotes(
    * rendered after filtering
    */
   function filterNotes() {
+  function filterNotes() {
     const query = searchInput.value.toLowerCase();
     const notes = notesAPI.readNotes();
 
