@@ -6,8 +6,8 @@ import fs from "fs/promises";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
-const tagPath = path.join(__dirname, "../data/tag.json");
+const notesDataPath = path.join(__dirname, "../data/notes.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
+const tagsDataPath = path.join(__dirname, "../data/tags.json");
 
 /**
  * Save the notes to file storage.
@@ -16,7 +16,7 @@ const tagPath = path.join(__dirname, "../data/tag.json");
 async function updateNotesFile(notes) {
   const jsonData = JSON.stringify(notes);
   try {
-    await fs.writeFile(dataPath, jsonData);
+    await fs.writeFile(notesDataPath, jsonData);
   } catch (error) {
     console.error(error);
   }
@@ -28,7 +28,7 @@ async function updateNotesFile(notes) {
  */
 async function readNotesFile() {
   try {
-    const data = await fs.readFile(dataPath, "utf-8");
+    const data = await fs.readFile(notesDataPath, "utf-8");
     return JSON.parse(data);
   } catch (error) {
     console.error(error);
@@ -36,22 +36,30 @@ async function readNotesFile() {
   }
 }
 
+/**
+ * Save the tags to file storage.
+ * @param {object} tags
+ */
 async function updateTagsFile(tags) {
-  const tagsData = JSON.stringify(tags);
+  const jsonData = JSON.stringify(tags);
   try {
-    await fs.writeFile(tagPath, tagsData);
+    await fs.writeFile(tagsDataPath, jsonData);
   } catch (error) {
     console.error(error);
   }
 }
 
+/**
+ * Return the tags saved in file storage.
+ * @returns {object}
+ */
 async function readTagsFile() {
   try {
-    const tagsData = await fs.readFile(tagPath, "utf-8");
-    return JSON.parse(tagsData);
+    const data = await fs.readFile(tagsDataPath, "utf-8");
+    return JSON.parse(data);
   } catch (error) {
     console.error(error);
-    return [];
+    return {};
   }
 }
 

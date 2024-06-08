@@ -2,15 +2,17 @@
 import fileStorage from "./fileStorage.js";
 import { contextBridge } from "electron";
 
-
 let notes = null;
 let tags = null;
 await defineNotesIfNull();
+await defineTagsIfNull();
 // Provide context bridge to expose file to render.js
 contextBridge.exposeInMainWorld("notes", {
   createNote,
+  createTag,
   readNotes,
   readNote,
+  readTags,
   updateNote,
   deleteNote,
   readTags,
@@ -45,6 +47,20 @@ async function createNote(title, content, tags, date) {
 }
 
 /**
+ * Create a new tag with color and content, and save to file storage.
+ * @param {string} content
+ * @param {string} color
+ */
+async function createTag(content, color) {
+  defineTagsIfNull();
+  let newTag = {
+    content: content,
+    color: color,
+  };
+  tags.append(newTag);
+}
+
+/**
  * Return all notes as an array.
  * @returns {object[]}
  */
@@ -67,6 +83,14 @@ function readTags() {
  */
 function readNote(noteID) {
   return notes[noteID];
+}
+
+/**
+ * Return all tags as an array
+ * @returns {object[]}
+ */
+function readTags() {
+  return Object.values(tags);
 }
 
 /**
@@ -133,18 +157,19 @@ async function defineNotesIfNull() {
 }
 
 /**
- * Define local representation of notes and tags from file storage if they are not already defined.
+ * Define local representation of tags from file storage if tags is not already defined.
+ * @returns {object}
  */
 async function defineTagsIfNull() {
-  if (tags === null) {
+  if (tags == null) {
     try {
-      // Read tags from file storage
       tags = await fileStorage.readTagsFile();
     } catch (err) {
       console.error(err);
       throw new Error(`Unable to load tags from file system. ${err}`);
     }
   }
+  return tags;
 }
 
 /**
@@ -153,6 +178,7 @@ async function defineTagsIfNull() {
 async function updateFileStorage() {
   try {
     await fileStorage.updateNotesFile(notes);
+    await fileStorage.updateTagsFile(tags);
   } catch (err) {
     console.error(err);
     throw new Error(`Unable to save notes to file system. ${err}`);

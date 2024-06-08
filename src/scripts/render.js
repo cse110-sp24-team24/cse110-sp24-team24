@@ -64,7 +64,7 @@ function initializeNoteApp() {
   const tagColorButton = document.getElementById("tag-color");
 
   //Event Listener for clicking the create tag button
-  tagCreateButton.addEventListener("click", () => {
+  tagCreateButton.addEventListener("click", function () {
     addTag();
     //reset the color drop down to the first option
     tagColorButton.selectedIndex = 0;
@@ -77,6 +77,13 @@ function initializeNoteApp() {
     } else {
       hideTagDropdown();
     }
+  });
+
+  // Event listener for tag color
+  tagColorButton.addEventListener("change", (event) => {
+    console.log(noteTags.style.backgroundColor); // fine
+    console.log(event.target.value);
+    noteTags.style.backgroundColor = event.target.value;
   });
 
   const filterButton = document.getElementById("filterButton");
@@ -132,6 +139,12 @@ function initializeNoteApp() {
     }
   });
 
+  // Event listener to bring user back to list view of all notes and reset search fields
+  homeButton.addEventListener("click", () => {
+    searchInput.value = ""; // Clear search input
+    renderNotes(); // Render all notes
+  });
+
   /**
    * Show note editor that uses default params when adding new note,
    * and pass in existing note to edit existing one
@@ -156,7 +169,7 @@ function initializeNoteApp() {
     activeNoteID = note.ID;
     noteTitle.value = note.title;
     noteContent.innerHTML = note.content;
-    noteTags.value = note.tags;
+    tagList.value = note.tags;
     noteDate.value = note.date;
     noteEditor.classList.remove("hidden"); // Show the note editor
     tagList.innerHTML = "";
@@ -202,7 +215,7 @@ function initializeNoteApp() {
   function clearNoteEditor() {
     noteTitle.value = "";
     noteContent.innerHTML = "";
-    noteTags.value = "";
+    tagList.innerHTML = "";
     noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
     tagList.innerHTML = "";
   }
@@ -610,10 +623,7 @@ function initializeNoteApp() {
    */
   function addTag() {
     // retrieve tags from local storage
-    // tags = JSON.parse(localStorage.getItem("tags")) || [];
-
-    // retrieve tags from file
-    let tags = notesAPI.readTags();
+    const tags = notesAPI.readTags();
 
     // tag data based on user input
     const tagText = noteTags.value.trim();
@@ -650,9 +660,7 @@ function initializeNoteApp() {
     // Add the list item to the list
     tagList.appendChild(newTag);
 
-    tags.push({ content: tagText, color: tagColor });
-    // localStorage.setItem("tags", JSON.stringify(tags));
-    notesAPI.updateTags(tags);
+    notesAPI.createTag(tagText, tagColor);
 
     // Clear the input
     noteTags.value = "";
@@ -695,9 +703,7 @@ function initializeNoteApp() {
    * Load tags from local storage and populate the tag dropdown
    */
   function loadTags() {
-    let tags = notesAPI.readTags();
-
-    console.log(tags);
+    const tags = notesAPI.readTags();
     tagDropdownList.innerHTML = ""; // Clear existing items
 
     tags.forEach((tag) => {
@@ -715,13 +721,13 @@ function initializeNoteApp() {
    * @returns
    */
   function addTagFromDropdown(tag) {
-    let notes = notesAPI.readNotes();
+    const notes = notesAPI.readNotes();
     const currNote = notes[activeNoteID];
     console.log(tag);
     console.log(currNote);
     if (currNote) {
       currNote.tags.forEach((currTag) => {
-        if (currTag.content === tag.content) {
+        if (currTag.content === tag.content && currTag.color === tag.color) {
           return;
         }
       });
@@ -783,8 +789,8 @@ function initializeNoteApp() {
    * each one.
    */
   function loadFilterTags() {
+    const tags = notesAPI.readTags();
     filterDropdownList.innerHTML = ""; // Clear existing items
-    let tags = notesAPI.readTags();
 
     tags.forEach((tag) => {
       const tagItem = document.createElement("li");
