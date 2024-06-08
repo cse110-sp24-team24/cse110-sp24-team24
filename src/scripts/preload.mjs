@@ -14,6 +14,7 @@ contextBridge.exposeInMainWorld("notes", {
   updateNote,
   deleteNote,
   readTags,
+  updateTags,
 });
 
 /**
@@ -87,6 +88,22 @@ async function updateNote(noteID, title, content, tags, date) {
   };
   notes[newNote.ID] = newNote;
   updateFileStorage();
+}
+
+/**
+ * Update tags in the data file.
+ * @param {string[]} tagsArray Array of tags to be updated
+ */
+async function updateTags(tagsArray) {
+  await defineTagsIfNull();
+  try {
+    await fileStorage.updateTagsFile(tagsArray);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Unable to update tags in the file system. ${err}`);
+  }
+  // Update local tags variable
+  tags = tagsArray;
 }
 
 /**

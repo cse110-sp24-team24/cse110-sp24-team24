@@ -1,5 +1,11 @@
 const notesAPI = window.notes;
 let activeNoteID = null;
+
+// Define these globally
+let underlineButton,
+  italicButton,
+  boldButton;
+
 document.addEventListener("DOMContentLoaded", () => {
   initializeNoteApp();
 });
@@ -21,9 +27,9 @@ function initializeNoteApp() {
   cancelButton.addEventListener("click", hideNoteEditor);
 
   //Toolbar Elements
-  const underlineButton = document.getElementById("makeUnderlineButton");
-  const italicButton = document.getElementById("makeItalicButton");
-  const boldButton = document.getElementById("makeBoldButton");
+  underlineButton = document.getElementById("makeUnderlineButton");
+  italicButton = document.getElementById("makeItalicButton");
+  boldButton = document.getElementById("makeBoldButton");
   const insertCodeButton = document.getElementById("insertCodeBlockButton");
 
   underlineButton.addEventListener("click", function () {
@@ -90,6 +96,11 @@ function initializeNoteApp() {
   });
 
   const homeButton = document.getElementById("homeButton");
+  // Event listener to bring user back to list view of all notes and reset search fields
+  homeButton.addEventListener("click", () => {
+    searchInput.value = ""; // Clear search input
+    renderNotes(); // Render all notes
+  });
 
   //Shortcuts for keys
   document.addEventListener("DOMContentLoaded", function () {
@@ -119,12 +130,6 @@ function initializeNoteApp() {
     ) {
       hideFilterDropdown();
     }
-  });
-
-  // Event listener to bring user back to list view of all notes and reset search fields
-  homeButton.addEventListener("click", () => {
-    searchInput.value = ""; // Clear search input
-    renderNotes(notes); // Render all notes
   });
 
   /**
@@ -608,7 +613,7 @@ function initializeNoteApp() {
     // tags = JSON.parse(localStorage.getItem("tags")) || [];
 
     // retrieve tags from file
-    // tags = loadTagsFromFile();
+    let tags = notesAPI.readTags();
 
     // tag data based on user input
     const tagText = noteTags.value.trim();
@@ -647,7 +652,7 @@ function initializeNoteApp() {
 
     tags.push({ content: tagText, color: tagColor });
     // localStorage.setItem("tags", JSON.stringify(tags));
-    fileStorage.updateTagsFile(tags)
+    notesAPI.updateTags(tags);
 
     // Clear the input
     noteTags.value = "";
@@ -690,6 +695,8 @@ function initializeNoteApp() {
    * Load tags from local storage and populate the tag dropdown
    */
   function loadTags() {
+    let tags = notesAPI.readTags();
+
     console.log(tags);
     tagDropdownList.innerHTML = ""; // Clear existing items
 
@@ -708,6 +715,7 @@ function initializeNoteApp() {
    * @returns
    */
   function addTagFromDropdown(tag) {
+    let notes = notesAPI.readNotes();
     const currNote = notes[activeNoteID];
     console.log(tag);
     console.log(currNote);
@@ -776,6 +784,7 @@ function initializeNoteApp() {
    */
   function loadFilterTags() {
     filterDropdownList.innerHTML = ""; // Clear existing items
+    let tags = notesAPI.readTags();
 
     tags.forEach((tag) => {
       const tagItem = document.createElement("li");
