@@ -1,5 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
+/* setting for custom css properties */
+:root {
+  --primary-bg-color: #1e1e2f;
+  --secondary-bg-color: #2a2a40;
+  --primary-txt-color: #ffffff;
+  --secondary-txt-color: #e5e5e5;
+  --sub-txt-color: #bbbbbb;
+  --tag-txt-color: #777;
+  --content-placeholdertxt-color: #888;
+  --emphasis-txt-color: #ff00ff;
+  --focus-pointclick-color: #3d3d57;
+
+  --sidebar-border-color: #333;
+  --input-border-color: #555;
+  --note-border-color: #444;
+}
+
 /* General body styles */
 body {
   display: flex;
@@ -7,8 +24,8 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
-  background-color: #1e1e2f;
-  color: #e5e5e5;
+  background-color: var(--primary-bg-color);
+  color: var(--secondary-txt-color);
   font-size: 1.2rem; /* Base font size */
 }
 
@@ -22,7 +39,7 @@ body {
 .header-title h1 {
   margin: 0;
   font-size: 4rem;
-  color: #ffffff;
+  color: var(--primary-txt-color);
   letter-spacing: 0.2rem;
   animation: glow 2s ease-in-out infinite alternate;
 }
@@ -30,30 +47,30 @@ body {
 .header-title p {
   margin: 0.5rem 0 0 0;
   font-size: 1.6rem;
-  color: #bbbbbb;
+  color: var(--sub-txt-color);
 }
 
 /* Make the header glow */
 @keyframes glow {
   from {
     text-shadow:
-      0 0 0.625rem #ffffff,
-      0 0 1.25rem #ffffff,
-      0 0 1.875rem #ff00ff,
-      0 0 2.5rem #ff00ff,
-      0 0 3.125rem #ff00ff,
-      0 0 3.75rem #ff00ff,
-      0 0 4.375rem #ff00ff;
+      0 0 0.625rem var(--primary-txt-color),
+      0 0 1.25rem var(--primary-txt-color),
+      0 0 1.875rem var(--emphasis-txt-color),
+      0 0 2.5rem var(--emphasis-txt-color),
+      0 0 3.125rem var(--emphasis-txt-color),
+      0 0 3.75rem var(--emphasis-txt-color),
+      0 0 4.375rem var(--emphasis-txt-color);
   }
   to {
     text-shadow:
-      0 0 1.25rem #ffffff,
-      0 0 1.875rem #ff00ff,
-      0 0 2.5rem #ff00ff,
-      0 0 3.125rem #ff00ff,
-      0 0 3.75rem #ff00ff,
-      0 0 4.375rem #ff00ff,
-      0 0 5rem #ff00ff;
+      0 0 1.25rem var(--primary-txt-color),
+      0 0 1.875rem var(--emphasis-txt-color),
+      0 0 2.5rem var(--emphasis-txt-color),
+      0 0 3.125rem var(--emphasis-txt-color),
+      0 0 3.75rem var(--emphasis-txt-color),
+      0 0 4.375rem var(--emphasis-txt-color),
+      0 0 5rem var(--emphasis-txt-color);
   }
 }
 
@@ -71,19 +88,19 @@ body {
 /* Sidebar styles */
 .sidebar {
   width: 15rem;
-  background-color: #2a2a40;
-  color: #fff;
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-txt-color);
   display: flex;
   flex-direction: column;
   padding-top: 1.5rem;
-  border-right: 1px solid #333;
+  border-right: 1px solid var(--sidebar-border-color);
   box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.3);
 }
 
 .sidebar button {
   background: none;
   border: none;
-  color: #e5e5e5;
+  color: var(--secondary-txt-color);
   padding: 1rem;
   cursor: pointer;
   text-align: left;
@@ -96,8 +113,8 @@ body {
 
 .sidebar button:hover,
 .sidebar button:focus {
-  background-color: #3d3d57;
-  color: #ff00ff; /* Match pink glow */
+  background-color: var(--focus-pointclick-color);
+  color: var(--emphasis-txt-color); /* Match pink glow */
   transform: scale(1.1);
   outline: none;
 }
@@ -124,9 +141,9 @@ body {
   width: 80%;
   padding: 0.75rem;
   border-radius: 2rem;
-  border: 1px solid #555;
-  background-color: #2a2a40;
-  color: #e5e5e5;
+  border: 1px solid var(--input-border-color);
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-txt-color);
   font-size: 1.4rem;
   transition: width 0.3s ease-in-out;
   margin-right: 1rem;
@@ -182,8 +199,8 @@ body {
 
 /* Individual note styles */
 .note {
-  background-color: #2a2a40;
-  border: 1px solid #444;
+  background-color: var(--secondary-bg-color);
+  border: 1px solid var(--note-border-color);
   padding: 1.5rem;
   border-radius: 1rem;
   cursor: pointer;
@@ -196,13 +213,13 @@ body {
 
 .note h2 {
   margin: 0 0 0.75rem 0;
-  color: #ffffff;
+  color: var(--primary-txt-color);
   font-size: 1.8rem;
 }
 
 .note p {
   margin: 0 0 0.75rem 0;
-  color: #bbbbbb;
+  color: var(--sub-txt-color);
   font-size: 1.4rem;
   overflow: hidden;
   display: -webkit-box;
@@ -212,17 +229,17 @@ body {
 }
 
 .note small {
-  color: #777;
+  color: var(--tag-txt-color);
   font-size: 1.2rem;
 }
 
 .note:hover,
 .note:focus {
   transform: scale(1.02);
-  background-color: #3d3d57;
+  background-color: var(--focus-pointclick-color);
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   outline: none;
-  color: #ff00ff; /* Match pink glow */
+  color: var(--emphasis-txt-color); /* Match pink glow */
 }
 
 /* Note editor styles */
@@ -237,8 +254,8 @@ body {
   width: 80%;
   height: 80%;
   padding: 2rem;
-  background-color: #2a2a40;
-  border: 1px solid #444;
+  background-color: var(--secondary-bg-color);
+  border: 1px solid var(--note-border-color);
   border-radius: 1rem;
   z-index: 1000;
   display: flex;
@@ -258,7 +275,7 @@ body {
 .editor-toolbar button {
   background: none;
   border: none;
-  color: #e5e5e5;
+  color: var(--secondary-txt-color);
   padding: 0.75rem;
   cursor: pointer;
   font-size: 1.4rem;
@@ -269,7 +286,7 @@ body {
 
 .editor-toolbar button:hover,
 .editor-toolbar button:focus {
-  color: #ff00ff; /* Match pink glow */
+  color: var(--emphasis-txt-color); /* Match pink glow */
   transform: scale(1.1);
   outline: none;
 }
@@ -331,15 +348,16 @@ body {
 #tag-dropdown,
 #filterButton,
 #tag-create,
+/* General input styles in the note editor */
 #noteTitle,
 #noteDate,
 #noteTags,
 #noteContent {
   padding: 1rem;
-  border: 1px solid #555;
+  border: 1px solid var(--input-border-color);
   border-radius: 0.5rem;
-  background-color: #1e1e2f;
-  color: #e5e5e5;
+  background-color: var(--primary-bg-color);
+  color: var(--secondary-txt-color);
   font-size: 1.4rem;
 }
 
@@ -460,6 +478,87 @@ body {
   font-size: 0.9em;
 }
 
+/* note content styles */
+#contentContainer {
+  position: relative;
+  flex: 1; /* Make the container grow to fill available space */
+  display: flex;
+  flex-direction: column;
+}
+
+#noteContent {
+  flex: 1; /* Make the content area grow to fill available space */
+  width: 97.5%;
+  resize: none;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+#noteContent.placeholder {
+  color: var(--content-placeholdertxt-color); /* Style for placeholder text */
+}
+
+/* code block styles*/
+div:has(> pre > code) {
+  display: block;
+  background-color: black;
+  max-height: 250px;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+pre code {
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Floating toolbar styles */
+#floatingToolbar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(
+    --note-border-color
+  ); /* More contrasting background color */
+  border-top: 1px solid var(--input-border-color);
+  padding: 0.25rem; /* Smaller padding */
+  margin-top: 1rem; /* Add margin to position it below the content area */
+  z-index: 1001;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+#floatingToolbar button {
+  background: none;
+  border: none;
+  color: var(--secondary-txt-color);
+  padding: 0.25rem; /* Smaller padding */
+  cursor: pointer;
+  font-size: 1.2rem; /* Smaller font size */
+  transition:
+    transform 0.3s,
+    color 0.3s;
+}
+
+#floatingToolbar button:hover,
+#floatingToolbar button:focus {
+  color: var(--emphasis-txt-color); /* Match pink glow */
+  transform: scale(1.1);
+  outline: none;
+}
+
+#floatingToolbar button.on {
+  background: none;
+  border: none;
+  color: maroon;
+  padding: 0.25rem; /* Smaller padding */
+  cursor: pointer;
+  font-size: 1.2rem; /* Smaller font size */
+  transition:
+    transform 0.3s,
+    color 0.3s;
+  transform: scale(1.1);
+}
+
 /* Styles for the delete button in note */
 .note .note-header {
   display: flex;
@@ -470,7 +569,7 @@ body {
 .note .delete-note {
   background: none;
   border: none;
-  color: #e5e5e5;
+  color: var(--secondary-txt-color);
   cursor: pointer;
   font-size: 1.4rem;
   transition:
@@ -480,7 +579,7 @@ body {
 
 .note .delete-note:hover,
 .note .delete-note:focus {
-  color: #ff00ff; /* Match pink glow */
+  color: var(--emphasis-txt-color); /* Match pink glow */
   transform: scale(1.2);
   outline: none;
 }
@@ -558,4 +657,20 @@ body {
     bottom: 1rem;
     padding: 0.5rem;
   }
+}
+
+/* No script warning box */
+.noscript-warning {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffcccc;
+  color: #cc0000;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #cc0000;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  z-index: 1000;
 }
