@@ -19,12 +19,32 @@
     "lint-check": "npm run style:lint && npm run style:prettier",
     "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
-    "test": "jest",
-    "docs": "jsdoc -c conf.json"
+    "test": "jest"
   },
   "jest": {
     "preset": "jest-puppeteer",
     "verbose": true
+  },
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": [
+      "src/scripts"
+    ],
+    "exclude": [
+      "node_modules"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "destination": "./out",
+    "recurse": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
   },
   "type": "module",
   "name": "cse110-sp24-team24",
