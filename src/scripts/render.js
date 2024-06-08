@@ -476,4 +476,19 @@ function initializeNoteApp() {
 
   //render the notes on page load
   renderNotes();
+
+  return {
+    showNoteEditor,
+    hideNoteEditor,
+    clearNoteEditor,
+    saveActiveNote,
+    deleteActiveNote,
+    deleteNote,
+    renderNotes,
+    filterNotes,
+    createNoteElement,
+    getClosestAncestorEl,
+  };
 }
+
+module.exports = initializeNoteApp;

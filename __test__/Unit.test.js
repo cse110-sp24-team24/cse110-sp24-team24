@@ -41,18 +41,16 @@ window.notes = {
   deleteNote: jest.fn(),
 };
 
-const {
-  initializeNoteApp,
-  showNoteEditor,
-  hideNoteEditor,
-  clearNoteEditor,
-  saveActiveNote,
-  deleteActiveNote,
-  deleteNote,
-  renderNotes,
-  filterNotes,
-  createNoteElement,
-} = require("../src/scripts/render");
+const initializeNoteApp = require("../src/scripts/render");
+const noteApp = initializeNoteApp;
+const showNoteEditor = noteApp.showNoteEditor();
+const hideNoteEditor = noteApp.hideNoteEditor();
+const clearNoteEditor = noteApp.clearNoteEditor();
+const saveActiveNote = noteApp.saveActiveNote();
+const deleteActiveNote = noteApp.deleteActiveNote();
+const deleteNote = noteApp.deleteNote();
+const renderNotes = noteApp.renderNotes();
+const filterNotes = noteApp.filterNotes();
 
 beforeAll(() => {
   initializeNoteApp();
