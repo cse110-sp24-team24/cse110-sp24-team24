@@ -532,61 +532,50 @@ function initializeNoteApp() {
     return noteElement;
   }
 
-  /**
-   * Render notes to the notes container
-   * Renders all notes if no search filter, but can be filtered
-   * to reduce search.
-   * Appends notes to the notes container in the order of filtering,
-   * which is by title, then tags, then text
-   * each note displays all related text, as well as an edit and delete button
-   * @param {object[]} filteredTitleNotes
-   * @param {object[]} filteredTagNotes
-   * @param {object[]} filteredTextNotes
-   */
-  function renderNotes(
-    filteredTitleNotes = [],
-    filteredTagNotes = [],
-    filteredTextNotes = []
-  ) {
-    notesContainer.innerHTML = "<h2>Your Journals:</h2>";
+/**
+ * Render notes to the notes container
+ * Renders all notes if no search filter, but can be filtered
+ * to reduce search.
+ * Appends notes to the notes container in the order of filtering,
+ * which is by title, then text
+ * each note displays all related text, as well as an edit and delete button
+ * @param {object[]} filteredTitleNotes
+ * @param {object[]} filteredTextNotes
+ */
+function renderNotes(
+  filteredTitleNotes = [],
+  filteredTextNotes = []
+) {
+  notesContainer.innerHTML = "<h2>Your Journals:</h2>";
 
-    // Ensure notesAPI.readNotes() returns an array
-    if (!Array.isArray(filteredTitleNotes)) {
-      filteredTitleNotes = [];
-    }
-
-    if (!Array.isArray(filteredTagNotes)) {
-      filteredTagNotes = [];
-    }
-
-    if (!Array.isArray(filteredTextNotes)) {
-      filteredTextNotes = [];
-    }
-
-    if (
-      !filteredTitleNotes.length &&
-      !filteredTagNotes.length &&
-      !filteredTextNotes.length
-    ) {
-      filteredTitleNotes = notesAPI.readNotes();
-    }
-
-    const filteredNotes = filteredTitleNotes.filter((note) => {
-      filteredTagNotes.includes(note);
-    });
-
-    if (filteredNotes.length > 0) {
-      [...filteredNotes].forEach((note) => {
-        notesContainer.appendChild(createNoteElement(note));
-      });
-    }
-
-    [...filteredTitleNotes, ...filteredTagNotes, ...filteredTextNotes].forEach(
-      (note) => {
-        notesContainer.appendChild(createNoteElement(note));
-      }
-    );
+  // Ensure notesAPI.readNotes() returns an array
+  if (!Array.isArray(filteredTitleNotes)) {
+    filteredTitleNotes = [];
   }
+
+  if (!Array.isArray(filteredTextNotes)) {
+    filteredTextNotes = [];
+  }
+
+  if (
+    !filteredTitleNotes.length &&
+    !filteredTextNotes.length
+  ) {
+    filteredTitleNotes = notesAPI.readNotes();
+  }
+
+  if (filteredTitleNotes.length > 0) {
+    [...filteredTitleNotes].forEach((note) => {
+      notesContainer.appendChild(createNoteElement(note));
+    });
+  }
+
+  if (filteredTextNotes.length > 0) {
+    [...filteredTextNotes].forEach((note) => {
+      notesContainer.appendChild(createNoteElement(note));
+    });
+  }
+}
 
   /**
    * Filter notes based on search input
@@ -815,13 +804,40 @@ function initializeNoteApp() {
       const tagItem = document.createElement("li");
       tagItem.textContent = tag.content;
       tagItem.style.backgroundColor = tag.color;
-      tagItem.addEventListener("click", () => filterNotes(tagItem));
+      tagItem.addEventListener("click", () => filterNotesByTag(tagItem));
       filterDropdownList.appendChild(tagItem);
     });
   }
 
   //render the notes on page load
   renderNotes();
+
+  /**
+ * Filter the notes that are shown by a specific tag. Use the tag item that
+ * is passed in and extract the relevant data from it, and then filter
+ * using that data.
+ * @param {HTMLLIElement} selectedTag
+ */
+function filterNotesByTag(selectedTag) {
+  const notes = notesAPI.readNotes();
+  const filteredNotes = notes.filter((note) =>
+    note.tags.some(
+      (tag) =>
+        tag.content === selectedTag.textContent &&
+        tag.color === selectedTag.style.backgroundColor
+    )
+  );
+
+  if (filteredNotes.length === 0) {
+    notesContainer.innerHTML = `<h2>Your Journals:</h2>
+      <h3> There are no notes with this tag.</h3>`;
+  } else {
+    renderNotes(filteredNotes);
+  }
+
+  hideFilterDropdown();
+}
+
 
   return {
     showNoteEditor,
