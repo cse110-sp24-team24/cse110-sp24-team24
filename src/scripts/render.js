@@ -390,8 +390,8 @@ function createNoteElement(note) {
       <h2>${note.title}</h2>
       <button class="delete-note" aria-label="Delete Note">🗑️</button>
     </div>
-    <p>${note.content}</p>
-    <small>${note.date} - Tags: ${note.tags}</small>
+    
+    <small>${note.date} &nbsp &nbsp Tags: ${note.tags}</small>
   `;
   noteElement.querySelector("button").addEventListener("click", async (event) => {
     event.stopPropagation();
