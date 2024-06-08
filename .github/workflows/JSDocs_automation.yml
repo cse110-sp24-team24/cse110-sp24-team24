@@ -15,10 +15,11 @@ jobs:
       - name: JSDoc Action
         uses: andstor/jsdoc-action@v1.2.1
         with:
-          source_dir: ./src/scipts/fileStorage.js
+          source_dir: ./src/scipts
           recurse: true
           output_dir: ./out
           config_file: conf.json
+          template: minami
           front_page: README.md
 
       - name: Deploy
