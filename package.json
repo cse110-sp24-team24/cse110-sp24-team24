@@ -19,7 +19,7 @@
     "style:lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
     "test": "jest",
-    "docs": "jsdoc -c jsdoc.conf.json"
+    "docs": "jsdoc -c conf.json"
   },
   "jest": {
     "preset": "jest-puppeteer",
