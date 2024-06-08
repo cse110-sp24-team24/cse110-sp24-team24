@@ -2,9 +2,7 @@ const notesAPI = window.notes;
 let activeNoteID = null;
 
 // Define these globally
-let underlineButton,
-  italicButton,
-  boldButton;
+let boldButton, italicButton, underlineButton;
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeNoteApp();
@@ -518,7 +516,7 @@ function initializeNoteApp() {
         <button class="delete-note" aria-label="Delete Note">🗑️</button>
       </div>
       <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags}</small>
+      <small>${note.date}</small>
     `;
     noteElement.appendChild(tagsContainer);
     noteElement
