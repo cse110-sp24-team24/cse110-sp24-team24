@@ -1,15 +1,13 @@
+import fileStorage from "./fileStorage.js";
+
 const notesAPI = window.notes;
 let activeNoteID = null;
 
-// Array of JSON objects to store tags
-let tags = [
-  {
-    content: "",
-    color: "",
-  },
-];
+// Get notes from file
+let notes = fileStorage.readNotesFile();
 
-tags = JSON.parse(localStorage.getItem("tags")) || [];
+// Get tags from file
+let tags = fileStorage.readTagsFile();
 
 // Define these globally
 let boldButton, italicButton, underlineButton;
@@ -619,7 +617,10 @@ function initializeNoteApp() {
    */
   function addTag() {
     // retrieve tags from local storage
-    tags = JSON.parse(localStorage.getItem("tags")) || [];
+    // tags = JSON.parse(localStorage.getItem("tags")) || [];
+
+    // retrieve tags from file
+    // tags = loadTagsFromFile();
 
     // tag data based on user input
     const tagText = noteTags.value.trim();
@@ -657,7 +658,8 @@ function initializeNoteApp() {
     tagList.appendChild(newTag);
 
     tags.push({ content: tagText, color: tagColor });
-    localStorage.setItem("tags", JSON.stringify(tags));
+    // localStorage.setItem("tags", JSON.stringify(tags));
+    fileStorage.updateTagsFile(tags)
 
     // Clear the input
     noteTags.value = "";
@@ -718,7 +720,7 @@ function initializeNoteApp() {
    * @returns
    */
   function addTagFromDropdown(tag) {
-    const currNote = notes[editingNoteIndex];
+    const currNote = notes[activeNoteID];
     console.log(tag);
     console.log(currNote);
     if (currNote) {
@@ -785,7 +787,6 @@ function initializeNoteApp() {
    * each one.
    */
   function loadFilterTags() {
-    tags = JSON.parse(localStorage.getItem("tags")) || [];
     filterDropdownList.innerHTML = ""; // Clear existing items
 
     tags.forEach((tag) => {

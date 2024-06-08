@@ -7,6 +7,7 @@ import fs from "fs/promises";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
+const tagPath = path.join(__dirname, "../data/tag.json");
 
 /**
  * Save the notes to file storage.
@@ -35,4 +36,23 @@ async function readNotesFile() {
   }
 }
 
-export default { updateNotesFile, readNotesFile }; //access via import fileStorage from ./fileStorage.js
+async function updateTagsFile(tags) {
+  const tagsData = JSON.stringify(tags);
+  try {
+    await fs.writeFile(tagPath, tagsData);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function readTagsFile() {
+  try {
+    const tagsData = await fs.readFile(tagPath, "utf-8");
+    return JSON.parse(tagsData);
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export default { updateNotesFile, readNotesFile, updateTagsFile, readTagsFile }; //access via import fileStorage from ./fileStorage.js
