@@ -9,16 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: JSDoc Action
+        uses: andstor/jsdoc-action@v1.2.1
         with:
-          node-version: "14"
-
-      - name: Generate JSDocs
-        run: npm run docs
+          source_dir: ./src/scipts/fileStorage.js
+          recurse: true
+          output_dir: ./out
+          config_file: conf.json
+          front_page: README.md
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
