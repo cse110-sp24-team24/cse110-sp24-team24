@@ -65,6 +65,7 @@ async function createTag(content, color) {
 function readNotes() {
   return Object.values(notes);
 }
+
 /**
  * Return note based on noteID.
  * @param {string} noteID

@@ -101,6 +101,11 @@ function initializeNoteApp() {
   });
 
   const homeButton = document.getElementById("homeButton");
+  // Event listener to bring user back to list view of all notes and reset search fields
+  homeButton.addEventListener("click", () => {
+    searchInput.value = ""; // Clear search input
+    renderNotes(); // Render all notes
+  });
 
   //Shortcuts for keys
   document.addEventListener("DOMContentLoaded", function () {
@@ -130,12 +135,6 @@ function initializeNoteApp() {
     ) {
       hideFilterDropdown();
     }
-  });
-
-  // Event listener to bring user back to list view of all notes and reset search fields
-  homeButton.addEventListener("click", () => {
-    searchInput.value = ""; // Clear search input
-    renderNotes(); // Render all notes
   });
 
   /**
@@ -517,7 +516,7 @@ function initializeNoteApp() {
         <button class="delete-note" aria-label="Delete Note">🗑️</button>
       </div>
       <p>${note.content}</p>
-      <small>${note.date} - Tags: ${note.tags}</small>
+      <small>${note.date}</small>
     `;
     noteElement.appendChild(tagsContainer);
     noteElement
