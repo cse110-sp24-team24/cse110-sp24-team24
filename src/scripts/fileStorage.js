@@ -6,7 +6,8 @@ import fs from "fs/promises";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
+const notesDataPath = path.join(__dirname, "../data/notes.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
+const tagsDataPath = path.join(__dirname, "../data/tags.json");
 
 /**
  * Save the notes to file storage.
@@ -15,7 +16,7 @@ const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should
 async function updateNotesFile(notes) {
   const jsonData = JSON.stringify(notes);
   try {
-    await fs.writeFile(dataPath + "/notes", jsonData);
+    await fs.writeFile(notesDataPath, jsonData);
   } catch (error) {
     console.error(error);
   }
@@ -27,7 +28,7 @@ async function updateNotesFile(notes) {
  */
 async function readNotesFile() {
   try {
-    const data = await fs.readFile(dataPath + "/notes", "utf-8");
+    const data = await fs.readFile(notesDataPath, "utf-8");
     return JSON.parse(data);
   } catch (error) {
     console.error(error);
@@ -42,7 +43,7 @@ async function readNotesFile() {
 async function updateTagsFile(tags) {
   const jsonData = JSON.stringify(tags);
   try {
-    await fs.writeFile(dataPath + "/tags", jsonData);
+    await fs.writeFile(tagsDataPath, jsonData);
   } catch (error) {
     console.error(error);
   }
@@ -54,7 +55,7 @@ async function updateTagsFile(tags) {
  */
 async function readTagsFile() {
   try {
-    const data = await fs.readFile(dataPath + "/tags", "utf-8");
+    const data = await fs.readFile(tagsDataPath, "utf-8");
     return JSON.parse(data);
   } catch (error) {
     console.error(error);

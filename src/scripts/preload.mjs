@@ -141,7 +141,7 @@ async function defineTagsIfNull() {
       throw new Error(`Unable to load tags from file system. ${err}`);
     }
   }
-  return notes;
+  return tags;
 }
 
 /**
