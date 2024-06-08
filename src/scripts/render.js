@@ -60,16 +60,15 @@ function initializeNoteApp() {
   renderNotes();
 }
 
+// clears notes array (for testing)
+function clearNotes() {
+  notes = [];
+}
 
-  // clears notes array (for testing)
-  function clearNotes() {
-    notes = [];
-  }
-
-  //returns notes array (for testing)
-  function getNotes() {
-    return notes;
-  }
+//returns notes array (for testing)
+function getNotes() {
+  return notes;
+}
 
 /**
  * Show note editor that uses default params when adding new note,
@@ -389,7 +388,7 @@ async function deleteNote(noteID) {
 
 /**
  * Create a DOM element for a given note.
- * 
+ *
  * @param {object} note - The note object containing the note's data.
  * @returns {HTMLElement} The created DOM element representing the note.
  */
@@ -404,16 +403,18 @@ function createNoteElement(note) {
     <p>${note.content}</p>
     <small>${note.date} - Tags: ${note.tags}</small>
   `;
-  noteElement.querySelector("button").addEventListener("click", async (event) => {
-    event.stopPropagation();
-    await deleteNote(note.ID);
-  });
+  noteElement
+    .querySelector("button")
+    .addEventListener("click", async (event) => {
+      event.stopPropagation();
+      await deleteNote(note.ID);
+    });
   noteElement.addEventListener("click", () => {
     showNoteEditor(note); // Edit note on click
   });
   return noteElement;
 }
-  
+
 /**
  * Render notes to the notes container
  * Renders all notes if no search filter, but can be filtered
@@ -425,7 +426,11 @@ function createNoteElement(note) {
  * @param {object[]} filteredTagNotes
  * @param {object[]} filteredTextNotes
  */
-function renderNotes(filteredTitleNotes = [], filteredTagNotes = [], filteredTextNotes = []) {
+function renderNotes(
+  filteredTitleNotes = [],
+  filteredTagNotes = [],
+  filteredTextNotes = []
+) {
   notesContainer.innerHTML = "<h2>Your Journals:</h2>";
 
   // Ensure notesAPI.readNotes() returns an array
@@ -441,13 +446,19 @@ function renderNotes(filteredTitleNotes = [], filteredTagNotes = [], filteredTex
     filteredTextNotes = [];
   }
 
-  if (!filteredTitleNotes.length && !filteredTagNotes.length && !filteredTextNotes.length) {
+  if (
+    !filteredTitleNotes.length &&
+    !filteredTagNotes.length &&
+    !filteredTextNotes.length
+  ) {
     filteredTitleNotes = notesAPI.readNotes();
   }
 
-  [...filteredTitleNotes, ...filteredTagNotes, ...filteredTextNotes].forEach(note => {
-    notesContainer.appendChild(createNoteElement(note));
-  });
+  [...filteredTitleNotes, ...filteredTagNotes, ...filteredTextNotes].forEach(
+    (note) => {
+      notesContainer.appendChild(createNoteElement(note));
+    }
+  );
 }
 
 /**
@@ -492,6 +503,5 @@ module.exports = {
   renderNotes,
   filterNotes,
   createNoteElement,
-  getClosestAncestorEl
+  getClosestAncestorEl,
 };
-
