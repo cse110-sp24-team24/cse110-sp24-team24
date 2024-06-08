@@ -1,6 +1,16 @@
 const notesAPI = window.notes;
 let activeNoteID = null;
 
+// Array of JSON objects to store tags
+let tags = [
+  {
+    content: "",
+    color: "",
+  },
+];
+
+tags = JSON.parse(localStorage.getItem("tags")) || [];
+
 // Define these globally
 let boldButton, italicButton, underlineButton;
 
@@ -52,6 +62,85 @@ function initializeNoteApp() {
   addNoteButton.addEventListener("click", () => showNoteEditor());
   searchInput.addEventListener("input", filterNotes);
 
+  const tagCreateButton = document.getElementById("tag-create");
+  const tagList = document.getElementById("tag-list");
+  const tagDropdownButton = document.getElementById("tag-dropdown");
+  const tagDropdownContainer = document.getElementById(
+    "tag-dropdown-container"
+  );
+  const tagDropdownList = document.getElementById("tag-dropdown-list");
+  const tagColorButton = document.getElementById("tag-color");
+
+  //Event Listener for clicking the create tag button
+  tagCreateButton.addEventListener("click", () => {
+    addTag();
+    //reset the color drop down to the first option
+    tagColorButton.selectedIndex = 0;
+  });
+
+  //Event Listener for clicking tag dropdown button
+  tagDropdownButton.addEventListener("click", () => {
+    if (tagDropdownContainer.classList.contains("hidden")) {
+      showTagDropdown();
+    } else {
+      hideTagDropdown();
+    }
+  });
+
+  const filterButton = document.getElementById("filterButton");
+  const filterDropdownContainer = document.getElementById(
+    "filter-dropdown-container"
+  );
+  const filterDropdownList = document.getElementById("filter-dropdown-list");
+
+  // Event listener to display or hide the filter dropdown
+  filterButton.addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent click event from propagating
+    if (filterDropdownContainer.classList.contains("hidden")) {
+      showFilterDropdown();
+    } else {
+      hideFilterDropdown();
+    }
+  });
+
+  const homeButton = document.getElementById("homeButton");
+
+  //Shortcuts for keys
+  document.addEventListener("DOMContentLoaded", function () {
+    //Shorcut "Enter" to add tag on click
+    noteTags.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        addTag();
+      }
+    });
+  });
+
+  // Event listener to hide the tag dropdown if the user clicks outside
+  document.addEventListener("click", (event) => {
+    if (
+      !tagDropdownContainer.contains(event.target) &&
+      !tagDropdownButton.contains(event.target)
+    ) {
+      hideTagDropdown();
+    }
+  });
+
+  // Event listener to hide the filter dropdown if the user clicks outside
+  document.addEventListener("click", (event) => {
+    if (
+      !filterDropdownContainer.contains(event.target) &&
+      !filterButton.contains(event.target)
+    ) {
+      hideFilterDropdown();
+    }
+  });
+
+  // Event listener to bring user back to list view of all notes and reset search fields
+  homeButton.addEventListener("click", () => {
+    searchInput.value = ""; // Clear search input
+    renderNotes(notes); // Render all notes
+  });
+
   /**
    * Show note editor that uses default params when adding new note,
    * and pass in existing note to edit existing one
@@ -64,7 +153,12 @@ function initializeNoteApp() {
       ID: null,
       title: "",
       content: "",
-      tags: "",
+      tags: [
+        {
+          content: "",
+          color: "",
+        },
+      ],
       date: new Date().toISOString().substring(0, 10),
     }
   ) {
@@ -74,6 +168,27 @@ function initializeNoteApp() {
     noteTags.value = note.tags;
     noteDate.value = note.date;
     noteEditor.classList.remove("hidden"); // Show the note editor
+    tagList.innerHTML = "";
+
+    // grab the prevoiusly added tags and repopulate if you are editing a note with tags already
+    note.tags.forEach((tag) => {
+      if (tag.content.trim() !== "") {
+        const tagItem = document.createElement("li");
+        tagItem.textContent = tag.content;
+        tagItem.style.backgroundColor = tag.color;
+        // tag.content, tag.color
+
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-tag-button";
+        removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+        removeButton.addEventListener("click", () =>
+          removeTag(tagItem, tag.content)
+        );
+
+        tagItem.appendChild(removeButton);
+        tagList.appendChild(tagItem);
+      }
+    });
   }
 
   /**
@@ -98,6 +213,7 @@ function initializeNoteApp() {
     noteContent.innerHTML = "";
     noteTags.value = "";
     noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
+    tagList.innerHTML = "";
   }
 
   /**
@@ -321,11 +437,21 @@ function initializeNoteApp() {
   async function saveActiveNote() {
     const title = noteTitle.value.trim();
     const content = noteContent.innerHTML.trim();
-    const tags = noteTags.value.trim();
+    const tags = Array.from(tagList.getElementsByTagName("li")).map((li) => {
+      return {
+        content: li.childNodes[0].textContent.trim(),
+        color: li.style.backgroundColor,
+      };
+    });
     const date = noteDate.value;
 
     if (!title || !content) {
       alert("Title and content cannot be empty.");
+      return;
+    }
+
+    if (noteTags.value !== "") {
+      alert("You should add the tag first.");
       return;
     }
 
@@ -377,6 +503,17 @@ function initializeNoteApp() {
   function createNoteElement(note) {
     const noteElement = document.createElement("div");
     noteElement.className = "note";
+
+    const tagsContainer = document.createElement("div");
+    tagsContainer.className = "tags-container";
+    note.tags.forEach((tag) => {
+      const tagElement = document.createElement("span");
+      tagElement.className = "tag";
+      tagElement.textContent = tag.content;
+      tagElement.style.backgroundColor = tag.color;
+      tagsContainer.appendChild(tagElement);
+    });
+
     noteElement.innerHTML = `
       <div class="note-header">
         <h2>${note.title}</h2>
@@ -385,6 +522,7 @@ function initializeNoteApp() {
       <p>${note.content}</p>
       <small>${note.date} - Tags: ${note.tags}</small>
     `;
+    noteElement.appendChild(tagsContainer);
     noteElement
       .querySelector("button")
       .addEventListener("click", async (event) => {
@@ -472,6 +610,191 @@ function initializeNoteApp() {
 
     // Render filtered notes
     renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
+  }
+
+  /**  Adds a tag to the note tags list
+   * Tags are stored in the tags array, and are displayed in the tag list
+   * The background color is also set from reading fromt he select tag color
+   * Clear the input box of the tag, upon asdding the tag
+   */
+  function addTag() {
+    // retrieve tags from local storage
+    tags = JSON.parse(localStorage.getItem("tags")) || [];
+
+    // tag data based on user input
+    const tagText = noteTags.value.trim();
+    const tagColor = noteTags.style.backgroundColor;
+    if (tagText === "") {
+      alert("Tag input cannot be empty if you want to add a tag.");
+      return;
+    }
+
+    // check for tag duplication
+    if (tags.some((tag) => tag.content === tagText && tag.color === tagColor)) {
+      alert("Cannot add duplicate tag.");
+      return;
+    }
+
+    // Add event listener to the add button
+    const newTag = document.createElement("li");
+
+    // Set the list item's content to the input's value
+    newTag.textContent = tagText;
+
+    // Set background COLOR
+    newTag.style.backgroundColor = tagColor;
+
+    // Create a remove button to remove the tag
+    const removeButton = document.createElement("button");
+    removeButton.className = "remove-tag-button";
+    removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+    removeButton.addEventListener("click", () => removeTag(newTag, tagText));
+
+    // Add the button to the tag list item
+    newTag.appendChild(removeButton);
+
+    // Add the list item to the list
+    tagList.appendChild(newTag);
+
+    tags.push({ content: tagText, color: tagColor });
+    localStorage.setItem("tags", JSON.stringify(tags));
+
+    // Clear the input
+    noteTags.value = "";
+    // Clear color of input box for tags
+    noteTags.style.backgroundColor = "";
+
+    /** reset tag color choice */
+    const resetTagColor = document.querySelector("form");
+    resetTagColor.reset();
+  }
+
+  /**
+   * Remove the tag element from the DOM
+   * @param {Element} tagElement
+   */
+  function removeTag(tagElement) {
+    tagElement.remove();
+  }
+
+  /**
+   * Shows the tag dropdown
+   * upon clicking the arrow button changes the icon to up arrow
+   */
+  function showTagDropdown() {
+    tagDropdownContainer.classList.remove("hidden");
+    tagDropdownButton.innerHTML = "&#9652;"; // Change icon to up arrow
+    loadTags();
+  }
+
+  /**
+   * Hides the tag dropdown
+   * Upon clicking the arrow button changes the icon to down arrow
+   */
+  function hideTagDropdown() {
+    tagDropdownContainer.classList.add("hidden");
+    tagDropdownButton.innerHTML = "&#9662;"; // Change icon to down arrow
+  }
+
+  /**
+   * Load tags from local storage and populate the tag dropdown
+   */
+  function loadTags() {
+    console.log(tags);
+    tagDropdownList.innerHTML = ""; // Clear existing items
+
+    tags.forEach((tag) => {
+      const tagItem = document.createElement("li");
+      tagItem.textContent = tag.content;
+      tagItem.style.backgroundColor = tag.color;
+      tagItem.addEventListener("click", () => addTagFromDropdown(tag));
+      tagDropdownList.appendChild(tagItem);
+    });
+  }
+
+  /**
+   * Adds the tag fromt he drop down list and populate the tag list
+   * @param {string} tag
+   * @returns
+   */
+  function addTagFromDropdown(tag) {
+    const currNote = notes[editingNoteIndex];
+    console.log(tag);
+    console.log(currNote);
+    if (currNote) {
+      currNote.tags.forEach((currTag) => {
+        if (currTag.content === tag.content) {
+          return;
+        }
+      });
+    }
+
+    if (
+      Array.from(tagList.getElementsByTagName("li")).some(
+        (li) =>
+          li.childNodes[0].textContent.trim() === tag.content &&
+          li.style.backgroundColor === tag.color
+      )
+    ) {
+      alert("Cannot add duplicate tag.");
+      return;
+    }
+    const tagItem = document.createElement("li");
+    tagItem.textContent = tag.content;
+    tagItem.style.backgroundColor = tag.color;
+
+    // Create a remove button to remove the tag
+    const removeButton = document.createElement("button");
+    removeButton.className = "remove-tag-button";
+    removeButton.innerHTML = "&#10005;"; // Unicode for "X"
+    removeButton.addEventListener("click", () =>
+      removeTag(tagItem, tagItem.textContent)
+    );
+
+    // Add the button to the tag list item
+    tagItem.appendChild(removeButton);
+    tagList.appendChild(tagItem);
+
+    //localStorage.setItem("notes", JSON.stringify(notes));
+    hideTagDropdown();
+  }
+
+  /**
+   * Shows the filter dropdown (trigerred by event listener)
+   */
+  function showFilterDropdown() {
+    filterDropdownContainer.classList.remove("hidden");
+    filterDropdownContainer.classList.add("visible");
+    filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
+    loadFilterTags();
+  }
+
+  /**
+   * This function hides the filter dropdown
+   * (trigerred by event listener)
+   */
+  function hideFilterDropdown() {
+    filterDropdownContainer.classList.add("hidden");
+    filterDropdownContainer.classList.remove("visible");
+    filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
+  }
+
+  /**
+   * Load all the tags into the filter, called by showFilterDropdown() when user
+   * clicks on dropdown button. Gets all the tags and creates a list item for
+   * each one.
+   */
+  function loadFilterTags() {
+    tags = JSON.parse(localStorage.getItem("tags")) || [];
+    filterDropdownList.innerHTML = ""; // Clear existing items
+
+    tags.forEach((tag) => {
+      const tagItem = document.createElement("li");
+      tagItem.textContent = tag.content;
+      tagItem.style.backgroundColor = tag.color;
+      tagItem.addEventListener("click", () => filterNotes());
+      filterDropdownList.appendChild(tagItem);
+    });
   }
 
   //render the notes on page load
