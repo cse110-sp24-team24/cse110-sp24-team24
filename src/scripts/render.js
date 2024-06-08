@@ -1,17 +1,5 @@
-import fileStorage from "./fileStorage.js";
-
 const notesAPI = window.notes;
 let activeNoteID = null;
-
-// Get notes from file
-let notes = fileStorage.readNotesFile();
-
-// Get tags from file
-let tags = fileStorage.readTagsFile();
-
-// Define these globally
-let boldButton, italicButton, underlineButton;
-
 document.addEventListener("DOMContentLoaded", () => {
   initializeNoteApp();
 });
@@ -33,9 +21,9 @@ function initializeNoteApp() {
   cancelButton.addEventListener("click", hideNoteEditor);
 
   //Toolbar Elements
-  underlineButton = document.getElementById("makeUnderlineButton");
-  italicButton = document.getElementById("makeItalicButton");
-  boldButton = document.getElementById("makeBoldButton");
+  const underlineButton = document.getElementById("makeUnderlineButton");
+  const italicButton = document.getElementById("makeItalicButton");
+  const boldButton = document.getElementById("makeBoldButton");
   const insertCodeButton = document.getElementById("insertCodeBlockButton");
 
   underlineButton.addEventListener("click", function () {

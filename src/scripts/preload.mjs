@@ -4,6 +4,7 @@ import { contextBridge } from "electron";
 
 
 let notes = null;
+let tags = null;
 await defineNotesIfNull();
 // Provide context bridge to expose file to render.js
 contextBridge.exposeInMainWorld("notes", {
@@ -12,6 +13,7 @@ contextBridge.exposeInMainWorld("notes", {
   readNote,
   updateNote,
   deleteNote,
+  readTags,
 });
 
 /**
@@ -35,6 +37,7 @@ function generateID() {
  */
 async function createNote(title, content, tags, date) {
   defineNotesIfNull();
+  defineTagsIfNull();
   let newID = generateID();
   await updateNote(newID, title, content, tags, date);
   return newID;
@@ -47,6 +50,15 @@ async function createNote(title, content, tags, date) {
 function readNotes() {
   return Object.values(notes);
 }
+
+/**
+ * Return all tags.
+ * @returns {string[]}
+ */
+function readTags() {
+  return tags;
+}
+
 /**
  * Return note based on noteID.
  * @param {string} noteID
@@ -101,6 +113,21 @@ async function defineNotesIfNull() {
     }
   }
   return notes;
+}
+
+/**
+ * Define local representation of notes and tags from file storage if they are not already defined.
+ */
+async function defineTagsIfNull() {
+  if (tags === null) {
+    try {
+      // Read tags from file storage
+      tags = await fileStorage.readTagsFile();
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Unable to load tags from file system. ${err}`);
+    }
+  }
 }
 
 /**
