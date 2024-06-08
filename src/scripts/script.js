@@ -86,7 +86,7 @@ boldButton.addEventListener("click", function () {
 });
 
 //Event Listener for clicking the create tag button
-tagCreateButton.addEventListener("click", () => {
+tagCreateButton.addEventListener("click", function () {
   addTag();
   //reset the color drop down to the first option
   tagColorButton.selectedIndex = 0;
