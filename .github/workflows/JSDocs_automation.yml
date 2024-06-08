@@ -15,7 +15,7 @@ jobs:
       - name: JSDoc Action
         uses: andstor/jsdoc-action@v1.2.1
         with:
-          source_dir: ./src/scipts
+          source_dir: ./src/scripts
           recurse: true
           output_dir: ./out
           config_file: conf.json
