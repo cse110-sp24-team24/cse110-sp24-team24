@@ -635,7 +635,11 @@ function renderNotes(
 
     // check for tag duplication
     if (tags.some((tag) => tag.content === tagText && tag.color === tagColor)) {
-      alert("Cannot add duplicate tag.");
+      alert("Tag already exists in the dropdown box");
+      return;
+    }
+    if(tags.some((tag) => tag.content === tagText)){
+      alert("Tag contains the same content, check drop down box");
       return;
     }
 
