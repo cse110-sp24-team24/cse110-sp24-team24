@@ -533,51 +533,50 @@ function initializeNoteApp() {
     return noteElement;
   }
 
-  /**
-   * Render notes to the notes container
-   * Renders all notes if no search filter, but can be filtered
-   * to reduce search.
-   * Appends notes to the notes container in the order of filtering,
-   * which is by title, then tags, then text
-   * each note displays all related text, as well as an edit and delete button
-   * @param {object[]} filteredTitleNotes
-   * @param {object[]} filteredTagNotes
-   * @param {object[]} filteredTextNotes
-   */
-  function renderNotes(
-    filteredTitleNotes = [],
-    filteredTagNotes = [],
-    filteredTextNotes = []
-  ) {
-    notesContainer.innerHTML = "<h2>Your Journals:</h2>";
+/**
+ * Render notes to the notes container
+ * Renders all notes if no search filter, but can be filtered
+ * to reduce search.
+ * Appends notes to the notes container in the order of filtering,
+ * which is by title, then text
+ * each note displays all related text, as well as an edit and delete button
+ * @param {object[]} filteredTitleNotes
+ * @param {object[]} filteredTextNotes
+ */
+function renderNotes(
+  filteredTitleNotes = [],
+  filteredTextNotes = []
+) {
+  notesContainer.innerHTML = "<h2>Your Journals:</h2>";
 
-    // Ensure notesAPI.readNotes() returns an array
-    if (!Array.isArray(filteredTitleNotes)) {
-      filteredTitleNotes = [];
-    }
-
-    if (!Array.isArray(filteredTagNotes)) {
-      filteredTagNotes = [];
-    }
-
-    if (!Array.isArray(filteredTextNotes)) {
-      filteredTextNotes = [];
-    }
-
-    if (
-      !filteredTitleNotes.length &&
-      !filteredTagNotes.length &&
-      !filteredTextNotes.length
-    ) {
-      filteredTitleNotes = notesAPI.readNotes();
-    }
-
-    [...filteredTitleNotes, ...filteredTagNotes, ...filteredTextNotes].forEach(
-      (note) => {
-        notesContainer.appendChild(createNoteElement(note));
-      }
-    );
+  // Ensure notesAPI.readNotes() returns an array
+  if (!Array.isArray(filteredTitleNotes)) {
+    filteredTitleNotes = [];
   }
+
+  if (!Array.isArray(filteredTextNotes)) {
+    filteredTextNotes = [];
+  }
+
+  if (
+    !filteredTitleNotes.length &&
+    !filteredTextNotes.length
+  ) {
+    filteredTitleNotes = notesAPI.readNotes();
+  }
+
+  if (filteredTitleNotes.length > 0) {
+    [...filteredTitleNotes].forEach((note) => {
+      notesContainer.appendChild(createNoteElement(note));
+    });
+  }
+
+  if (filteredTextNotes.length > 0) {
+    [...filteredTextNotes].forEach((note) => {
+      notesContainer.appendChild(createNoteElement(note));
+    });
+  }
+}
 
   /**
    * Filter notes based on search input
@@ -587,18 +586,25 @@ function initializeNoteApp() {
    * this occurs on input of search filter change, and new notes are automatically
    * rendered after filtering
    */
-  function filterNotes() {
+  function filterNotes(tagItem) {
     const query = searchInput.value.toLowerCase();
     const notes = notesAPI.readNotes();
 
     let filteredTitleNotes = notes.filter((note) =>
       note.title.toLowerCase().includes(query)
     );
-    let filteredTagNotes = notes.filter(
-      (note) =>
-        note.tags.toLowerCase().includes(query) &&
-        !filteredTitleNotes.includes(note)
-    );
+
+    let filteredTagNotes = notes;
+    if (tagItem) {
+      filteredTagNotes = notes.filter((note) =>
+        note.tags.some(
+          (tag) =>
+            tag.content === tagItem.textContent &&
+            tag.color === tagItem.style.backgroundColor
+        )
+      );
+    }
+
     let filteredTextNotes = notes.filter(
       (note) =>
         note.content.toLowerCase().includes(query) &&
@@ -608,6 +614,7 @@ function initializeNoteApp() {
 
     // Render filtered notes
     renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
+    hideFilterDropdown();
   }
 
   /**  Adds a tag to the note tags list
@@ -615,7 +622,7 @@ function initializeNoteApp() {
    * The background color is also set from reading fromt he select tag color
    * Clear the input box of the tag, upon asdding the tag
    */
-  function addTag() {
+  async function addTag() {
     // retrieve tags from local storage
     const tags = notesAPI.readTags();
 
@@ -654,7 +661,11 @@ function initializeNoteApp() {
     // Add the list item to the list
     tagList.appendChild(newTag);
 
-    notesAPI.createTag(tagText, tagColor);
+    try {
+      await notesAPI.createTag(tagText, tagColor);
+    } catch (error) {
+      console.error("Error save tag", error);
+    }
 
     // Clear the input
     noteTags.value = "";
@@ -761,10 +772,12 @@ function initializeNoteApp() {
    * Shows the filter dropdown (trigerred by event listener)
    */
   function showFilterDropdown() {
-    filterDropdownContainer.classList.remove("hidden");
-    filterDropdownContainer.classList.add("visible");
-    filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
-    loadFilterTags();
+    if (filterDropdownContainer.classList.contains("hidden")) {
+      filterDropdownContainer.classList.remove("hidden");
+      filterDropdownContainer.classList.add("visible");
+      filterButton.innerHTML = "&#9652;"; // Change icon to up arrow
+      loadFilterTags();
+    }
   }
 
   /**
@@ -772,9 +785,11 @@ function initializeNoteApp() {
    * (trigerred by event listener)
    */
   function hideFilterDropdown() {
-    filterDropdownContainer.classList.add("hidden");
-    filterDropdownContainer.classList.remove("visible");
-    filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
+    if (filterDropdownContainer.classList.contains("visible")) {
+      filterDropdownContainer.classList.add("hidden");
+      filterDropdownContainer.classList.remove("visible");
+      filterButton.innerHTML = "&#9662;"; // Change icon to filter icon
+    }
   }
 
   /**
@@ -790,13 +805,40 @@ function initializeNoteApp() {
       const tagItem = document.createElement("li");
       tagItem.textContent = tag.content;
       tagItem.style.backgroundColor = tag.color;
-      tagItem.addEventListener("click", () => filterNotes());
+      tagItem.addEventListener("click", () => filterNotesByTag(tagItem));
       filterDropdownList.appendChild(tagItem);
     });
   }
 
   //render the notes on page load
   renderNotes();
+
+  /**
+ * Filter the notes that are shown by a specific tag. Use the tag item that
+ * is passed in and extract the relevant data from it, and then filter
+ * using that data.
+ * @param {HTMLLIElement} selectedTag
+ */
+function filterNotesByTag(selectedTag) {
+  const notes = notesAPI.readNotes();
+  const filteredNotes = notes.filter((note) =>
+    note.tags.some(
+      (tag) =>
+        tag.content === selectedTag.textContent &&
+        tag.color === selectedTag.style.backgroundColor
+    )
+  );
+
+  if (filteredNotes.length === 0) {
+    notesContainer.innerHTML = `<h2>Your Journals:</h2>
+      <h3> There are no notes with this tag.</h3>`;
+  } else {
+    renderNotes(filteredNotes);
+  }
+
+  hideFilterDropdown();
+}
+
 
   return {
     showNoteEditor,

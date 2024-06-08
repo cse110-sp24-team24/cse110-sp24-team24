@@ -54,7 +54,7 @@ async function createTag(content, color) {
     content: content,
     color: color,
   };
-  tags.append(newTag);
+  tags[content] = newTag;
   updateFileStorage();
 }
 
@@ -88,8 +88,8 @@ function readTags() {
  * @param {string} noteID
  * @param {string} title
  * @param {string} content
- * @param {string} tags
- * @param {obejct} date
+ * @param {object} tags
+ * @param {object} date
  */
 async function updateNote(noteID, title, content, tags, date) {
   defineNotesIfNull();
