@@ -1,8 +1,8 @@
 const notesAPI = window.notes;
 let activeNoteID = null;
 
-// Define these globally
-let boldButton, italicButton, underlineButton;
+// Declare variables in the global scope
+let noteEditor, noteTitle, noteContent, noteTags, noteDate, saveNoteButton, deleteNoteButton, cancelButton, insertCodeButton, addNoteButton, searchInput, notesContainer;
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeNoteApp();
@@ -11,14 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeNoteApp() {
   // Get DOM elements
   //Note Editor Elements
-  const noteEditor = document.getElementById("noteEditor");
-  const noteTitle = document.getElementById("noteTitle");
-  const noteContent = document.getElementById("noteContent");
-  const noteTags = document.getElementById("noteTags");
-  const noteDate = document.getElementById("noteDate");
-  const saveNoteButton = document.getElementById("saveNoteButton");
-  const deleteNoteButton = document.getElementById("deleteNoteButton");
-  const cancelButton = document.getElementById("cancelButton");
+  noteEditor = document.getElementById("noteEditor");
+  noteTitle = document.getElementById("noteTitle");
+  noteContent = document.getElementById("noteContent");
+  noteTags = document.getElementById("noteTags");
+  noteDate = document.getElementById("noteDate");
+  saveNoteButton = document.getElementById("saveNoteButton");
+  deleteNoteButton = document.getElementById("deleteNoteButton");
+  cancelButton = document.getElementById("cancelButton");
 
   saveNoteButton.addEventListener("click", saveActiveNote);
   deleteNoteButton.addEventListener("click", deleteActiveNote);
@@ -28,7 +28,7 @@ function initializeNoteApp() {
   underlineButton = document.getElementById("makeUnderlineButton");
   italicButton = document.getElementById("makeItalicButton");
   boldButton = document.getElementById("makeBoldButton");
-  const insertCodeButton = document.getElementById("insertCodeBlockButton");
+  insertCodeButton = document.getElementById("insertCodeBlockButton");
 
   underlineButton.addEventListener("click", function () {
     applyStyle("underline");
@@ -44,9 +44,9 @@ function initializeNoteApp() {
   noteContent.addEventListener("focus", loadStyle);
 
   //Other Elements
-  const addNoteButton = document.getElementById("addNoteButton");
-  const searchInput = document.getElementById("searchInput");
-  const notesContainer = document.getElementById("notesContainer");
+  addNoteButton = document.getElementById("addNoteButton");
+  searchInput = document.getElementById("searchInput");
+  notesContainer = document.getElementById("notesContainer");
 
   addNoteButton.addEventListener("click", () => showNoteEditor());
   searchInput.addEventListener("input", filterNotes);
@@ -59,17 +59,6 @@ function initializeNoteApp() {
 
   renderNotes();
 }
-
-
-  // clears notes array (for testing)
-  function clearNotes() {
-    notes = [];
-  }
-
-  //returns notes array (for testing)
-  function getNotes() {
-    return notes;
-  }
 
 /**
  * Show note editor that uses default params when adding new note,
