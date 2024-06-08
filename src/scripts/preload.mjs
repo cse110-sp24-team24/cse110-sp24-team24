@@ -55,6 +55,7 @@ async function createTag(content, color) {
     color: color,
   };
   tags.append(newTag);
+  updateFileStorage();
 }
 
 /**
