@@ -139,12 +139,6 @@ function initializeNoteApp() {
     }
   });
 
-  // Event listener to bring user back to list view of all notes and reset search fields
-  homeButton.addEventListener("click", () => {
-    searchInput.value = ""; // Clear search input
-    renderNotes(); // Render all notes
-  });
-
   /**
    * Show note editor that uses default params when adding new note,
    * and pass in existing note to edit existing one
