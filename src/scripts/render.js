@@ -165,7 +165,7 @@ function initializeNoteApp() {
     activeNoteID = note.ID;
     noteTitle.value = note.title;
     noteContent.innerHTML = note.content;
-    noteTags.value = note.tags;
+    tagList.value = note.tags;
     noteDate.value = note.date;
     noteEditor.classList.remove("hidden"); // Show the note editor
     tagList.innerHTML = "";
@@ -211,7 +211,7 @@ function initializeNoteApp() {
   function clearNoteEditor() {
     noteTitle.value = "";
     noteContent.innerHTML = "";
-    noteTags.value = "";
+    tagList.innerHTML = "";
     noteDate.value = new Date().toISOString().substring(0, 10); // Set to today's date
     tagList.innerHTML = "";
   }

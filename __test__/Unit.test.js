@@ -258,7 +258,7 @@ describe("hideNoteEditor", () => {
     ).toBe(true);
     expect(document.getElementById("noteTitle").value).toBe("");
     expect(document.getElementById("noteContent").innerHTML).toBe("");
-    expect(document.getElementById("noteTags").value).toBe("");
+    expect(document.getElementById("tag-list").children.length).toBe(0);
     expect(document.getElementById("noteDate").value).toBe(
       new Date().toISOString().substring(0, 10)
     );
@@ -339,12 +339,10 @@ describe("saveActiveNote", () => {
       date: "2023-05-27",
     };
     // Set activeNoteID and note editor fields
-    activeNoteID = note.ID;
-    //showNoteEditor(note);
+    //activeNoteID = note.ID;
+    showNoteEditor(note);
     document.getElementById("noteTitle").value = "Updated Note";
     document.getElementById("noteContent").innerHTML = "Updated Content";
-    document.getElementById("tag-list").value = note.tags;
-    document.getElementById("noteDate").value = note.date;
 
     await saveActiveNote();
     expect(window.notes.updateNote).toHaveBeenCalledWith(
