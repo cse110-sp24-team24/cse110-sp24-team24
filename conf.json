@@ -1,8 +1,7 @@
 {
   "plugins": [],
-  "recurseDepth": 10,
   "source": {
-    "include": ["src/scripts"],
+    "include": ["src"],
     "exclude": ["node_modules"],
     "includePattern": ".+\\.m?js(doc|x)?$",
     "excludePattern": "(^|\\/|\\\\)_"
