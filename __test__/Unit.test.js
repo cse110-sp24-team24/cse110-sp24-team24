@@ -18,7 +18,9 @@ document.body.innerHTML = `
   <button id="makeUnderlineButton"></button>
   <button id="makeItalicButton"></button>
   <button id="makeBoldButton"></button>
+  <button id="insertImageButton"></button>
   <button id="insertCodeBlockButton"></button>
+  <input type="checkbox" id="darkmode-toggle">
 `;
 
 // Mock global functions
@@ -30,6 +32,21 @@ global.localStorage = {
 
 // Mock document.execCommand
 document.execCommand = jest.fn();
+
+// Mock window.matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
 
 // Mock the notes API
 window.notes = {
