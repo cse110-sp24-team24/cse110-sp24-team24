@@ -105,14 +105,14 @@ function showNoteEditor(
   }
 ) {
   activeNoteID = note.ID;
-  noteTitle.value = note.title;
-  noteContent.innerHTML = note.content;
+  noteTitle.value = note.title || "";
+  noteContent.innerHTML = note.content || "";
   const codeBlocks = document.querySelectorAll("#noteContent .codeBlock");
   codeBlocks.forEach((codeBlock) => {
     addCodeBlockEventListener(codeBlock);
   });
-  noteTags.value = note.tags;
-  noteDate.value = note.date;
+  noteTags.value = note.tags || "";
+  noteDate.value = note.date || new Date().toISOString().substring(0, 10);
   noteEditor.classList.remove("hidden"); // Show the note editor
 }
 
