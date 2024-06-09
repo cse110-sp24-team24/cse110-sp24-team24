@@ -10,8 +10,14 @@ let noteEditor,
   saveNoteButton,
   deleteNoteButton,
   cancelButton,
+  underlineButton,
+  italicButton,
+  boldButton,
+  insertImgButton,
   insertCodeButton,
   addNoteButton,
+  modeToggle,
+  themePref,
   searchInput,
   notesContainer;
 
@@ -39,6 +45,7 @@ function initializeNoteApp() {
   underlineButton = document.getElementById("makeUnderlineButton");
   italicButton = document.getElementById("makeItalicButton");
   boldButton = document.getElementById("makeBoldButton");
+  insertImgButton = document.getElementById("insertImageButton");
   insertCodeButton = document.getElementById("insertCodeBlockButton");
 
   underlineButton.addEventListener("click", function () {
@@ -50,6 +57,7 @@ function initializeNoteApp() {
   boldButton.addEventListener("click", function () {
     applyStyle("bold");
   });
+  insertImgButton.addEventListener("click", insertImg);
   insertCodeButton.addEventListener("click", insertCode);
   noteContent.addEventListener("keydown", loadStyle);
   noteContent.addEventListener("focus", loadStyle);
@@ -59,14 +67,23 @@ function initializeNoteApp() {
   searchInput = document.getElementById("searchInput");
   notesContainer = document.getElementById("notesContainer");
 
-  addNoteButton.addEventListener("click", () => showNoteEditor());
+  modeToggle = document.getElementById("darkmode-toggle");
+  //modeToggleLabel = document.getElementById("darkmode-label");
+
+  themePref = window.matchMedia("(prefers-color-scheme: dark)");
+  loadInitThemePreference();
+  themePref.addEventListener("change", loadInitThemePreference);
+
+  addNoteButton.addEventListener("click", showNoteEditor);
   searchInput.addEventListener("input", filterNotes);
+
+  modeToggle.addEventListener("change", toggleTheme);
 
   // toggle text styling buttons on and off when selecting into styled or nonstyled text
   noteContent.addEventListener("mouseup", toggleStyleOnSelect);
 
   // Event listeners for the note editor with code blocks
-  noteContent.addEventListener("keydown", (event) => specEditCodeBlock(event));
+  //noteContent.addEventListener("keydown", (event) => specEditCodeBlock(event));
 
   renderNotes();
 }
@@ -90,6 +107,10 @@ function showNoteEditor(
   activeNoteID = note.ID;
   noteTitle.value = note.title;
   noteContent.innerHTML = note.content;
+  const codeBlocks = document.querySelectorAll("#noteContent .codeBlock");
+  codeBlocks.forEach((codeBlock) => {
+    addCodeBlockEventListener(codeBlock);
+  });
   noteTags.value = note.tags;
   noteDate.value = note.date;
   noteEditor.classList.remove("hidden"); // Show the note editor
@@ -223,13 +244,18 @@ function insertCode() {
   }
 
   // create code block element
-  const codeContainer = document.createElement("div");
+  const codeBlock = document.createElement("textarea");
+  codeBlock.className = "codeBlock";
+  codeBlock.spellcheck = false;
+  addCodeBlockEventListener(codeBlock);
+
+  /*const codeContainer = document.createElement("div");
   codeContainer.className = "codeBlock";
   const codeBlock = document.createElement("pre");
   const codeEl = document.createElement("code");
   codeContainer.contentEditable = "true";
   codeBlock.append(codeEl);
-  codeContainer.append(codeBlock);
+  codeContainer.append(codeBlock);*/
 
   //zerowidthspace so that user can continue typing after code block
   const zeroWidthSpace = document.createTextNode("\u200B");
@@ -240,11 +266,13 @@ function insertCode() {
   if (sel.rangeCount > 0) {
     const range = sel.getRangeAt(0);
     range.deleteContents();
-    range.insertNode(codeContainer);
+    range.insertNode(codeBlock);
     range.collapse(false);
     range.insertNode(zeroWidthSpace);
-    range.setStart(codeEl, 0);
-    range.setEnd(codeEl, 0);
+    //range.setStart(codeEl, 0);
+    //range.setEnd(codeEl, 0);
+    range.setStart(codeBlock, 0);
+    range.setEnd(codeBlock, 0);
     range.insertNode(initText);
     range.setStartAfter(initText);
     range.setEndAfter(initText);
@@ -253,57 +281,77 @@ function insertCode() {
   }
 }
 
-function specEditCodeBlock(event) {
-  // if the selection is inside a code block, get the code block the section is in
-  let selectedInCodeBlock = getClosestAncestorEl(".codeBlock");
+function addCodeBlockEventListener(codeBlock) {
+  codeBlock.addEventListener("input", () => {
+    codeBlock.textContent = codeBlock.value;
+    codeBlock.value = codeBlock.textContent;
+  });
+  codeBlock.addEventListener("keydown", (event) => {
+    if (event.key.toLowerCase() == "tab") {
+      event.preventDefault();
+      const start = codeBlock.selectionStart;
+      const end = codeBlock.selectionEnd;
+      codeBlock.value =
+        codeBlock.value.substring(0, start) +
+        "\t" +
+        codeBlock.value.substring(end);
+      codeBlock.selectionStart = start + 1;
+      codeBlock.selectionEnd = start + 1;
+    }
+    if (
+      event.key.toLowerCase() == "delete" ||
+      event.key.toLowerCase() == "backspace"
+    ) {
+      if (codeBlock.value.trim() == "") {
+        event.preventDefault();
+        codeBlock.innerHTML = "";
+        if (codeBlock.nextSibling.data == "\u200B")
+          codeBlock.nextSibling.remove();
+        codeBlock.remove();
+        noteContent.focus();
+      }
+    }
+  });
+}
 
-  // get the user's selection
+function insertImg() {
+  if (
+    !getClosestAncestorEl("#noteContent") ||
+    getClosestAncestorEl(".codeBlock")
+  ) {
+    noteContent.focus();
+    return;
+  }
   const sel = window.getSelection();
   const range = sel.getRangeAt(0);
 
-  // if the tab key press occurs inside of a codeblock, the tab will replace the tab navigation functionality and instead produce a '\t' inside the code block
-  if (event.key.toLowerCase() == "tab" && selectedInCodeBlock) {
-    // prevent the default behavior of pressing tab
-    event.preventDefault();
+  const urlInput = document.createElement("input");
+  urlInput.type = "url";
+  urlInput.size = "40";
+  urlInput.className = "urlInput";
+  urlInput.placeholder = "type image url then press 'enter'";
+  let imgUrl = "";
 
-    // create and insert '\t' tab text node
-    const tabNode = document.createTextNode("\t");
-    range.insertNode(tabNode);
-
-    // select after the tab text node
-    range.setStartAfter(tabNode);
-    range.setEndAfter(tabNode);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  }
-
-  // if the delete key press occurs inside of a codeblock, then make sure that if the codeblock is to be empty the codeblock is removed
-  if (
-    (event.key.toLowerCase() == "delete" ||
-      event.key.toLowerCase() == "backspace") &&
-    selectedInCodeBlock
-  ) {
-    const selectedText = range.toString().replace(/\s/g, "");
-    const codeBlockText = selectedInCodeBlock.innerText.replace(/\s/g, "");
-    // checks if the delete will delete the last character in the code block or at least all text in the code block is selected
-    if (
-      selectedInCodeBlock.innerText.length == 1 ||
-      selectedText.indexOf(codeBlockText) >= 0
-    ) {
-      // prevent the default behavior of delete
-      //event.preventDefault();
-
-      // empty the code block container
-      selectedInCodeBlock.innerHTML = "";
-
-      // remove the zerowidthspace text node after the code block
-      if (selectedInCodeBlock.nextSibling.data == "\u200B")
-        selectedInCodeBlock.nextSibling.remove();
-
-      // remove the code block element
-      selectedInCodeBlock.remove();
+  urlInput.addEventListener("keyup", (event) => {
+    if (event.key.toLowerCase() == "enter") {
+      event.preventDefault();
+      imgUrl = urlInput.value;
+      noteContent.focus();
+      if (imgUrl) {
+        const img = document.createElement("img");
+        img.src = imgUrl;
+        img.style.maxWidth = "100%";
+        img.style.height = "auto";
+        range.insertNode(img);
+      }
     }
-  }
+  });
+  urlInput.addEventListener("focusout", () => {
+    urlInput.remove();
+  });
+  range.deleteContents();
+  range.insertNode(urlInput);
+  urlInput.focus();
 }
 
 /**
@@ -491,6 +539,30 @@ function filterNotes() {
 
   // Render filtered notes
   renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
+}
+
+function loadInitThemePreference() {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme && savedTheme == "dark") {
+    modeToggle.checked = true;
+  } else if (savedTheme && savedTheme == "light") {
+    modeToggle.checked = false;
+  } else {
+    modeToggle.checked = themePref.matches;
+  }
+  toggleTheme();
+}
+
+function toggleTheme() {
+  if (modeToggle.checked) {
+    document.body.classList.add("dark-theme");
+    document.body.classList.remove("light-theme");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.body.classList.add("light-theme");
+    document.body.classList.remove("dark-theme");
+    localStorage.setItem("theme", "light");
+  }
 }
 
 module.exports = {
