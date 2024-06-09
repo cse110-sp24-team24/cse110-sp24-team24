@@ -65,8 +65,11 @@ function initializeNoteApp() {
   });
   insertImgButton.addEventListener("click", insertImg);
   insertCodeButton.addEventListener("click", insertCode);
-  noteContent.addEventListener("keydown", loadStyle);
-  noteContent.addEventListener("focus", loadStyle);
+  noteContent.addEventListener("change", loadStyle);
+  noteContent.addEventListener("focus", function () {
+    loadStyle();
+    enableEditingButtons();
+  });
 
   // gets the os/browser theme preferences on darkmode
   themePref = window.matchMedia("(prefers-color-scheme: dark)");
@@ -84,8 +87,11 @@ function initializeNoteApp() {
   // toggle theme when dark/light mode switch is checked
   modeToggle.addEventListener("change", toggleTheme);
 
-  // toggle text styling buttons on and off when selecting into styled or nonstyled text
-  noteContent.addEventListener("mouseup", toggleStyleOnSelect);
+  // event listeners for when user clicks around toggle text styling buttons on and off when selecting into styled or nonstyled text
+  document.body.addEventListener("mouseup", function () {
+    toggleStyleOnSelect();
+    if (!getClosestAncestorEl("#noteEditor")) hideNoteEditor();
+  });
 
   renderNotes();
 }
@@ -161,6 +167,13 @@ function styleToggle(button) {
  * @param {string} style - the style indicated by which button is pressed
  */
 function applyStyle(style) {
+  // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise refocus on the note content and exit the function
+  if (
+    !getClosestAncestorEl("#noteContent") ||
+    getClosestAncestorEl(".codeBlock")
+  ) {
+    return;
+  }
   //depreciated method to toggle text styling
   if (style == "bold") {
     styleToggle(boldButton);
@@ -180,9 +193,9 @@ function applyStyle(style) {
  * on every note content input and click
  */
 function loadStyle() {
-  var bold = document.queryCommandState("bold");
-  var italic = document.queryCommandState("italic");
-  var underline = document.queryCommandState("underline");
+  const bold = document.queryCommandState("bold");
+  const italic = document.queryCommandState("italic");
+  const underline = document.queryCommandState("underline");
   if (underlineButton.className == "on") {
     if (!underline) {
       document.execCommand("underline", false, null);
@@ -218,6 +231,16 @@ function loadStyle() {
  * When the user selects into styled text, toggles the style on/off
  */
 function toggleStyleOnSelect() {
+  // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise turn all buttons off
+  if (
+    !getClosestAncestorEl("#noteContent") ||
+    getClosestAncestorEl(".codeBlock")
+  ) {
+    disableEditingButtons();
+    return;
+  }
+
+  // check if inside styled text
   if (getClosestAncestorEl("u")) {
     underlineButton.className = "on";
   } else {
@@ -317,6 +340,11 @@ function addCodeBlockEventListener(codeBlock) {
       }
     }
   });
+
+  // turn off text styling when inside code block
+  codeBlock.addEventListener("focus", () => {
+    disableEditingButtons();
+  });
 }
 
 /**
@@ -367,6 +395,27 @@ function insertImg() {
   range.deleteContents();
   range.insertNode(urlInput);
   urlInput.focus();
+}
+
+function disableEditingButtons() {
+  underlineButton.className = "off";
+  underlineButton.disabled = true;
+  boldButton.className = "off";
+  boldButton.disabled = true;
+  italicButton.className = "off";
+  italicButton.disabled = true;
+
+  insertCodeButton.disabled = true;
+  insertImgButton.disabled = true;
+}
+
+function enableEditingButtons() {
+  underlineButton.disabled = false;
+  boldButton.disabled = false;
+  italicButton.disabled = false;
+
+  insertCodeButton.disabled = false;
+  insertImgButton.disabled = false;
 }
 
 /**

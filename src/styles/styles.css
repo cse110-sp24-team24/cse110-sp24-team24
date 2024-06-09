@@ -378,7 +378,7 @@ body {
 #floatingToolbar button.on {
   background: none;
   border: none;
-  color: #ff00ff;
+  color: var(--emphasis-txt-color);
   padding: 0.25rem; /* Smaller padding */
   cursor: pointer;
   font-size: 1.2rem; /* Smaller font size */
@@ -386,6 +386,11 @@ body {
     transform 0.3s,
     color 0.3s;
   transform: scale(1.1);
+}
+
+#floatingToolbar button:disabled {
+  color: var(--content-placeholdertxt-color);
+  cursor: not-allowed;
 }
 
 /* Styles for the delete button in note */
