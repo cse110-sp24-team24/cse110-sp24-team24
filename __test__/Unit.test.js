@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 // Need to run the following commands to run the tests:
 // npm install
-// npm install --save-dev jest-environment-jsdom
 // npm test
 
 // Set up DOM elements
@@ -172,6 +171,21 @@ global.localStorage = {
 // Mock document.execCommand
 document.execCommand = jest.fn();
 
+// Mock window.matchMedia
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: jest.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(), // deprecated
+    removeListener: jest.fn(), // deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});
+
 // Mock the notes API
 window.notes = {
   createNote: jest.fn(),
@@ -204,7 +218,7 @@ beforeEach(() => {
   let tagList = document.getElementById("tag-list");
   while (tagList.firstChild) {
     tagList.removeChild(tagList.firstChild);
-  } 
+  }
   document.getElementById("noteDate").value = "";
   document.getElementById("searchInput").value = "";
   document.getElementById("notesContainer").innerHTML = "";
@@ -232,18 +246,22 @@ describe("showNoteEditor", () => {
       content: "Content",
       tags: [
         {
-        content: "Tag",
-        color: "red",
-      },
-    ],
+          content: "Tag",
+          color: "red",
+        },
+      ],
       date: "2023-05-27",
     };
     showNoteEditor(note);
     expect(document.getElementById("noteTitle").value).toBe(note.title);
     expect(document.getElementById("noteContent").innerHTML).toBe(note.content);
     expect(document.getElementById("tag-list").children.length).toBe(1);
-    expect(document.getElementById("tag-list").children[0].textContent).toContain("Tag");
-    expect(document.getElementById("tag-list").children[0].style.backgroundColor).toBe("red");
+    expect(
+      document.getElementById("tag-list").children[0].textContent
+    ).toContain("Tag");
+    expect(
+      document.getElementById("tag-list").children[0].style.backgroundColor
+    ).toBe("red");
     expect(document.getElementById("noteDate").value).toBe(note.date);
     expect(
       document.getElementById("noteEditor").classList.contains("hidden")
@@ -277,7 +295,7 @@ describe("renderNotes", () => {
           {
             content: "Tag",
             color: "red",
-          }
+          },
         ],
         date: "2023-05-27",
       },
@@ -289,7 +307,7 @@ describe("renderNotes", () => {
           {
             content: "Tag2",
             color: "orange",
-          }
+          },
         ],
         date: "2023-05-28",
       },
@@ -310,7 +328,7 @@ describe("clearNoteEditor", () => {
         {
           content: "Tag",
           color: "red",
-        }
+        },
       ],
       date: "2023-05-27",
     };
@@ -335,7 +353,7 @@ describe("saveActiveNote", () => {
         {
           content: "Tag",
           color: "red",
-        }
+        },
       ],
       date: "2023-05-27",
     };
@@ -354,7 +372,7 @@ describe("saveActiveNote", () => {
         {
           content: "Tag",
           color: "red",
-        }
+        },
       ],
       "2023-05-27"
     );
@@ -371,7 +389,7 @@ describe("deleteActiveNote", () => {
         {
           content: "Tag",
           color: "red",
-        }
+        },
       ],
       date: "2023-05-27",
     };
@@ -393,7 +411,7 @@ describe("deleteNote", () => {
         {
           content: "Tag",
           color: "red",
-        }
+        },
       ],
       date: "2023-05-28",
     };
@@ -415,8 +433,7 @@ describe("filterNotes", () => {
           {
             content: "Tag1",
             color: "red",
-          }
-        
+          },
         ],
         date: "2023-05-27",
       },
@@ -428,7 +445,7 @@ describe("filterNotes", () => {
           {
             content: "Tag2",
             color: "orange",
-          }
+          },
         ],
         date: "2023-05-28",
       },

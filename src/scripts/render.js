@@ -1,8 +1,25 @@
 const notesAPI = window.notes;
 let activeNoteID = null;
 
-// Define these globally
-let boldButton, italicButton, underlineButton;
+// Declare variables in the global scope
+let noteEditor,
+  noteTitle,
+  noteContent,
+  noteTags,
+  noteDate,
+  saveNoteButton,
+  deleteNoteButton,
+  cancelButton,
+  underlineButton,
+  italicButton,
+  boldButton,
+  insertImgButton,
+  insertCodeButton,
+  addNoteButton,
+  modeToggle,
+  themePref,
+  searchInput,
+  notesContainer;
 
 document.addEventListener("DOMContentLoaded", () => {
   initializeNoteApp();
@@ -11,15 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function initializeNoteApp() {
   // Get DOM elements
   //Note Editor Elements
-  const noteEditor = document.getElementById("noteEditor");
-  const noteTitle = document.getElementById("noteTitle");
-  const noteContent = document.getElementById("noteContent");
-  const noteTags = document.getElementById("noteTags");
-  const noteDate = document.getElementById("noteDate");
-  const saveNoteButton = document.getElementById("saveNoteButton");
-  const deleteNoteButton = document.getElementById("deleteNoteButton");
-  const cancelButton = document.getElementById("cancelButton");
-
+  noteEditor = document.getElementById("noteEditor");
+  noteTitle = document.getElementById("noteTitle");
+  noteContent = document.getElementById("noteContent");
+  noteTags = document.getElementById("noteTags");
+  noteDate = document.getElementById("noteDate");
+  saveNoteButton = document.getElementById("saveNoteButton");
+  deleteNoteButton = document.getElementById("deleteNoteButton");
+  cancelButton = document.getElementById("cancelButton");
   saveNoteButton.addEventListener("click", saveActiveNote);
   deleteNoteButton.addEventListener("click", deleteActiveNote);
   cancelButton.addEventListener("click", hideNoteEditor);
@@ -28,8 +44,16 @@ function initializeNoteApp() {
   underlineButton = document.getElementById("makeUnderlineButton");
   italicButton = document.getElementById("makeItalicButton");
   boldButton = document.getElementById("makeBoldButton");
-  const insertCodeButton = document.getElementById("insertCodeBlockButton");
+  insertImgButton = document.getElementById("insertImageButton");
+  insertCodeButton = document.getElementById("insertCodeBlockButton");
 
+  //Other Elements
+  addNoteButton = document.getElementById("addNoteButton");
+  searchInput = document.getElementById("searchInput");
+  notesContainer = document.getElementById("notesContainer");
+  modeToggle = document.getElementById("darkmode-toggle");
+
+  // event listeners for note content / toolbar functions
   underlineButton.addEventListener("click", function () {
     applyStyle("underline");
   });
@@ -39,17 +63,23 @@ function initializeNoteApp() {
   boldButton.addEventListener("click", function () {
     applyStyle("bold");
   });
+  insertImgButton.addEventListener("click", insertImg);
   insertCodeButton.addEventListener("click", insertCode);
   noteContent.addEventListener("keydown", (event) => specEditCodeBlock(event));
   noteContent.addEventListener("focus", loadStyle);
   noteContent.addEventListener("mouseup", toggleStyleOnSelect);
 
-  //Other Elements
-  const addNoteButton = document.getElementById("addNoteButton");
-  const searchInput = document.getElementById("searchInput");
-  const notesContainer = document.getElementById("notesContainer");
+  // gets the os/browser theme preferences on darkmode
+  themePref = window.matchMedia("(prefers-color-scheme: dark)");
 
-  addNoteButton.addEventListener("click", () => showNoteEditor());
+  // initialize theme preferences based on: previously selected theme / the user's default os/browser settings
+  loadInitThemePreference();
+  themePref.addEventListener("change", loadInitThemePreference);
+
+  // reveals empty note editor when add note button is pressed
+  addNoteButton.addEventListener("click", showNoteEditor);
+
+  // filters listed notes by the given query
   searchInput.addEventListener("input", filterNotes);
 
   const tagCreateButton = document.getElementById("tag-create");
@@ -531,50 +561,44 @@ function initializeNoteApp() {
     return noteElement;
   }
 
-/**
- * Render notes to the notes container
- * Renders all notes if no search filter, but can be filtered
- * to reduce search.
- * Appends notes to the notes container in the order of filtering,
- * which is by title, then text
- * each note displays all related text, as well as an edit and delete button
- * @param {object[]} filteredTitleNotes
- * @param {object[]} filteredTextNotes
- */
-function renderNotes(
-  filteredTitleNotes = [],
-  filteredTextNotes = []
-) {
-  notesContainer.innerHTML = "<h2>Your Journals:</h2>";
+  /**
+   * Render notes to the notes container
+   * Renders all notes if no search filter, but can be filtered
+   * to reduce search.
+   * Appends notes to the notes container in the order of filtering,
+   * which is by title, then text
+   * each note displays all related text, as well as an edit and delete button
+   * @param {object[]} filteredTitleNotes
+   * @param {object[]} filteredTextNotes
+   */
+  function renderNotes(filteredTitleNotes = [], filteredTextNotes = []) {
+    notesContainer.innerHTML = "<h2>Your Journals:</h2>";
 
-  // Ensure notesAPI.readNotes() returns an array
-  if (!Array.isArray(filteredTitleNotes)) {
-    filteredTitleNotes = [];
-  }
+    // Ensure notesAPI.readNotes() returns an array
+    if (!Array.isArray(filteredTitleNotes)) {
+      filteredTitleNotes = [];
+    }
 
-  if (!Array.isArray(filteredTextNotes)) {
-    filteredTextNotes = [];
-  }
+    if (!Array.isArray(filteredTextNotes)) {
+      filteredTextNotes = [];
+    }
 
-  if (
-    !filteredTitleNotes.length &&
-    !filteredTextNotes.length
-  ) {
-    filteredTitleNotes = notesAPI.readNotes();
-  }
+    if (!filteredTitleNotes.length && !filteredTextNotes.length) {
+      filteredTitleNotes = notesAPI.readNotes();
+    }
 
-  if (filteredTitleNotes.length > 0) {
-    [...filteredTitleNotes].forEach((note) => {
-      notesContainer.appendChild(createNoteElement(note));
-    });
-  }
+    if (filteredTitleNotes.length > 0) {
+      [...filteredTitleNotes].forEach((note) => {
+        notesContainer.appendChild(createNoteElement(note));
+      });
+    }
 
-  if (filteredTextNotes.length > 0) {
-    [...filteredTextNotes].forEach((note) => {
-      notesContainer.appendChild(createNoteElement(note));
-    });
+    if (filteredTextNotes.length > 0) {
+      [...filteredTextNotes].forEach((note) => {
+        notesContainer.appendChild(createNoteElement(note));
+      });
+    }
   }
-}
 
   /**
    * Filter notes based on search input
@@ -630,7 +654,7 @@ function renderNotes(
       alert("Tag already exists in the dropdown box");
       return;
     }
-    if(tags.some((tag) => tag.content === tagText)){
+    if (tags.some((tag) => tag.content === tagText)) {
       alert("Tag contains the same content, check drop down box");
       return;
     }
@@ -809,31 +833,30 @@ function renderNotes(
   renderNotes();
 
   /**
- * Filter the notes that are shown by a specific tag. Use the tag item that
- * is passed in and extract the relevant data from it, and then filter
- * using that data.
- * @param {HTMLLIElement} selectedTag
- */
-function filterNotesByTag(selectedTag) {
-  const notes = notesAPI.readNotes();
-  const filteredNotes = notes.filter((note) =>
-    note.tags.some(
-      (tag) =>
-        tag.content === selectedTag.textContent &&
-        tag.color === selectedTag.style.backgroundColor
-    )
-  );
+   * Filter the notes that are shown by a specific tag. Use the tag item that
+   * is passed in and extract the relevant data from it, and then filter
+   * using that data.
+   * @param {HTMLLIElement} selectedTag
+   */
+  function filterNotesByTag(selectedTag) {
+    const notes = notesAPI.readNotes();
+    const filteredNotes = notes.filter((note) =>
+      note.tags.some(
+        (tag) =>
+          tag.content === selectedTag.textContent &&
+          tag.color === selectedTag.style.backgroundColor
+      )
+    );
 
-  if (filteredNotes.length === 0) {
-    notesContainer.innerHTML = `<h2>Your Journals:</h2>
+    if (filteredNotes.length === 0) {
+      notesContainer.innerHTML = `<h2>Your Journals:</h2>
       <h3> There are no notes with this tag.</h3>`;
-  } else {
-    renderNotes(filteredNotes);
+    } else {
+      renderNotes(filteredNotes);
+    }
+
+    hideFilterDropdown();
   }
-
-  hideFilterDropdown();
-}
-
 
   return {
     showNoteEditor,
