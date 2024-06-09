@@ -283,7 +283,7 @@ function initializeNoteApp() {
   }
 
   /**
-   * update the formatting to reflect the toolbar button indicators
+   * Update the formatting to reflect the toolbar button indicators
    * on every note content input and click
    */
   function loadStyle() {
@@ -321,6 +321,9 @@ function initializeNoteApp() {
     }
   }
 
+  /**
+   * Controls class type of style buttons
+   */
   function toggleStyleOnSelect() {
     if (getClosestAncestorEl("u")) {
       underlineButton.className = "on";
@@ -340,7 +343,7 @@ function initializeNoteApp() {
   }
 
   /**
-   * called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
+   * Called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
    */
   function insertCode() {
     // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise refocus on the note content and exit the function
@@ -786,7 +789,7 @@ function initializeNoteApp() {
   }
 
   /**
-   * Adds the tag fromt he drop down list and populate the tag list
+   * Adds the tag from the drop down list and populate the tag list
    * @param {string} tag
    * @returns
    */
@@ -829,7 +832,6 @@ function initializeNoteApp() {
     tagItem.appendChild(removeButton);
     tagList.appendChild(tagItem);
 
-    //localStorage.setItem("notes", JSON.stringify(notes));
     hideTagDropdown();
   }
 
