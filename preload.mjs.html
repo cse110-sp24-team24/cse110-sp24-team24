@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>fileStorage.js - Documentation</title>
+    <title>preload.mjs - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">fileStorage.js</h1>
+    <h1 class="page-title">preload.mjs</h1>
     
 
     
@@ -39,44 +39,122 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>//TODO create tests
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
-import path from "path";
-import fs from "fs/promises";
+            <pre class="prettyprint source linenums"><code>// preload requires .mjs extension https://www.electronjs.org/docs/latest/tutorial/esm#esm-preload-scripts-must-have-the-mjs-extension
+import fileStorage from "./fileStorage.js";
+import { contextBridge } from "electron";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const dataPath = path.join(__dirname, "../data/data.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
+
+let notes = null;
+await defineNotesIfNull();
+// Provide context bridge to expose file to render.js
+contextBridge.exposeInMainWorld("notes", {
+  createNote,
+  readNotes,
+  readNote,
+  updateNote,
+  deleteNote,
+});
 
 /**
- * Save the notes to file storage.
- * @param {object} notes
+ * Randomly generate a unique ID that will be used to identify each note
+ * See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with-javascript
+ *
+ * @returns {string} ID
  */
-async function updateNotesFile(notes) {
-  const jsonData = JSON.stringify(notes);
-  try {
-    await fs.writeFile(dataPath, jsonData);
-  } catch (error) {
-    console.error(error);
-  }
+function generateID() {
+  let ID = "id" + Math.random().toString(16).slice(2);
+  return ID;
 }
 
 /**
- * Return the notes saved in file storage.
+ * Create a new note, generating a noteID, and save it to file storage.
+ * @param {string} title
+ * @param {string} content
+ * @param {string} tags
+ * @param {object} date
+ * @returns {string}
+ */
+async function createNote(title, content, tags, date) {
+  defineNotesIfNull();
+  let newID = generateID();
+  await updateNote(newID, title, content, tags, date);
+  return newID;
+}
+
+/**
+ * Return all notes as an array.
+ * @returns {object[]}
+ */
+function readNotes() {
+  return Object.values(notes);
+}
+/**
+ * Return note based on noteID.
+ * @param {string} noteID
  * @returns {object}
  */
-async function readNotesFile() {
-  try {
-    const data = await fs.readFile(dataPath, "utf-8");
-    return JSON.parse(data);
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
+function readNote(noteID) {
+  return notes[noteID];
 }
 
-export default { updateNotesFile, readNotesFile }; //access via import fileStorage from ./fileStorage.js
+/**
+ * Override the note specified by noteID with the specified parameters and update file storage.
+ * @param {string} noteID
+ * @param {string} title
+ * @param {string} content
+ * @param {string} tags
+ * @param {obejct} date
+ */
+async function updateNote(noteID, title, content, tags, date) {
+  defineNotesIfNull();
+  let newNote = {
+    ID: noteID,
+    title: title,
+    content: content,
+    tags: tags,
+    date: date,
+  };
+  notes[newNote.ID] = newNote;
+  updateFileStorage();
+}
+
+/**
+ * Delete the note specified by noteID and update file storage.
+ * @param {object} noteID
+ */
+async function deleteNote(noteID) {
+  defineNotesIfNull();
+  delete notes[noteID];
+  updateFileStorage();
+}
+
+/**
+ * Define local representation of notes from file storage if notes is not already defined.
+ * @returns {object}
+ */
+async function defineNotesIfNull() {
+  if (notes == null) {
+    try {
+      notes = await fileStorage.readNotesFile();
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Unable to load notes from file system. ${err}`);
+    }
+  }
+  return notes;
+}
+
+/**
+ * Update file storage representation of notes with local representation of notes.
+ */
+async function updateFileStorage() {
+  try {
+    await fileStorage.updateNotesFile(notes);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Unable to save notes to file system. ${err}`);
+  }
+}
 </code></pre>
         </article>
     </section>
