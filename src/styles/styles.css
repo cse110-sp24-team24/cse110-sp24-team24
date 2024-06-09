@@ -861,3 +861,11 @@ body.light-theme {
 #darkmode-toggle:checked + #darkmode-label svg.moon {
   fill: #fff;
 }
+
+/* Title icon styling */
+.title-icon {
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+  vertical-align: middle;
+  margin-right: 10px; /* Space between icon and title */
+}
