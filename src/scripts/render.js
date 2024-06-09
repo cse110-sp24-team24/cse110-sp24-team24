@@ -53,7 +53,7 @@ function initializeNoteApp() {
   notesContainer = document.getElementById("notesContainer");
   modeToggle = document.getElementById("darkmode-toggle");
 
-  // event listeners for note content / toolbar functions
+  // prevent listeners for note content / toolbar functions
   underlineButton.addEventListener("click", function () {
     applyStyle("underline");
   });
@@ -88,9 +88,20 @@ function initializeNoteApp() {
   modeToggle.addEventListener("change", toggleTheme);
 
   // event listeners for when user clicks around toggle text styling buttons on and off when selecting into styled or nonstyled text
-  document.body.addEventListener("mouseup", function () {
-    toggleStyleOnSelect();
-    if (!getClosestAncestorEl("#noteEditor")) hideNoteEditor();
+  window.addEventListener("mousedown", function (event) {
+    if (!noteEditor.contains(event.target)) {
+      hideNoteEditor();
+    } else if (noteContent.contains(event.target)) {
+      toggleStyleOnSelect();
+    } else if (
+      !underlineButton.contains(event.target) &&
+      !boldButton.contains(event.target) &&
+      !italicButton.contains(event.target) &&
+      !insertImgButton.contains(event.target) &&
+      !insertCodeButton.contains(event.target)
+    ) {
+      disableEditingButtons();
+    }
   });
 
   renderNotes();
@@ -149,20 +160,6 @@ function clearNoteEditor() {
 }
 
 /**
- * Toggle note content styling button's class to "on" or "off"
- * button class represents style on UI for whether style is applied
- * or not
- * @param {DOM element} button
- */
-function styleToggle(button) {
-  if (button.className == "on") {
-    button.className = "off";
-  } else {
-    button.className = "on";
-  }
-}
-
-/**
  * Given a style in the form of a string (either "bold", "underline", or "italic"), toggle text styling in the respective format
  * @param {string} style - the style indicated by which button is pressed
  */
@@ -186,6 +183,20 @@ function applyStyle(style) {
     styleToggle(italicButton);
   }
   noteContent.focus();
+}
+
+/**
+ * Toggle note content styling button's class to "on" or "off"
+ * button class represents style on UI for whether style is applied
+ * or not
+ * @param {DOM element} button
+ */
+function styleToggle(button) {
+  if (button.className == "on") {
+    button.className = "off";
+  } else {
+    button.className = "on";
+  }
 }
 
 /**
@@ -267,7 +278,6 @@ function insertCode() {
     !getClosestAncestorEl("#noteContent") ||
     getClosestAncestorEl(".codeBlock")
   ) {
-    noteContent.focus();
     return;
   }
 
@@ -292,6 +302,7 @@ function insertCode() {
     range.setStart(codeBlock, 0);
     range.setEnd(codeBlock, 0);
     range.insertNode(initText);
+    codeBlock.focus();
     range.setStartAfter(initText);
     range.setEndAfter(initText);
     sel.removeAllRanges();
