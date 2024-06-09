@@ -366,7 +366,7 @@ body {
 #floatingToolbar button.on {
   background: none;
   border: none;
-  color: maroon;
+  color: #ff00ff;
   padding: 0.25rem; /* Smaller padding */
   cursor: pointer;
   font-size: 1.2rem; /* Smaller font size */
