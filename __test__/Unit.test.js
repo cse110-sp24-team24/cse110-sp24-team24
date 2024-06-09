@@ -8,6 +8,7 @@ document.body.innerHTML = `
     <nav class="sidebar" role="navigation">
       <button id="homeButton" aria-label="Home">🏠 Home</button>
       <button id="addNoteButton" aria-label="Add Note">➕ Add Note</button>
+      <input type="checkbox" id="darkmode-toggle" />
     </nav>
     <!-- Main content area -->
     <main class="main-content">
@@ -123,20 +124,20 @@ document.body.innerHTML = `
         <button id="makeBoldButton" class="off" aria-label="Bold" title="Bold">
           <b>B</b>
         </button>
-        <!-- <button
+        <button
           id="insertImageButton"
           aria-label="Insert Image"
           title="Insert Image"
         >
           🖼️
         </button>
-        <button
+        <!--<button
           id="insertVideoButton"
           aria-label="Insert Video"
           title="Insert Video"
         >
           📹
-        </button> -->
+        </button>-->
         <button
           id="insertCodeBlockButton"
           aria-label="Insert Code Block"
@@ -146,7 +147,6 @@ document.body.innerHTML = `
           >_
         </button>
       </div>
-    </div>
     </section>
 
     <!-- NoScript tag to handle cases where JavaScript is disabled -->
