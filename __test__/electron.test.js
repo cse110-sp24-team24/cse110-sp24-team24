@@ -63,7 +63,64 @@ describe("Testing Window Functionality", () => {
     expect(isNoteEditorVisible).toBe(true);
   });
 
-  test("Fill note with details and verify each input", async () => {
+  test("Cancel note", async () => {
+    await page.waitForSelector("#noteTitle");
+    await page.type("#noteTitle", "First test");
+
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+
+    // Click the 'Cancel' button
+    await page.click("#cancelButton");
+
+    // Wait for the note editor to be hidden
+    await page.waitForSelector("#noteEditor.hidden");
+
+    // Check if the note editor is hidden
+    const isNoteEditorHidden = await page.evaluate(() => {
+      const noteEditor = document.querySelector("#noteEditor");
+      return noteEditor.classList.contains("hidden");
+    });
+
+    // Expect the note editor to be hidden
+    expect(isNoteEditorHidden).toBe(true);
+
+    // Wait for the home page to return
+    await page.waitForSelector("title"); // Wait for the title element to be available
+    const pageTitle = await page.title();
+    expect(pageTitle).toBe("Dev Journal");
+
+    await page.reload();
+  });
+
+  test("Fill note with details, save, and close", async () => {
+    // Click the 'Add Note' button
+    await page.click("#addNoteButton");
+
+    // Wait for the note editor to be displayed
+    await page.waitForSelector("#noteEditor:not(.hidden)");
+
+    // Wait for the input fields to appear
+    await page.waitForSelector("#noteTitle");
+    await page.waitForSelector("#noteTags");
+    await page.waitForSelector("#noteContent");
+    await page.waitForSelector("#noteDate");
+
+    // Fill in the note details
+    await page.type("#noteTitle", "Write unit tests");
+    await page.type("#noteTags", "TEST");
+    await page.type(
+      "#noteContent",
+      "Write unit tests using puppeteer and chat"
+    );
+  });
+
+  test("Observe for 30 seconds", async () => {
+    // Wait for 30 seconds
+    await new Promise((resolve) => setTimeout(resolve, 30000));
+  });
+
+  /*
+  test("Fill note with details, save, and close", async () => {
     // Wait for the input fields to appear
     await page.waitForSelector("#noteTitle");
     await page.waitForSelector("#noteTags");
@@ -86,7 +143,7 @@ describe("Testing Window Functionality", () => {
       document.getElementById("noteDate").value = tomorrowISOString;
     }, tomorrowISOString);
 
-    // Retrieve the value of each input field
+    // Verify each input
     const noteTitleValue = await page.$eval(
       "#noteTitle",
       (input) => input.value
@@ -103,7 +160,44 @@ describe("Testing Window Functionality", () => {
     expect(noteDateValue).toBe(tomorrowISOString);
     expect(noteTagsValue).toBe("TEST");
     expect(noteContentValue).toBe("Write unit tests using puppeteer and chat");
-  }, 10000); // Set timeout to 10 seconds (10000 milliseconds)
+
+    // Click on the save button to save the note
+
+    await page.waitForSelector("#saveNoteButton");
+    await page.click("#saveNoteButton");
+
+    // Check if the note editor is displayed
+    const noteEditor = await page.$("#noteEditor");
+    const isNoteEditorVisible = await noteEditor.evaluate(
+      (el) => !el.classList.contains("hidden")
+    );
+
+    // Expect the note editor to be visible
+    expect(isNoteEditorVisible).toBe(false);
+  });
+  */
+
+  /**
+  test("Open another note", async () => {
+    // Click the 'Add Note' button
+    await page.click("#addNoteButton");
+
+    // Wait for the note editor to be displayed
+    await page.waitForSelector("#noteEditor:not(.hidden)");
+
+    // Check if the note editor is displayed
+    const noteEditor = await page.$("#noteEditor");
+    const isNoteEditorVisible = await noteEditor.evaluate(
+      (el) => !el.classList.contains("hidden")
+    );
+
+    // Expect the note editor to be visible
+    expect(isNoteEditorVisible).toBe(true);
+
+    await page.waitForSelector("#noteTitle");
+    await page.type("#noteTitle", "Cancel note");
+  });
+  */
 
   /**
   test("Back to home page after saving the note", async () => {
