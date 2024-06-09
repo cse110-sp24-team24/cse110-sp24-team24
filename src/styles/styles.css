@@ -1,5 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
+/* setting for custom css properties */
+:root {
+  --primary-bg-color: #1e1e2f;
+  --secondary-bg-color: #2a2a40;
+  --primary-txt-color: #ffffff;
+  --note-txt-color: #ffffff;
+  --secondary-txt-color: #e5e5e5;
+  --sub-txt-color: #bbbbbb;
+  --tag-txt-color: #777;
+  --content-placeholdertxt-color: #888;
+  --emphasis-txt-color: #ff00ff;
+  --focus-pointclick-color: #3d3d57;
+
+  --sidebar-border-color: #333;
+  --input-border-color: #555;
+  --note-border-color: #444;
+}
+
 /* General body styles */
 body {
   display: flex;
@@ -7,8 +25,8 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
-  background-color: #1e1e2f;
-  color: #e5e5e5;
+  background-color: var(--primary-bg-color);
+  color: var(--secondary-txt-color);
   font-size: 1.2rem; /* Base font size */
 }
 
@@ -22,7 +40,7 @@ body {
 .header-title h1 {
   margin: 0;
   font-size: 4rem;
-  color: #ffffff;
+  color: var(--primary-txt-color);
   letter-spacing: 0.2rem;
   animation: glow 2s ease-in-out infinite alternate;
 }
@@ -30,30 +48,30 @@ body {
 .header-title p {
   margin: 0.5rem 0 0 0;
   font-size: 1.6rem;
-  color: #bbbbbb;
+  color: var(--sub-txt-color);
 }
 
 /* Make the header glow */
 @keyframes glow {
   from {
     text-shadow:
-      0 0 0.625rem #ffffff,
-      0 0 1.25rem #ffffff,
-      0 0 1.875rem #ff00ff,
-      0 0 2.5rem #ff00ff,
-      0 0 3.125rem #ff00ff,
-      0 0 3.75rem #ff00ff,
-      0 0 4.375rem #ff00ff;
+      0 0 0.625rem var(--primary-txt-color),
+      0 0 1.25rem var(--primary-txt-color),
+      0 0 1.875rem var(--emphasis-txt-color),
+      0 0 2.5rem var(--emphasis-txt-color),
+      0 0 3.125rem var(--emphasis-txt-color),
+      0 0 3.75rem var(--emphasis-txt-color),
+      0 0 4.375rem var(--emphasis-txt-color);
   }
   to {
     text-shadow:
-      0 0 1.25rem #ffffff,
-      0 0 1.875rem #ff00ff,
-      0 0 2.5rem #ff00ff,
-      0 0 3.125rem #ff00ff,
-      0 0 3.75rem #ff00ff,
-      0 0 4.375rem #ff00ff,
-      0 0 5rem #ff00ff;
+      0 0 1.25rem var(--primary-txt-color),
+      0 0 1.875rem var(--emphasis-txt-color),
+      0 0 2.5rem var(--emphasis-txt-color),
+      0 0 3.125rem var(--emphasis-txt-color),
+      0 0 3.75rem var(--emphasis-txt-color),
+      0 0 4.375rem var(--emphasis-txt-color),
+      0 0 5rem var(--emphasis-txt-color);
   }
 }
 
@@ -71,19 +89,19 @@ body {
 /* Sidebar styles */
 .sidebar {
   width: 15rem;
-  background-color: #2a2a40;
-  color: #fff;
+  background-color: var(--secondary-bg-color);
+  color: var(--primary-txt-color);
   display: flex;
   flex-direction: column;
   padding-top: 1.5rem;
-  border-right: 1px solid #333;
+  border-right: 1px solid var(--sidebar-border-color);
   box-shadow: 0.125rem 0 0.3125rem rgba(0, 0, 0, 0.3);
 }
 
 .sidebar button {
   background: none;
   border: none;
-  color: #e5e5e5;
+  color: var(--secondary-txt-color);
   padding: 1rem;
   cursor: pointer;
   text-align: left;
@@ -96,8 +114,8 @@ body {
 
 .sidebar button:hover,
 .sidebar button:focus {
-  background-color: #3d3d57;
-  color: #ff00ff; /* Match pink glow */
+  background-color: var(--focus-pointclick-color);
+  color: var(--emphasis-txt-color); /* Match pink glow */
   transform: scale(1.1);
   outline: none;
 }
@@ -124,16 +142,53 @@ body {
   width: 80%;
   padding: 0.75rem;
   border-radius: 2rem;
-  border: 1px solid #555;
-  background-color: #2a2a40;
-  color: #e5e5e5;
+  border: 1px solid var(--input-border-color);
+  background-color: var(--secondary-bg-color);
+  color: var(--secondary-txt-color);
   font-size: 1.4rem;
   transition: width 0.3s ease-in-out;
+  margin-right: 1rem;
 }
 
 #searchInput:focus {
   width: 90%;
   outline: none;
+}
+
+#filter-dropdown-container {
+  position: absolute;
+  top: 20%;
+  left: 19%;
+  background-color: #2a2a40;
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  width: 70%;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+#filter-dropdown-container.hidden {
+  display: none;
+}
+
+#filter-dropdown-container.visible {
+  display: block;
+}
+
+#filter-dropdown-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#filter-dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#filter-dropdown-list li:hover {
+  background-color: #3d3d57;
 }
 
 /* Notes container styles */
@@ -145,8 +200,8 @@ body {
 
 /* Individual note styles */
 .note {
-  background-color: #2a2a40;
-  border: 1px solid #444;
+  background-color: var(--secondary-bg-color);
+  border: 1px solid var(--note-border-color);
   padding: 1.5rem;
   border-radius: 1rem;
   cursor: pointer;
@@ -159,13 +214,13 @@ body {
 
 .note h2 {
   margin: 0 0 0.75rem 0;
-  color: #ffffff;
+  color: var(--note-txt-color);
   font-size: 1.8rem;
 }
 
 .note p {
   margin: 0 0 0.75rem 0;
-  color: #bbbbbb;
+  color: var(--sub-txt-color);
   font-size: 1.4rem;
   overflow: hidden;
   display: -webkit-box;
@@ -175,17 +230,17 @@ body {
 }
 
 .note small {
-  color: #777;
+  color: var(--tag-txt-color);
   font-size: 1.2rem;
 }
 
 .note:hover,
 .note:focus {
   transform: scale(1.02);
-  background-color: #3d3d57;
+  background-color: var(--focus-pointclick-color);
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
   outline: none;
-  color: #ff00ff; /* Match pink glow */
+  color: var(--emphasis-txt-color); /* Match pink glow */
 }
 
 /* Note editor styles */
@@ -200,8 +255,8 @@ body {
   width: 80%;
   height: 80%;
   padding: 2rem;
-  background-color: #2a2a40;
-  border: 1px solid #444;
+  background-color: var(--secondary-bg-color);
+  border: 1px solid var(--note-border-color);
   border-radius: 1rem;
   z-index: 1000;
   display: flex;
@@ -221,7 +276,7 @@ body {
 .editor-toolbar button {
   background: none;
   border: none;
-  color: #e5e5e5;
+  color: var(--secondary-txt-color);
   padding: 0.75rem;
   cursor: pointer;
   font-size: 1.4rem;
@@ -232,7 +287,7 @@ body {
 
 .editor-toolbar button:hover,
 .editor-toolbar button:focus {
-  color: #ff00ff; /* Match pink glow */
+  color: var(--emphasis-txt-color); /* Match pink glow */
   transform: scale(1.1);
   outline: none;
 }
@@ -290,15 +345,20 @@ body {
 }
 
 /* Input styles in the note editor */
+#tag-color,
+#tag-dropdown,
+#filterButton,
+#tag-create,
+/* General input styles in the note editor */
 #noteTitle,
 #noteDate,
 #noteTags,
 #noteContent {
   padding: 1rem;
-  border: 1px solid #555;
+  border: 1px solid var(--input-border-color);
   border-radius: 0.5rem;
-  background-color: #1e1e2f;
-  color: #e5e5e5;
+  background-color: var(--primary-bg-color);
+  color: var(--secondary-txt-color);
   font-size: 1.4rem;
 }
 
@@ -317,12 +377,203 @@ body {
 
 /* Date input styling */
 #noteDate {
-  width: 20%;
+  width: 30%;
 }
-
 /* Tag input styling */
 #noteTags {
-  width: 70%;
+  width: 30%;
+}
+
+/* Tag add button styling */
+#tag-create {
+  width: 5%;
+}
+#tag-create:hover {
+  background-color: #3d3d57;
+  transform: scale(1.1);
+  outline: none;
+}
+/* Tag drop down styling*/
+#tag-dropdown {
+  width: 5%;
+}
+/* Tag color change styling*/
+#tag-color {
+  width: 100%;
+}
+
+/* Tag storage styling */
+#tag-list {
+  list-style-type: none;
+  display: flex;
+  gap: 10px;
+}
+
+#tag-list li {
+  list-style-type: none;
+  padding: 20px;
+  border: 1px solid #555;
+  border-radius: 0.5rem;
+  background-color: #1e1e2f;
+  color: #e5e5e5;
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#tag-list li .remove-tag-button {
+  background: none;
+  border: none;
+  color: #e5e5e5;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#tag-list li .remove-tag-button:hover {
+  color: #ff0000;
+}
+
+#tag-dropdown-container {
+  position: absolute;
+  background-color: #2a2a40;
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  width: 60%;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+#tag-dropdown-container.hidden {
+  display: none;
+}
+
+#tag-dropdown-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#tag-dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#tag-dropdown-list li:hover {
+  background-color: #3d3d57;
+}
+
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: 2px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* note content styles */
+#contentContainer {
+  position: relative;
+  flex: 1; /* Make the container grow to fill available space */
+  display: flex;
+  flex-direction: column;
+}
+
+#noteContent {
+  flex: 1; /* Make the content area grow to fill available space */
+  width: 97.5%;
+  resize: none;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+#noteContent.placeholder {
+  color: var(--content-placeholdertxt-color); /* Style for placeholder text */
+}
+
+/* inserted image styles*/
+#noteContent img {
+  overflow: auto;
+  display: inline-block;
+  min-width: 25px;
+  min-height: 25px;
+  max-width: 400px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+}
+
+/* code block styles*/
+/*div:has(> pre > code)*/
+.codeBlock {
+  display: block;
+  background-color: black;
+  color: white;
+  resize: none;
+  min-height: 100px;
+  max-height: 250px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Floating toolbar styles */
+#floatingToolbar {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(
+    --note-border-color
+  ); /* More contrasting background color */
+  border-top: 1px solid var(--input-border-color);
+  padding: 0.25rem; /* Smaller padding */
+  margin-top: 1rem; /* Add margin to position it below the content area */
+  z-index: 1001;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+#floatingToolbar button {
+  background: none;
+  border: none;
+  color: var(--secondary-txt-color);
+  padding: 0.25rem; /* Smaller padding */
+  cursor: pointer;
+  font-size: 1.2rem; /* Smaller font size */
+  transition:
+    transform 0.3s,
+    color 0.3s;
+}
+
+#floatingToolbar button:hover,
+#floatingToolbar button:focus {
+  color: var(--emphasis-txt-color); /* Match pink glow */
+  transform: scale(1.1);
+  outline: none;
+}
+
+#floatingToolbar button.on {
+  background: none;
+  border: none;
+  color: #ff00ff;
+  padding: 0.25rem; /* Smaller padding */
+  cursor: pointer;
+  font-size: 1.2rem; /* Smaller font size */
+  transition:
+    transform 0.3s,
+    color 0.3s;
+  transform: scale(1.1);
 }
 
 /* Styles for the delete button in note */
@@ -335,7 +586,7 @@ body {
 .note .delete-note {
   background: none;
   border: none;
-  color: #e5e5e5;
+  color: var(--secondary-txt-color);
   cursor: pointer;
   font-size: 1.4rem;
   transition:
@@ -345,7 +596,7 @@ body {
 
 .note .delete-note:hover,
 .note .delete-note:focus {
-  color: #ff00ff; /* Match pink glow */
+  color: var(--emphasis-txt-color); /* Match pink glow */
   transform: scale(1.2);
   outline: none;
 }
@@ -423,4 +674,185 @@ body {
     bottom: 1rem;
     padding: 0.5rem;
   }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --primary-bg-color: #1e1e2f;
+    --secondary-bg-color: #2a2a40;
+    --primary-txt-color: #ffffff;
+    --note-txt-color: #ffffff;
+    --secondary-txt-color: #e5e5e5;
+    --sub-txt-color: #bbbbbb;
+    --tag-txt-color: #777;
+    --content-placeholdertxt-color: #888;
+    --emphasis-txt-color: #ff00ff;
+    --focus-pointclick-color: #3d3d57;
+
+    --sidebar-border-color: #333;
+    --input-border-color: #555;
+    --note-border-color: #444;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    --primary-bg-color: #fffbfc /*ffffff*/; /* Changed from dark to light */
+    --secondary-bg-color: #ffedf7 /*#f0f0f0*/; /* Changed from dark to light */
+    --primary-txt-color: #fdf7f7; /* Changed from white to black */
+    --note-txt-color: #4b4b4b;
+    --secondary-txt-color: #333333; /* Changed from light grey to darker grey */
+    --sub-txt-color: #555555; /* Changed from light grey to slightly darker grey */
+    --tag-txt-color: #777777; /* Changed from light grey to slightly darker grey */
+    --content-placeholdertxt-color: #aaaaaa; /* Changed from light grey to slightly darker grey */
+    --emphasis-txt-color: #ff00ff; /* Kept the same for emphasis */
+    --focus-pointclick-color: #cccccc; /* Changed from dark to light grey */
+
+    --sidebar-border-color: #dacfd5 /*#dddddd*/; /* Changed from dark to light grey */
+    --input-border-color: #bbbbbb; /* Changed from dark to light grey */
+    --note-border-color: #cccccc; /* Changed from dark to light grey */
+  }
+}
+body.dark-theme {
+  --primary-bg-color: #1e1e2f;
+  --secondary-bg-color: #2a2a40;
+  --primary-txt-color: #ffffff;
+  --note-txt-color: #ffffff;
+  --secondary-txt-color: #e5e5e5;
+  --sub-txt-color: #bbbbbb;
+  --tag-txt-color: #777;
+  --content-placeholdertxt-color: #888;
+  --emphasis-txt-color: #ff00ff;
+  --focus-pointclick-color: #3d3d57;
+
+  --sidebar-border-color: #333;
+  --input-border-color: #555;
+  --note-border-color: #444;
+}
+body.light-theme {
+  --primary-bg-color: #fffbfc /*ffffff*/; /* Changed from dark to light */
+  --secondary-bg-color: #ffedf7 /*#f0f0f0*/; /* Changed from dark to light */
+  --primary-txt-color: #fdf7f7; /* Changed from white to black */
+  --note-txt-color: #4b4b4b;
+  --secondary-txt-color: #333333; /* Changed from light grey to darker grey */
+  --sub-txt-color: #555555; /* Changed from light grey to slightly darker grey */
+  --tag-txt-color: #777777; /* Changed from light grey to slightly darker grey */
+  --content-placeholdertxt-color: #aaaaaa; /* Changed from light grey to slightly darker grey */
+  --emphasis-txt-color: #ff00ff; /* Kept the same for emphasis */
+  --focus-pointclick-color: #cccccc; /* Changed from dark to light grey */
+
+  --sidebar-border-color: #dacfd5 /*#dddddd*/; /* Changed from dark to light grey */
+  --input-border-color: #bbbbbb; /* Changed from dark to light grey */
+  --note-border-color: #cccccc; /* Changed from dark to light grey */
+}
+
+/* No script warning box */
+.noscript-warning {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffcccc;
+  color: #cc0000;
+  text-align: center;
+  padding: 1rem;
+  border: 1px solid #cc0000;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  z-index: 1000;
+}
+
+/* dark mode toggle */
+#darkmode-label {
+  width: 135px;
+  height: 50px;
+  position: relative;
+  display: block;
+  background: #ffffff;
+  border-radius: 50px;
+  box-shadow:
+    inset 0px 5px 15px rgba(0, 0, 0, 0.4),
+    inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  margin-left: 17px;
+}
+
+#darkmode-label:after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background: linear-gradient(180deg, #e9ba56, #d68915);
+  background: #f1c61a;
+  border-radius: 50px;
+  transform: translateX(0%);
+  box-shadow:
+    inset 0px 5px 15px rgba(0, 0, 0, 0.3),
+    inset 0px -5px 15px rgba(255, 255, 255, 0.4);
+}
+
+#darkmode-toggle {
+  width: 0px;
+  height: 0px;
+  visibility: hidden;
+}
+
+#darkmode-toggle:checked + #darkmode-label {
+  background: #242424;
+}
+
+#darkmode-toggle:checked + #darkmode-label:after {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  left: 135px;
+  transform: translateX(-100%);
+  background: linear-gradient(180deg, #777, #3a3a3a);
+}
+
+#darkmode-label:active:after {
+  width: 50px;
+}
+
+#darkmode-background {
+  width: 100vw;
+  height: 100vh;
+  background: #ffffff;
+  z-index: -1;
+  position: absolute;
+  transition: 0.3s;
+}
+
+#darkmode-toggle:checked + #darkmode-label + #darkmode-background {
+  background: #242424;
+}
+
+#darkmode-label svg {
+  position: absolute;
+  width: 120px;
+  top: 40px;
+  z-index: 100;
+}
+#darkmode-label svg.sun {
+  height: 40px;
+  width: 40px;
+  left: 4px;
+  top: 5px;
+  fill: #fff;
+  transition: 0.3s;
+}
+#darkmode-label svg.moon {
+  height: 38px;
+  width: 38px;
+  left: 93px;
+  top: 4px;
+  margin-bottom: 10px;
+  fill: #000000;
+  transition: 0.3s;
+}
+#darkmode-toggle:checked + #darkmode-label svg.sun {
+  fill: #7e7e7e;
+}
+#darkmode-toggle:checked + #darkmode-label svg.moon {
+  fill: #fff;
 }

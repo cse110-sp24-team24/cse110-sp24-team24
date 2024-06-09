@@ -13,8 +13,10 @@ async function main() {
   createWindow();
 
   app.on("window-all-closed", () => {
-    ipcMain.removeHandler("fileStorage:readNotesFile")
-    ipcMain.removeHandler("fileStorage:updateNotesFile")
+    ipcMain.removeHandler("fileStorage:readNotesFile");
+    ipcMain.removeHandler("fileStorage:updateNotesFile");
+    ipcMain.removeHandler("fileStorage:readTagsFile");
+    ipcMain.removeHandler("fileStorage:updateTagsFile");
     if (process.platform !== "darwin") app.quit();
   });
   app.on("activate", () => {
@@ -30,6 +32,14 @@ const createWindow = () => {
 
   ipcMain.handle("fileStorage:updateNotesFile", async (event, notes) => {
     await fileStorage.updateFile(notes, notesDataPath, "notes.json");
+  });
+
+  ipcMain.handle("fileStorage:readTagsFile", async () => {
+    return await fileStorage.readTagsFile(notesDataPath, "tags.json");
+  });
+
+  ipcMain.handle("fileStorage:updateTagsFile", async (event, notes) => {
+    await fileStorage.updateTagsFile(notes, notesDataPath, "tags.json");
   });
 
   const win = new BrowserWindow({
