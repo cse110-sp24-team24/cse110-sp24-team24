@@ -1,22 +1,18 @@
 //TODO create tests
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
-import path from "path";
 import fs from "fs/promises";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const notesDataPath = path.join(__dirname, "../data/notes.json"); // HACK there should be a consistent way to start from the top level directory and not start from __dirname
-const tagsDataPath = path.join(__dirname, "../data/tags.json");
+import path from "node:path";
 
 /**
  * Save the notes to file storage.
- * @param {object} notes
+ * @param {object} data
+ * @param {string} dir
+ * @param {string} file
  */
-async function updateNotesFile(notes) {
-  const jsonData = JSON.stringify(notes);
+async function updateFile(data, dir, file) {
+  const jsonData = JSON.stringify(data);
   try {
-    await fs.writeFile(notesDataPath, jsonData);
+    await createDirIfNotExists(dir);
+    await fs.writeFile(path.join(dir, file), jsonData);
   } catch (error) {
     console.error(error);
   }
@@ -24,11 +20,14 @@ async function updateNotesFile(notes) {
 
 /**
  * Return the notes saved in file storage.
+ * @param {string} dir
+ * @param {string} file
  * @returns {object}
  */
-async function readNotesFile() {
+async function readFile(dir, file) {
   try {
-    const data = await fs.readFile(notesDataPath, "utf-8");
+    await createDirIfNotExists(dir);
+    const data = await fs.readFile(path.join(dir, file), "utf-8");
     return JSON.parse(data);
   } catch (error) {
     console.error(error);
@@ -40,10 +39,11 @@ async function readNotesFile() {
  * Save the tags to file storage.
  * @param {object} tags
  */
-async function updateTagsFile(tags) {
+async function updateTagsFile(tags, dir, file) {
   const jsonData = JSON.stringify(tags);
   try {
-    await fs.writeFile(tagsDataPath, jsonData);
+    await createDirIfNotExists(dir);
+    await fs.writeFile(path.join(dir, file), jsonData);
   } catch (error) {
     console.error(error);
   }
@@ -53,9 +53,10 @@ async function updateTagsFile(tags) {
  * Return the tags saved in file storage.
  * @returns {object}
  */
-async function readTagsFile() {
+async function readTagsFile(dir, file) {
   try {
-    const data = await fs.readFile(tagsDataPath, "utf-8");
+    await createDirIfNotExists(dir);
+    const data = await fs.readFile(path.join(dir, file), "utf-8");
     return JSON.parse(data);
   } catch (error) {
     console.error(error);
@@ -63,4 +64,12 @@ async function readTagsFile() {
   }
 }
 
-export default { updateNotesFile, readNotesFile, updateTagsFile, readTagsFile }; //access via import fileStorage from ./fileStorage.js
+async function createDirIfNotExists(dir) {
+  fs.access(dir, fs.constants.F_OK, (err) => {
+    if (err) {
+      fs.mkdir(dir);
+    }
+  });
+}
+
+export default { updateFile, readFile, updateTagsFile, readTagsFile }; //access via import fileStorage from ./fileStorage.js

@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
-// Need to run the following commands to run the tests:
-// npm install
-// npm test
 
+// Note: this is a hack-y way, but the complexity of electron means this
+// method is (for now) the most feasible one.
 // Set up DOM elements
 document.body.innerHTML = `
 <!-- Sidebar with navigation buttons -->
