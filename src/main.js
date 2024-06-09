@@ -8,6 +8,20 @@ import fileStorage from "./scripts/fileStorage.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// // Listen for the message from the preload script
+// ipcMain.handle("confirm-dialog", async (event, message) => {
+//   const result = await dialog.showMessageBox({
+//     type: "question",
+//     buttons: ["OK", "Cancel"],
+//     defaultId: 0,
+//     title: "Confirm",
+//     message: message,
+//   });
+
+//   // Return true if the user clicks OK, false otherwise
+//   return result.response === 0;
+// });
+
 async function main() {
   await app.whenReady();
   createWindow();

@@ -1,6 +1,20 @@
 // preload requires .mjs extension https://www.electronjs.org/docs/latest/tutorial/esm#esm-preload-scripts-must-have-the-mjs-extension
 import { contextBridge, ipcRenderer } from "electron";
 
+// //CHANGED
+// // Override the confirm function to send a message to the main process
+// window.confirm = async (message) => {
+//   // Send a message to the main process to trigger the confirmation dialog
+//   const confirmed = await ipcRenderer.invoke("confirm-dialog", message);
+//   return confirmed;
+// };
+
+// // Expose other functions or variables as needed
+// // Example:
+// contextBridge.exposeInMainWorld("myAPI", {
+//   // Functions or variables to expose
+// });
+// //CHANGED
 
 let notes = null;
 await readAndDefineNotesIfNull();
