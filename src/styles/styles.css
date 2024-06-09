@@ -310,6 +310,18 @@ body {
   color: var(--content-placeholdertxt-color); /* Style for placeholder text */
 }
 
+/* inserted image styles*/
+#noteContent img {
+  overflow: auto;
+  display: inline-block;
+  min-width: 25px;
+  min-height: 25px;
+  max-width: 400px;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+}
+
 /* code block styles*/
 /*div:has(> pre > code)*/
 .codeBlock {

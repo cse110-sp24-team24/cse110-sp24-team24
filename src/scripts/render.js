@@ -36,7 +36,6 @@ function initializeNoteApp() {
   saveNoteButton = document.getElementById("saveNoteButton");
   deleteNoteButton = document.getElementById("deleteNoteButton");
   cancelButton = document.getElementById("cancelButton");
-
   saveNoteButton.addEventListener("click", saveActiveNote);
   deleteNoteButton.addEventListener("click", deleteActiveNote);
   cancelButton.addEventListener("click", hideNoteEditor);
@@ -48,6 +47,13 @@ function initializeNoteApp() {
   insertImgButton = document.getElementById("insertImageButton");
   insertCodeButton = document.getElementById("insertCodeBlockButton");
 
+  //Other Elements
+  addNoteButton = document.getElementById("addNoteButton");
+  searchInput = document.getElementById("searchInput");
+  notesContainer = document.getElementById("notesContainer");
+  modeToggle = document.getElementById("darkmode-toggle");
+
+  // event listeners for note content / toolbar functions
   underlineButton.addEventListener("click", function () {
     applyStyle("underline");
   });
@@ -62,28 +68,24 @@ function initializeNoteApp() {
   noteContent.addEventListener("keydown", loadStyle);
   noteContent.addEventListener("focus", loadStyle);
 
-  //Other Elements
-  addNoteButton = document.getElementById("addNoteButton");
-  searchInput = document.getElementById("searchInput");
-  notesContainer = document.getElementById("notesContainer");
-
-  modeToggle = document.getElementById("darkmode-toggle");
-  //modeToggleLabel = document.getElementById("darkmode-label");
-
+  // gets the os/browser theme preferences on darkmode
   themePref = window.matchMedia("(prefers-color-scheme: dark)");
+
+  // initialize theme preferences based on: previously selected theme / the user's default os/browser settings
   loadInitThemePreference();
   themePref.addEventListener("change", loadInitThemePreference);
 
+  // reveals empty note editor when add note button is pressed
   addNoteButton.addEventListener("click", showNoteEditor);
+
+  // filters listed notes by the given query
   searchInput.addEventListener("input", filterNotes);
 
+  // toggle theme when dark/light mode switch is checked
   modeToggle.addEventListener("change", toggleTheme);
 
   // toggle text styling buttons on and off when selecting into styled or nonstyled text
   noteContent.addEventListener("mouseup", toggleStyleOnSelect);
-
-  // Event listeners for the note editor with code blocks
-  //noteContent.addEventListener("keydown", (event) => specEditCodeBlock(event));
 
   renderNotes();
 }
@@ -212,6 +214,9 @@ function loadStyle() {
   }
 }
 
+/**
+ * When the user selects into styled text, toggles the style on/off
+ */
 function toggleStyleOnSelect() {
   if (getClosestAncestorEl("u")) {
     underlineButton.className = "on";
@@ -249,14 +254,6 @@ function insertCode() {
   codeBlock.spellcheck = false;
   addCodeBlockEventListener(codeBlock);
 
-  /*const codeContainer = document.createElement("div");
-  codeContainer.className = "codeBlock";
-  const codeBlock = document.createElement("pre");
-  const codeEl = document.createElement("code");
-  codeContainer.contentEditable = "true";
-  codeBlock.append(codeEl);
-  codeContainer.append(codeBlock);*/
-
   //zerowidthspace so that user can continue typing after code block
   const zeroWidthSpace = document.createTextNode("\u200B");
   const initText = document.createTextNode("// write code here... ");
@@ -269,8 +266,6 @@ function insertCode() {
     range.insertNode(codeBlock);
     range.collapse(false);
     range.insertNode(zeroWidthSpace);
-    //range.setStart(codeEl, 0);
-    //range.setEnd(codeEl, 0);
     range.setStart(codeBlock, 0);
     range.setEnd(codeBlock, 0);
     range.insertNode(initText);
@@ -281,12 +276,20 @@ function insertCode() {
   }
 }
 
+/**
+ * Allows for customized reactions to certain events on code blocks (specific ways to delete/edit code blocks) by attaching event listeners to a given code block
+ * @param {*} codeBlock takes in the code block to attach event listeners to
+ */
 function addCodeBlockEventListener(codeBlock) {
+  // event listener to make sure that codeblock textarea value is saved into the innercontent to be saved in filesystem
   codeBlock.addEventListener("input", () => {
     codeBlock.textContent = codeBlock.value;
     codeBlock.value = codeBlock.textContent;
   });
+
+  // event listener for 'tab' and 'delete' for specified behavior
   codeBlock.addEventListener("keydown", (event) => {
+    // when 'tab' is entered, make sure that it does not default to tab navigation and isntead inserts a tab into the codeblock content
     if (event.key.toLowerCase() == "tab") {
       event.preventDefault();
       const start = codeBlock.selectionStart;
@@ -298,6 +301,8 @@ function addCodeBlockEventListener(codeBlock) {
       codeBlock.selectionStart = start + 1;
       codeBlock.selectionEnd = start + 1;
     }
+
+    //when 'delete' is entered, make sure that if the codeblock is empty, then delete the codeblock itself and remove its accompanying zero width space
     if (
       event.key.toLowerCase() == "delete" ||
       event.key.toLowerCase() == "backspace"
@@ -314,7 +319,11 @@ function addCodeBlockEventListener(codeBlock) {
   });
 }
 
+/**
+ * When the user presses teh insert image button, inserts a prompt for an image url, if it is valid an image will display in that position
+ */
 function insertImg() {
+  // check if user is selected in code block or not selected in note content
   if (
     !getClosestAncestorEl("#noteContent") ||
     getClosestAncestorEl(".codeBlock")
@@ -322,9 +331,12 @@ function insertImg() {
     noteContent.focus();
     return;
   }
+
+  // get user selection
   const sel = window.getSelection();
   const range = sel.getRangeAt(0);
 
+  // create url input query for user
   const urlInput = document.createElement("input");
   urlInput.type = "url";
   urlInput.size = "40";
@@ -332,6 +344,7 @@ function insertImg() {
   urlInput.placeholder = "type image url then press 'enter'";
   let imgUrl = "";
 
+  // when user presses 'enter' the url input will disappear and be replaced with an image (if the url is valid)
   urlInput.addEventListener("keyup", (event) => {
     if (event.key.toLowerCase() == "enter") {
       event.preventDefault();
@@ -340,15 +353,17 @@ function insertImg() {
       if (imgUrl) {
         const img = document.createElement("img");
         img.src = imgUrl;
-        img.style.maxWidth = "100%";
-        img.style.height = "auto";
         range.insertNode(img);
       }
     }
   });
+
+  // when the user presses out of the input prompt, removes the input prompt from the content
   urlInput.addEventListener("focusout", () => {
     urlInput.remove();
   });
+
+  // insert the url input
   range.deleteContents();
   range.insertNode(urlInput);
   urlInput.focus();
@@ -360,10 +375,13 @@ function insertImg() {
  * @returns {Element} The ancestor element that matches the given selector, null of not found
  */
 function getClosestAncestorEl(selector) {
+  // get user selection
   const sel = window.getSelection();
+
+  // check surrounding ancestor nodes and get the nearest matching parent element up the DOM tree
   if (sel.rangeCount > 0) {
     const range = sel.getRangeAt(0);
-    let node = range.startContainer;
+    let node = range.commonAncestorContainer;
 
     if (node.nodeType != Node.ELEMENT_NODE) {
       node = node.parentElement;
@@ -541,8 +559,14 @@ function filterNotes() {
   renderNotes(filteredTitleNotes, filteredTagNotes, filteredTextNotes);
 }
 
+/**
+ * First checks the user's last saved theme setting, if there is no such setting then defaults to the os/browser theme preference
+ */
 function loadInitThemePreference() {
+  // check local storage for saved theme
   const savedTheme = localStorage.getItem("theme");
+
+  // toggle based on saved theme if exists, else toggle based on existing system preferences
   if (savedTheme && savedTheme == "dark") {
     modeToggle.checked = true;
   } else if (savedTheme && savedTheme == "light") {
@@ -553,6 +577,9 @@ function loadInitThemePreference() {
   toggleTheme();
 }
 
+/**
+ * Toggles the theme based on the checked status of the theme switch, if checked then switches to dark theme, otherwise switches to light theme
+ */
 function toggleTheme() {
   if (modeToggle.checked) {
     document.body.classList.add("dark-theme");
