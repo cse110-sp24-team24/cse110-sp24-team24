@@ -397,6 +397,9 @@ function insertImg() {
   urlInput.focus();
 }
 
+/**
+ * disables all editing buttons
+ */
 function disableEditingButtons() {
   underlineButton.className = "off";
   underlineButton.disabled = true;
@@ -409,6 +412,9 @@ function disableEditingButtons() {
   insertImgButton.disabled = true;
 }
 
+/**
+ * enables all editing buttons
+ */
 function enableEditingButtons() {
   underlineButton.disabled = false;
   boldButton.disabled = false;
