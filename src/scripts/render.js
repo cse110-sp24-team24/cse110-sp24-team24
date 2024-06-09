@@ -65,7 +65,7 @@ function initializeNoteApp() {
   });
   insertImgButton.addEventListener("click", insertImg);
   insertCodeButton.addEventListener("click", insertCode);
-  noteContent.addEventListener("change", loadStyle);
+  noteContent.addEventListener("input", loadStyle);
   noteContent.addEventListener("focus", function () {
     loadStyle();
     enableEditingButtons();
