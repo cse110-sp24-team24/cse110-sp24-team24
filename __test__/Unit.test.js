@@ -1,6 +1,5 @@
 // Need to run the following commands to run the tests:
 // npm install
-// npm install --save-dev jest-environment-jsdom
 // npm test
 
 // Set up DOM elements
