@@ -1,6 +1,5 @@
 // preload requires .mjs extension https://www.electronjs.org/docs/latest/tutorial/esm#esm-preload-scripts-must-have-the-mjs-extension
-import fileStorage from "./fileStorage.js";
-import { contextBridge } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 
 let notes = null;
 let tags = null;
@@ -37,7 +36,7 @@ function generateID() {
  * @returns {string}
  */
 async function createNote(title, content, tags, date) {
-  defineNotesIfNull();
+  readAndDefineNotesIfNull();
   let newID = generateID();
   await updateNote(newID, title, content, tags, date);
   return newID;
@@ -92,7 +91,7 @@ function readTags() {
  * @param {object} date
  */
 async function updateNote(noteID, title, content, tags, date) {
-  defineNotesIfNull();
+  readAndDefineNotesIfNull();
   let newNote = {
     ID: noteID,
     title: title,
@@ -101,7 +100,7 @@ async function updateNote(noteID, title, content, tags, date) {
     date: date,
   };
   notes[newNote.ID] = newNote;
-  updateFileStorage();
+  updateNotesFile();
 }
 
 /**
@@ -109,19 +108,19 @@ async function updateNote(noteID, title, content, tags, date) {
  * @param {object} noteID
  */
 async function deleteNote(noteID) {
-  defineNotesIfNull();
+  readAndDefineNotesIfNull();
   delete notes[noteID];
-  updateFileStorage();
+  updateNotesFile();
 }
 
 /**
  * Define local representation of notes from file storage if notes is not already defined.
  * @returns {object}
  */
-async function defineNotesIfNull() {
+async function readAndDefineNotesIfNull() {
   if (notes == null) {
     try {
-      notes = await fileStorage.readNotesFile();
+      notes = await ipcRenderer.invoke("fileStorage:readNotesFile");
     } catch (err) {
       console.error(err);
       throw new Error(`Unable to load notes from file system. ${err}`);
@@ -149,7 +148,7 @@ async function defineTagsIfNull() {
 /**
  * Update file storage representation of notes with local representation of notes.
  */
-async function updateFileStorage() {
+async function updateNotesFile() {
   try {
     await fileStorage.updateNotesFile(notes);
     await fileStorage.updateTagsFile(tags);

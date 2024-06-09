@@ -1,7 +1,4 @@
 //TODO create tests
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
-import path from "path";
 import fs from "fs/promises";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,10 +8,12 @@ const tagsDataPath = path.join(__dirname, "../data/tags.json");
 
 /**
  * Save the notes to file storage.
- * @param {object} notes
+ * @param {object} data
+ * @param {string} dir
+ * @param {string} file 
  */
-async function updateNotesFile(notes) {
-  const jsonData = JSON.stringify(notes);
+async function updateFile(data, dir, file) {
+  const jsonData = JSON.stringify(data);
   try {
     await fs.writeFile(notesDataPath, jsonData);
   } catch (error) {
@@ -24,9 +23,11 @@ async function updateNotesFile(notes) {
 
 /**
  * Return the notes saved in file storage.
+ * @param {string} dir
+ * @param {string} file 
  * @returns {object}
  */
-async function readNotesFile() {
+async function readFile(dir, file) {
   try {
     const data = await fs.readFile(notesDataPath, "utf-8");
     return JSON.parse(data);
