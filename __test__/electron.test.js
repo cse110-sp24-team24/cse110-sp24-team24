@@ -110,4 +110,48 @@ describe("Testing Window Functionality", () => {
     expect(noteContentValue).toBe("Write unit tests using puppeteer and chat");
   }, 150000);
 
+  test("Apply bold, italic, and underline styles to text", async () => {
+    // Select the text
+    await page.evaluate(() => {
+      const range = document.createRange();
+      const textNode = document.querySelector("#noteContent").firstChild;
+      range.selectNodeContents(textNode);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+    });
+
+    // Apply bold style
+    await page.click("#makeBoldButton");
+
+    // Check if the text is bold
+    const isBold = await page.evaluate(() => {
+      return document.queryCommandState("bold");
+    });
+
+    // Expect the text to be bold
+    expect(isBold).toBe(true);
+
+    // Apply italic style
+    await page.click("#makeItalicButton");
+
+    // Check if the text is italic
+    const isItalic = await page.evaluate(() => {
+      return document.queryCommandState("italic");
+    });
+
+    // Expect the text to be italic
+    expect(isItalic).toBe(true);
+
+    // Apply underline style
+    await page.click("#makeUnderlineButton");
+
+    // Check if the text is underlined
+    const isUnderlined = await page.evaluate(() => {
+      return document.queryCommandState("underline");
+    });
+
+    // Expect the text to be underlined
+    expect(isUnderlined).toBe(true);
+  });
 });
