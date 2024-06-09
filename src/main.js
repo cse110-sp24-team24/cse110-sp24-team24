@@ -1,9 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 import path from "node:path";
-import { app, BrowserWindow, ipcMain } from "electron";
-
-import fileStorage from "./scripts/fileStorage.js";
+import { app, BrowserWindow } from "electron";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,8 +11,6 @@ async function main() {
   createWindow();
 
   app.on("window-all-closed", () => {
-    ipcMain.removeHandler("fileStorage:readNotesFile")
-    ipcMain.removeHandler("fileStorage:updateNotesFile")
     if (process.platform !== "darwin") app.quit();
   });
   app.on("activate", () => {
@@ -23,15 +19,6 @@ async function main() {
 }
 
 const createWindow = () => {
-  const notesDataPath = path.join(app.getPath("documents"), "dev-journal");
-  ipcMain.handle("fileStorage:readNotesFile", async () => {
-    return await fileStorage.readFile(notesDataPath, "notes.json");
-  });
-
-  ipcMain.handle("fileStorage:updateNotesFile", async (event, notes) => {
-    await fileStorage.updateFile(notes, notesDataPath, "notes.json");
-  });
-
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -40,8 +27,7 @@ const createWindow = () => {
       nodeIntegration: true,
     },
   });
-
-  win.loadFile(path.join(__dirname, "index.html"));
+  win.loadFile("./index.html");
 };
 
 main();
