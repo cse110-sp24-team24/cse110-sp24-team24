@@ -174,6 +174,12 @@
           placeholder="Search..."
           aria-label="Search"
         />
+        <button id="filterButton" aria-label="Filter">&#9662;</button>
+        <div id="filter-dropdown-container" class="hidden">
+          <ul id="filter-dropdown-list">
+            <!-- Tag options will be dynamically inserted here -->
+          </ul>
+        </div>
       </div>
       <!-- Container for displaying notes -->
       <section id="notesContainer">
@@ -202,14 +208,45 @@
       <div id="date-tags-container">
         <label for="noteDate">Date</label>
         <input type="date" id="noteDate" aria-label="Note Date" />
+
+        <!-- Tag color picker -->
         <label for="noteTags">Tags</label>
+        <form>
+        <select required name="tag-color" id="tag-color">
+          <option value="" disable selected hidden>Select tag color</option>
+          <option value="">Default</option>
+          <option value="red">Red</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+        </select>
+        </form>
+        
         <input
           type="text"
           id="noteTags"
-          placeholder="Tags (comma separated)"
+          placeholder="create tag"
           aria-label="Note Tags"
         />
+
+        <!-- button for adding a tag
+        - Create
+        - drop down
+         -->
+        <button id="tag-create" aria-label="Button 1" title="tagcreate">+</button>
+        <button id="tag-dropdown" aria-label="Button 2">&#9662;</button>
+        <div id="tag-dropdown-container" class="hidden">
+          <ul id="tag-dropdown-list">
+            <!-- Tag options will be dynamically inserted here -->
+          </ul>
+        </div>
       </div>
+
+      <ul id="tag-list">
+        <!-- Tags will be dynamically inserted here -->
+      </ul>
+
       <div id="contentContainer">
         <label for="noteContent">Content</label>
         <div
