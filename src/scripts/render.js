@@ -65,7 +65,7 @@ function initializeNoteApp() {
   });
   insertImgButton.addEventListener("click", insertImg);
   insertCodeButton.addEventListener("click", insertCode);
-  noteContent.addEventListener("keydown", (event) => specEditCodeBlock(event));
+  noteContent.addEventListener("keydown", loadStyle);
   noteContent.addEventListener("focus", loadStyle);
   noteContent.addEventListener("mouseup", toggleStyleOnSelect);
 
@@ -81,6 +81,9 @@ function initializeNoteApp() {
 
   // filters listed notes by the given query
   searchInput.addEventListener("input", filterNotes);
+
+  // toggle theme when dark/light mode switch is checked
+  modeToggle.addEventListener("change", toggleTheme);
 
   const tagCreateButton = document.getElementById("tag-create");
   const tagList = document.getElementById("tag-list");
@@ -191,6 +194,10 @@ function initializeNoteApp() {
     activeNoteID = note.ID;
     noteTitle.value = note.title;
     noteContent.innerHTML = note.content;
+    const codeBlocks = document.querySelectorAll("#noteContent .codeBlock");
+    codeBlocks.forEach((codeBlock) => {
+      addCodeBlockEventListener(codeBlock);
+    });
     tagList.value = note.tags;
     noteDate.value = note.date;
     noteEditor.classList.remove("hidden"); // Show the note editor
@@ -346,13 +353,10 @@ function initializeNoteApp() {
     }
 
     // create code block element
-    const codeContainer = document.createElement("div");
-    codeContainer.className = "codeBlock";
-    const codeBlock = document.createElement("pre");
-    const codeEl = document.createElement("code");
-    codeContainer.contentEditable = "true";
-    codeBlock.append(codeEl);
-    codeContainer.append(codeBlock);
+    const codeBlock = document.createElement("textarea");
+    codeBlock.className = "codeBlock";
+    codeBlock.spellcheck = false;
+    addCodeBlockEventListener(codeBlock);
 
     //zerowidthspace so that user can continue typing after code block
     const zeroWidthSpace = document.createTextNode("\u200B");
@@ -363,11 +367,11 @@ function initializeNoteApp() {
     if (sel.rangeCount > 0) {
       const range = sel.getRangeAt(0);
       range.deleteContents();
-      range.insertNode(codeContainer);
+      range.insertNode(codeBlock);
       range.collapse(false);
       range.insertNode(zeroWidthSpace);
-      range.setStart(codeEl, 0);
-      range.setEnd(codeEl, 0);
+      range.setStart(codeBlock, 0);
+      range.setEnd(codeBlock, 0);
       range.insertNode(initText);
       range.setStartAfter(initText);
       range.setEndAfter(initText);
@@ -376,57 +380,97 @@ function initializeNoteApp() {
     }
   }
 
-  function specEditCodeBlock(event) {
-    // if the selection is inside a code block, get the code block the section is in
-    let selectedInCodeBlock = getClosestAncestorEl(".codeBlock");
+  /**
+   * Allows for customized reactions to certain events on code blocks (specific ways to delete/edit code blocks) by attaching event listeners to a given code block
+   * @param {*} codeBlock takes in the code block to attach event listeners to
+   */
+  function addCodeBlockEventListener(codeBlock) {
+    // event listener to make sure that codeblock textarea value is saved into the innercontent to be saved in filesystem
+    codeBlock.addEventListener("input", () => {
+      codeBlock.textContent = codeBlock.value;
+      codeBlock.value = codeBlock.textContent;
+    });
 
-    // get the user's selection
+    // event listener for 'tab' and 'delete' for specified behavior
+    codeBlock.addEventListener("keydown", (event) => {
+      // when 'tab' is entered, make sure that it does not default to tab navigation and isntead inserts a tab into the codeblock content
+      if (event.key.toLowerCase() == "tab") {
+        event.preventDefault();
+        const start = codeBlock.selectionStart;
+        const end = codeBlock.selectionEnd;
+        codeBlock.value =
+          codeBlock.value.substring(0, start) +
+          "\t" +
+          codeBlock.value.substring(end);
+        codeBlock.selectionStart = start + 1;
+        codeBlock.selectionEnd = start + 1;
+      }
+
+      //when 'delete' is entered, make sure that if the codeblock is empty, then delete the codeblock itself and remove its accompanying zero width space
+      if (
+        event.key.toLowerCase() == "delete" ||
+        event.key.toLowerCase() == "backspace"
+      ) {
+        if (codeBlock.value.trim() == "") {
+          event.preventDefault();
+          codeBlock.innerHTML = "";
+          if (codeBlock.nextSibling.data == "\u200B")
+            codeBlock.nextSibling.remove();
+          codeBlock.remove();
+          noteContent.focus();
+        }
+      }
+    });
+  }
+
+  /**
+   * When the user presses teh insert image button, inserts a prompt for an image url, if it is valid an image will display in that position
+   */
+  function insertImg() {
+    // check if user is selected in code block or not selected in note content
+    if (
+      !getClosestAncestorEl("#noteContent") ||
+      getClosestAncestorEl(".codeBlock")
+    ) {
+      noteContent.focus();
+      return;
+    }
+
+    // get user selection
     const sel = window.getSelection();
     const range = sel.getRangeAt(0);
 
-    // if the tab key press occurs inside of a codeblock, the tab will replace the tab navigation functionality and instead produce a '\t' inside the code block
-    if (event.key.toLowerCase() == "tab" && selectedInCodeBlock) {
-      // prevent the default behavior of pressing tab
-      event.preventDefault();
+    // create url input query for user
+    const urlInput = document.createElement("input");
+    urlInput.type = "url";
+    urlInput.size = "40";
+    urlInput.className = "urlInput";
+    urlInput.placeholder = "type image url then press 'enter'";
+    let imgUrl = "";
 
-      // create and insert '\t' tab text node
-      const tabNode = document.createTextNode("\t");
-      range.insertNode(tabNode);
-
-      // select after the tab text node
-      range.setStartAfter(tabNode);
-      range.setEndAfter(tabNode);
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-
-    // if the delete key press occurs inside of a codeblock, then make sure that if the codeblock is to be empty the codeblock is removed
-    if (
-      (event.key.toLowerCase() == "delete" ||
-        event.key.toLowerCase() == "backspace") &&
-      selectedInCodeBlock
-    ) {
-      const selectedText = range.toString().replace(/\s/g, "");
-      const codeBlockText = selectedInCodeBlock.innerText.replace(/\s/g, "");
-      // checks if the delete will delete the last character in the code block or at least all text in the code block is selected
-      if (
-        selectedInCodeBlock.innerText.length == 1 ||
-        selectedText.indexOf(codeBlockText) >= 0
-      ) {
-        // prevent the default behavior of delete
-        //event.preventDefault();
-
-        // empty the code block container
-        selectedInCodeBlock.innerHTML = "";
-
-        // remove the zerowidthspace text node after the code block
-        if (selectedInCodeBlock.nextSibling.data == "\u200B")
-          selectedInCodeBlock.nextSibling.remove();
-
-        // remove the code block element
-        selectedInCodeBlock.remove();
+    // when user presses 'enter' the url input will disappear and be replaced with an image (if the url is valid)
+    urlInput.addEventListener("keyup", (event) => {
+      if (event.key.toLowerCase() == "enter") {
+        event.preventDefault();
+        imgUrl = urlInput.value;
+        noteContent.focus();
+        if (imgUrl) {
+          const img = document.createElement("img");
+          img.src = imgUrl;
+          range.insertNode(img);
+        }
       }
-    }
+    });
+
+    // when the user presses out of the input prompt, removes the input prompt from the content
+    urlInput.addEventListener("focusout", () => {
+      urlInput.remove();
+    });
+
+    // insert the url input
+    range.deleteContents();
+    range.insertNode(urlInput);
+    urlInput.focus();
   }
 
   /**
@@ -435,10 +479,13 @@ function initializeNoteApp() {
    * @returns {Element} The ancestor element that matches the given selector, null of not found
    */
   function getClosestAncestorEl(selector) {
+    // get user selection
     const sel = window.getSelection();
+
+    // check surrounding ancestor nodes and get the nearest matching parent element up the DOM tree
     if (sel.rangeCount > 0) {
       const range = sel.getRangeAt(0);
-      let node = range.startContainer;
+      let node = range.commonAncestorContainer;
 
       if (node.nodeType != Node.ELEMENT_NODE) {
         node = node.parentElement;
@@ -454,7 +501,6 @@ function initializeNoteApp() {
     }
     return null;
   }
-
   /**
    * Save note values from note editor text input areas into a note object,
    * and updates note in "notes" array if already existing, or appends to
@@ -856,6 +902,39 @@ function initializeNoteApp() {
     }
 
     hideFilterDropdown();
+  }
+
+  /**
+   * First checks the user's last saved theme setting, if there is no such setting then defaults to the os/browser theme preference
+   */
+  function loadInitThemePreference() {
+    // check local storage for saved theme
+    const savedTheme = localStorage.getItem("theme");
+
+    // toggle based on saved theme if exists, else toggle based on existing system preferences
+    if (savedTheme && savedTheme == "dark") {
+      modeToggle.checked = true;
+    } else if (savedTheme && savedTheme == "light") {
+      modeToggle.checked = false;
+    } else {
+      modeToggle.checked = themePref.matches;
+    }
+    toggleTheme();
+  }
+
+  /**
+   * Toggles the theme based on the checked status of the theme switch, if checked then switches to dark theme, otherwise switches to light theme
+   */
+  function toggleTheme() {
+    if (modeToggle.checked) {
+      document.body.classList.add("dark-theme");
+      document.body.classList.remove("light-theme");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.body.classList.add("light-theme");
+      document.body.classList.remove("dark-theme");
+      localStorage.setItem("theme", "light");
+    }
   }
 
   return {
