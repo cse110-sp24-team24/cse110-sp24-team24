@@ -75,7 +75,7 @@ function readNote(noteID) {
  * @param {string} title
  * @param {string} content
  * @param {string} tags
- * @param {obejct} date
+ * @param {object} date
  */
 async function updateNote(noteID, title, content, tags, date) {
   readAndDefineNotesIfNull();
