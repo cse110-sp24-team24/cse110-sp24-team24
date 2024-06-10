@@ -24,6 +24,7 @@
 **Team 3:**
 - bug fixes
 - code blocks
+- Dark/Light mode
 
 **Cynthia:**
 - JSDOCs automation
