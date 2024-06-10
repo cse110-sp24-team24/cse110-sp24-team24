@@ -3,8 +3,9 @@
 ## Context and Problem Statement
 
 One of the few design requirements that we had been given for our project by the professor was local first. This requirement brings up a few problems primarily:
+
 1. The app needs to run independent of a network connection.
-2. Data be stored and stay persistent across sessions. 
+2. Data be stored and stay persistent across sessions.
 
 So we needed to answer:
 What technologies and structure will we use to enable development of a local first application?
@@ -27,11 +28,11 @@ Spoilers we chose to go with Electron.JS (which we will expand on later). To add
 This is a convenient way to store data through the window api. However, this data is not guaranteed to persist and may be cleared if caches are cleared or if chrome is updated.
 
 **File Storage**
-Through node's file system module we can save app data in the user's file system. This allows us to have persistent data. The con is there are security concerns with accessing a user's file system. 
+Through node's file system module we can save app data in the user's file system. This allows us to have persistent data. The con is there are security concerns with accessing a user's file system.
 
 ---
 
-Finally we needed to decide on a structure for our app. 
+Finally we needed to decide on a structure for our app.
 
 **index.html, scripts.js, styles.css**
 This is a very simple system that most of us were familiar with. It's a very common structure for simple websites. The downside is that this leads to much of the code being tightly coupled. This also would lead to problems using node.js modules with electron

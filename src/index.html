@@ -14,22 +14,36 @@
       content="Dev Journal, Developer Notebook, Notes, Journal, Purrfect Notes"
     />
     <!-- Icon for the webpage -->
-    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_io/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_io/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_io/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./assets/favicon_io/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/favicon_io/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./assets/favicon_io/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/site.webmanifest" />
     <!-- Sets the title of the webpage -->
     <title>Purrfect Notes</title>
     <!-- Links the external CSS stylesheet for styling the webpage -->
     <link rel="stylesheet" href="./styles/styles.css" />
-    <script src="./scripts/render.js"></script>
+    <script src="./scripts/render.js" type="module"></script>
   </head>
   <body>
     <!-- Sidebar with navigation buttons -->
     <nav class="sidebar" role="navigation">
       <button id="homeButton" aria-label="Home">🏠 Home</button>
       <button id="addNoteButton" aria-label="Add Note">➕ Add Note</button>
-      <input type="checkbox" id="darkmode-toggle" aria-label="Theme Toggle"/>
+      <input type="checkbox" id="darkmode-toggle" aria-label="Theme Toggle" />
       <label id="darkmode-label" for="darkmode-toggle">
         <svg
           version="1.1"
@@ -218,17 +232,17 @@
         <!-- Tag color picker -->
         <label for="noteTags">Tags</label>
         <form>
-        <select required name="tag-color" id="tag-color">
-          <option value="" disable selected hidden>Select tag color</option>
-          <option value="">Default</option>
-          <option value="red">Red</option>
-          <option value="orange">Orange</option>
-          <option value="yellow">Yellow</option>
-          <option value="green">Green</option>
-          <option value="blue">Blue</option>
-        </select>
+          <select required name="tag-color" id="tag-color">
+            <option value="" disable selected hidden>Select tag color</option>
+            <option value="">Default</option>
+            <option value="red">Red</option>
+            <option value="orange">Orange</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+          </select>
         </form>
-        
+
         <input
           type="text"
           id="noteTags"
@@ -240,7 +254,9 @@
         - Create
         - drop down
          -->
-        <button id="tag-create" aria-label="Button 1" title="tagcreate">+</button>
+        <button id="tag-create" aria-label="Button 1" title="tagcreate">
+          +
+        </button>
         <button id="tag-dropdown" aria-label="Button 2">&#9662;</button>
         <div id="tag-dropdown-container" class="hidden">
           <ul id="tag-dropdown-list">
