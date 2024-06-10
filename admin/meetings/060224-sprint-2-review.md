@@ -11,19 +11,22 @@
 ### Completed Tasks:
 
 **Team 1:**
+
 - Still working on testing
 - Having a bug on unit tests that are not working
 - Moving for next sprint to pull from other tests and modify tests
-  
+
 **Team 2:**
+
 - Working bugs on color/duplicates
 - Finished filtering system of tags
 - Change of tags being saved as JSON file
-    - Change caused some bugs
-    - Plan to be fixed by end of today or tomorrow
+  - Change caused some bugs
+  - Plan to be fixed by end of today or tomorrow
 - Has to fix unnecessary duplication of tags
-  
+
 **Team 3:**
+
 - Reconsider using markdown library
   - Alternative would be to manually mimic markdown library's code editor
   - Since we can do it manaually library is no longer as necessary
@@ -41,9 +44,7 @@
   - Will start merging their code Monday night
 - Team 3: HTML and UI
   - Decide on how code editor will be implemented and if library will be used moving on or not
-  - ADR on code block decision 
+  - ADR on code block decision
   - Will finish these tasks and start merging by Monday night
 - Everyone
-  - Review PR's once teams begin adding their branches to 'deploy' 
-
-
+  - Review PR's once teams begin adding their branches to 'deploy'

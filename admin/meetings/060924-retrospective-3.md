@@ -22,7 +22,7 @@
    - Everyone contributing the team despite being busy
    - Everyone putting in the work
    - Lots of progress made
-   - Jefferey MVP 
+   - Jefferey MVP
    - Even though the last minute changes are stressful, everyone’s very attentive to the slack
 
 2. **What did not go well:**
@@ -38,17 +38,14 @@
    - Fix the bugs and make the final video presentation
    - merge and pull
    - finish up the last merge and tests!
-     
-4. **Action Items:**
-   
-    - Each team finish up their tasks and start merging to deploy branch
-    - Focus on testing, debugging, as well as any styling
-    - Start discussing how to make the video
 
+4. **Action Items:**
+
+   - Each team finish up their tasks and start merging to deploy branch
+   - Focus on testing, debugging, as well as any styling
+   - Start discussing how to make the video
 
 ### Group Activity
-
-
 
 ![Group Satisfaction Activity](/images/060924-retrospective-activity.png)
 
