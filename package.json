@@ -12,6 +12,7 @@
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-puppeteer": "^10.0.1",
+    "jsdoc": "^4.0.3",
     "prettier": "^3.2.5",
     "puppeteer": "^22.8.0"
   },
@@ -34,6 +35,27 @@
     "productName": "Developer Journal",
     "mac": {},
     "win": {}
+  },
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": [
+      "src/scripts"
+    ],
+    "exclude": [
+      "node_modules"
+    ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "opts": {
+    "destination": "./out",
+    "recurse": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
   },
   "type": "module",
   "name": "cse110-sp24-team24",
