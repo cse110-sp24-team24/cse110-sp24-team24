@@ -548,7 +548,8 @@ body {
   background: none;
   border: none;
   color: var(--secondary-txt-color);
-  padding: 0.25rem; /* Smaller padding */
+  padding: 0.25rem;
+  width: 20%;
   cursor: pointer;
   font-size: 1.2rem; /* Smaller font size */
   transition:
@@ -566,14 +567,18 @@ body {
 #floatingToolbar button.on {
   background: none;
   border: none;
-  color: #ff00ff;
-  padding: 0.25rem; /* Smaller padding */
+  color: var(--emphasis-txt-color);
   cursor: pointer;
   font-size: 1.2rem; /* Smaller font size */
   transition:
     transform 0.3s,
     color 0.3s;
   transform: scale(1.1);
+}
+
+#floatingToolbar button:disabled {
+  color: var(--content-placeholdertxt-color);
+  cursor: not-allowed;
 }
 
 /* Styles for the delete button in note */
@@ -627,7 +632,7 @@ body {
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .sidebar {
-    width: 8rem;
+    width: 10rem;
   }
 
   .sidebar button {
@@ -855,4 +860,12 @@ body.light-theme {
 }
 #darkmode-toggle:checked + #darkmode-label svg.moon {
   fill: #fff;
+}
+
+/* Title icon styling */
+.title-icon {
+  width: 150px; /* Adjust size as needed */
+  height: auto;
+  vertical-align: middle;
+  margin-right: 10px; /* Space between icon and title */
 }

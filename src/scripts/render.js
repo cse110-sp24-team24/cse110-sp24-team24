@@ -53,7 +53,7 @@ function initializeNoteApp() {
   notesContainer = document.getElementById("notesContainer");
   modeToggle = document.getElementById("darkmode-toggle");
 
-  // event listeners for note content / toolbar functions
+  // prevent listeners for note content / toolbar functions
   underlineButton.addEventListener("click", function () {
     applyStyle("underline");
   });
@@ -65,9 +65,11 @@ function initializeNoteApp() {
   });
   insertImgButton.addEventListener("click", insertImg);
   insertCodeButton.addEventListener("click", insertCode);
-  noteContent.addEventListener("keydown", loadStyle);
-  noteContent.addEventListener("focus", loadStyle);
-  noteContent.addEventListener("mouseup", toggleStyleOnSelect);
+  noteContent.addEventListener("input", loadStyle);
+  noteContent.addEventListener("focus", function () {
+    loadStyle();
+    enableEditingButtons();
+  });
 
   // gets the os/browser theme preferences on darkmode
   themePref = window.matchMedia("(prefers-color-scheme: dark)");
@@ -93,6 +95,22 @@ function initializeNoteApp() {
   );
   const tagDropdownList = document.getElementById("tag-dropdown-list");
   const tagColorButton = document.getElementById("tag-color");
+  // event listeners for when user clicks around toggle text styling buttons on and off when selecting into styled or nonstyled text
+  window.addEventListener("mousedown", function (event) {
+    if (!noteEditor.contains(event.target)) {
+      hideNoteEditor();
+    } else if (noteContent.contains(event.target)) {
+      toggleStyleOnSelect();
+    } else if (
+      !underlineButton.contains(event.target) &&
+      !boldButton.contains(event.target) &&
+      !italicButton.contains(event.target) &&
+      !insertImgButton.contains(event.target) &&
+      !insertCodeButton.contains(event.target)
+    ) {
+      disableEditingButtons();
+    }
+  });
 
   //Event Listener for clicking the create tag button
   tagCreateButton.addEventListener("click", function () {
@@ -191,15 +209,17 @@ function initializeNoteApp() {
       date: new Date().toISOString().substring(0, 10),
     }
   ) {
+    enableEditingButtons();
+
     activeNoteID = note.ID;
-    noteTitle.value = note.title;
-    noteContent.innerHTML = note.content;
+    noteTitle.value = note.title || "";
+    noteContent.innerHTML = note.content || "";
     const codeBlocks = document.querySelectorAll("#noteContent .codeBlock");
     codeBlocks.forEach((codeBlock) => {
       addCodeBlockEventListener(codeBlock);
     });
-    tagList.value = note.tags;
-    noteDate.value = note.date;
+    tagList.value = note.tags || "";
+    noteDate.value = note.date || new Date().toISOString().substring(0, 10);
     noteEditor.classList.remove("hidden"); // Show the note editor
     tagList.innerHTML = "";
 
@@ -268,6 +288,13 @@ function initializeNoteApp() {
    * @param {string} style - the style indicated by which button is pressed
    */
   function applyStyle(style) {
+    // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise refocus on the note content and exit the function
+    if (
+      !getClosestAncestorEl("#noteContent") ||
+      getClosestAncestorEl(".codeBlock")
+    ) {
+      return;
+    }
     //depreciated method to toggle text styling
     if (style == "bold") {
       styleToggle(boldButton);
@@ -283,13 +310,27 @@ function initializeNoteApp() {
   }
 
   /**
-   * Update the formatting to reflect the toolbar button indicators
+   * Toggle note content styling button's class to "on" or "off"
+   * button class represents style on UI for whether style is applied
+   * or not
+   * @param {DOM element} button
+   */
+  function styleToggle(button) {
+    if (button.className == "on") {
+      button.className = "off";
+    } else {
+      button.className = "on";
+    }
+  }
+
+  /**
+   * update the formatting to reflect the toolbar button indicators
    * on every note content input and click
    */
   function loadStyle() {
-    var bold = document.queryCommandState("bold");
-    var italic = document.queryCommandState("italic");
-    var underline = document.queryCommandState("underline");
+    const bold = document.queryCommandState("bold");
+    const italic = document.queryCommandState("italic");
+    const underline = document.queryCommandState("underline");
     if (underlineButton.className == "on") {
       if (!underline) {
         document.execCommand("underline", false, null);
@@ -322,9 +363,19 @@ function initializeNoteApp() {
   }
 
   /**
-   * Controls class type of style buttons
+   * When the user selects into styled text, toggles the style on/off
    */
   function toggleStyleOnSelect() {
+    // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise turn all buttons off
+    if (
+      !getClosestAncestorEl("#noteContent") ||
+      getClosestAncestorEl(".codeBlock")
+    ) {
+      disableEditingButtons();
+      return;
+    }
+
+    // check if inside styled text
     if (getClosestAncestorEl("u")) {
       underlineButton.className = "on";
     } else {
@@ -343,7 +394,7 @@ function initializeNoteApp() {
   }
 
   /**
-   * Called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
+   * called when insert code block button is clicked: inserts a code block into where the user is selected in the note contents
    */
   function insertCode() {
     // make sure that the user is selected inside the note content and if so, they are not inside a code block; otherwise refocus on the note content and exit the function
@@ -351,7 +402,6 @@ function initializeNoteApp() {
       !getClosestAncestorEl("#noteContent") ||
       getClosestAncestorEl(".codeBlock")
     ) {
-      noteContent.focus();
       return;
     }
 
@@ -376,6 +426,7 @@ function initializeNoteApp() {
       range.setStart(codeBlock, 0);
       range.setEnd(codeBlock, 0);
       range.insertNode(initText);
+      codeBlock.focus();
       range.setStartAfter(initText);
       range.setEndAfter(initText);
       sel.removeAllRanges();
@@ -423,6 +474,11 @@ function initializeNoteApp() {
           noteContent.focus();
         }
       }
+    });
+
+    // turn off text styling when inside code block
+    codeBlock.addEventListener("focus", () => {
+      disableEditingButtons();
     });
   }
 
@@ -474,6 +530,33 @@ function initializeNoteApp() {
     range.deleteContents();
     range.insertNode(urlInput);
     urlInput.focus();
+  }
+
+  /**
+   * disables all editing buttons
+   */
+  function disableEditingButtons() {
+    underlineButton.className = "off";
+    underlineButton.disabled = true;
+    boldButton.className = "off";
+    boldButton.disabled = true;
+    italicButton.className = "off";
+    italicButton.disabled = true;
+
+    insertCodeButton.disabled = true;
+    insertImgButton.disabled = true;
+  }
+
+  /**
+   * enables all editing buttons
+   */
+  function enableEditingButtons() {
+    underlineButton.disabled = false;
+    boldButton.disabled = false;
+    italicButton.disabled = false;
+
+    insertCodeButton.disabled = false;
+    insertImgButton.disabled = false;
   }
 
   /**
@@ -594,7 +677,6 @@ function initializeNoteApp() {
         <h2>${note.title}</h2>
         <button class="delete-note" aria-label="Delete Note">🗑️</button>
       </div>
-      <p>${note.content}</p>
       <small>${note.date}</small>
     `;
     noteElement.appendChild(tagsContainer);

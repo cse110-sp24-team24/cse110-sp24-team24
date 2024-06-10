@@ -7,14 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Dev Journal - Your Personal Developer Notebook"
+      content="Purrfect Notes: A PAWgrammer's Notebook"
     />
     <meta
       name="keywords"
-      content="Dev Journal, Developer Notebook, Notes, Journal"
+      content="Dev Journal, Developer Notebook, Notes, Journal, Purrfect Notes"
     />
+    <!-- Icon for the webpage -->
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <!-- Sets the title of the webpage -->
-    <title>Dev Journal</title>
+    <title>Purrfect Notes</title>
     <!-- Links the external CSS stylesheet for styling the webpage -->
     <link rel="stylesheet" href="./styles/styles.css" />
     <script src="./scripts/render.js"></script>
@@ -24,7 +29,7 @@
     <nav class="sidebar" role="navigation">
       <button id="homeButton" aria-label="Home">🏠 Home</button>
       <button id="addNoteButton" aria-label="Add Note">➕ Add Note</button>
-      <input type="checkbox" id="darkmode-toggle" />
+      <input type="checkbox" id="darkmode-toggle" aria-label="Theme Toggle"/>
       <label id="darkmode-label" for="darkmode-toggle">
         <svg
           version="1.1"
@@ -163,8 +168,9 @@
     <main class="main-content">
       <!-- Header with the title of the webpage -->
       <header class="header-title">
-        <h1>Dev Journal</h1>
-        <p>Your Personal Developer Notebook</p>
+        <img src="./assets/paw_icon.png" alt="Icon" class="title-icon" />
+        <h1>Purrfect Notes</h1>
+        <p>A PAWgrammer's Notebook</p>
       </header>
       <!-- Search bar for searching notes -->
       <div class="search-bar">
@@ -261,13 +267,18 @@
       <div id="floatingToolbar" class="editor-options">
         <button
           id="makeUnderlineButton"
+          class="off"
           aria-label="Underline"
           title="Underline"
-          class="off"
         >
           <u>U</u>
         </button>
-        <button id="makeItalicButton" aria-label="Italic" title="Italic">
+        <button
+          id="makeItalicButton"
+          class="off"
+          aria-label="Italic"
+          title="Italic"
+        >
           <i>I</i>
         </button>
         <button id="makeBoldButton" class="off" aria-label="Bold" title="Bold">
@@ -280,13 +291,6 @@
         >
           🖼️
         </button>
-        <!--<button
-          id="insertVideoButton"
-          aria-label="Insert Video"
-          title="Insert Video"
-        >
-          📹
-        </button>-->
         <button
           id="insertCodeBlockButton"
           aria-label="Insert Code Block"
