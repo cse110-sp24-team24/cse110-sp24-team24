@@ -13,6 +13,7 @@ export default [
         beforeAll: "readonly",
         afterAll: "readonly",
         page: "readonly",
+        test: "readonly",
       },
     },
   },

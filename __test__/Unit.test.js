@@ -231,10 +231,10 @@ describe("showNoteEditor", () => {
     expect(document.getElementById("noteContent").innerHTML).toBe("");
     expect(document.getElementById("tag-list").children.length).toBe(0);
     expect(document.getElementById("noteDate").value).toBe(
-      new Date().toISOString().substring(0, 10)
+      new Date().toISOString().substring(0, 10),
     );
     expect(
-      document.getElementById("noteEditor").classList.contains("hidden")
+      document.getElementById("noteEditor").classList.contains("hidden"),
     ).toBe(false);
   });
 
@@ -256,14 +256,14 @@ describe("showNoteEditor", () => {
     expect(document.getElementById("noteContent").innerHTML).toBe(note.content);
     expect(document.getElementById("tag-list").children.length).toBe(1);
     expect(
-      document.getElementById("tag-list").children[0].textContent
+      document.getElementById("tag-list").children[0].textContent,
     ).toContain("Tag");
     expect(
-      document.getElementById("tag-list").children[0].style.backgroundColor
+      document.getElementById("tag-list").children[0].style.backgroundColor,
     ).toBe("red");
     expect(document.getElementById("noteDate").value).toBe(note.date);
     expect(
-      document.getElementById("noteEditor").classList.contains("hidden")
+      document.getElementById("noteEditor").classList.contains("hidden"),
     ).toBe(false);
   });
 });
@@ -272,13 +272,13 @@ describe("hideNoteEditor", () => {
   it("should hide the note editor and clear its fields", () => {
     hideNoteEditor();
     expect(
-      document.getElementById("noteEditor").classList.contains("hidden")
+      document.getElementById("noteEditor").classList.contains("hidden"),
     ).toBe(true);
     expect(document.getElementById("noteTitle").value).toBe("");
     expect(document.getElementById("noteContent").innerHTML).toBe("");
     expect(document.getElementById("tag-list").children.length).toBe(0);
     expect(document.getElementById("noteDate").value).toBe(
-      new Date().toISOString().substring(0, 10)
+      new Date().toISOString().substring(0, 10),
     );
   });
 });
@@ -337,7 +337,7 @@ describe("clearNoteEditor", () => {
     expect(document.getElementById("noteContent").innerHTML).toBe("");
     expect(document.getElementById("tag-list").children.length).toBe(0);
     expect(document.getElementById("noteDate").value).toBe(
-      new Date().toISOString().substring(0, 10)
+      new Date().toISOString().substring(0, 10),
     );
   });
 });
@@ -373,7 +373,7 @@ describe("saveActiveNote", () => {
           color: "red",
         },
       ],
-      "2023-05-27"
+      "2023-05-27",
     );
   });
 });

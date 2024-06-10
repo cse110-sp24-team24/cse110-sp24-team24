@@ -98,9 +98,7 @@ function initializeNoteApp() {
   const tagCreateButton = document.getElementById("tag-create");
   tagList = document.getElementById("tag-list");
   tagDropdownButton = document.getElementById("tag-dropdown");
-  tagDropdownContainer = document.getElementById(
-    "tag-dropdown-container"
-  );
+  tagDropdownContainer = document.getElementById("tag-dropdown-container");
   tagDropdownList = document.getElementById("tag-dropdown-list");
   const tagColorButton = document.getElementById("tag-color");
   // event listeners for when user clicks around toggle text styling buttons on and off when selecting into styled or nonstyled text
@@ -145,7 +143,7 @@ function initializeNoteApp() {
 
   filterButton = document.getElementById("filterButton");
   filterDropdownContainer = document.getElementById(
-    "filter-dropdown-container"
+    "filter-dropdown-container",
   );
   filterDropdownList = document.getElementById("filter-dropdown-list");
 
@@ -219,7 +217,7 @@ function showNoteEditor(
       },
     ],
     date: new Date().toISOString().substring(0, 10),
-  }
+  },
 ) {
   enableEditingButtons();
 
@@ -247,7 +245,7 @@ function showNoteEditor(
       removeButton.className = "remove-tag-button";
       removeButton.innerHTML = "&#10005;"; // Unicode for "X"
       removeButton.addEventListener("click", () =>
-        removeTag(tagItem, tag.content)
+        removeTag(tagItem, tag.content),
       );
 
       tagItem.appendChild(removeButton);
@@ -741,13 +739,13 @@ function filterNotes() {
   const notes = notesAPI.readNotes();
 
   let filteredTitleNotes = notes.filter((note) =>
-    note.title.toLowerCase().includes(query)
+    note.title.toLowerCase().includes(query),
   );
 
   let filteredTextNotes = notes.filter(
     (note) =>
       note.content.toLowerCase().includes(query) &&
-      !filteredTitleNotes.includes(note)
+      !filteredTitleNotes.includes(note),
   );
 
   if (filteredTitleNotes.length === 0 && filteredTextNotes.length === 0) {
@@ -888,7 +886,7 @@ function addTagFromDropdown(tag) {
     Array.from(tagList.getElementsByTagName("li")).some(
       (li) =>
         li.childNodes[0].textContent.trim() === tag.content &&
-        li.style.backgroundColor === tag.color
+        li.style.backgroundColor === tag.color,
     )
   ) {
     alert("Cannot add duplicate tag.");
@@ -903,7 +901,7 @@ function addTagFromDropdown(tag) {
   removeButton.className = "remove-tag-button";
   removeButton.innerHTML = "&#10005;"; // Unicode for "X"
   removeButton.addEventListener("click", () =>
-    removeTag(tagItem, tagItem.textContent)
+    removeTag(tagItem, tagItem.textContent),
   );
 
   // Add the button to the tag list item
@@ -967,8 +965,8 @@ function filterNotesByTag(selectedTag) {
     note.tags.some(
       (tag) =>
         tag.content === selectedTag.textContent &&
-        tag.color === selectedTag.style.backgroundColor
-    )
+        tag.color === selectedTag.style.backgroundColor,
+    ),
   );
 
   if (filteredNotes.length === 0) {
