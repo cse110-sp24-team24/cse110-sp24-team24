@@ -193,8 +193,8 @@ window.notes = {
   deleteNote: jest.fn(),
 };
 
-const initializeNoteApp = require("../src/scripts/render");
-const noteApp = initializeNoteApp();
+const noteApp = require("../src/scripts/render");
+const initializeNoteApp = noteApp.initializeNoteApp;
 const showNoteEditor = noteApp.showNoteEditor;
 const hideNoteEditor = noteApp.hideNoteEditor;
 const clearNoteEditor = noteApp.clearNoteEditor;
