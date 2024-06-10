@@ -2,7 +2,7 @@
 
 ## Meeting Details
 
-- **Date:** June 9, 2024
+- **Date:** June 2, 2024
 - **Time:** 3:00 PM - 3:30 PM
 - **Locaton:** Zoom
 - **Attendees:** Geena, Harsh,  Sarvesh, Sofia, Cynthia, Jeffrey, Eugenie, Kiera 
