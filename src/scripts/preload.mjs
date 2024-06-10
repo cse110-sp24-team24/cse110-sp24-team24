@@ -1,28 +1,18 @@
 // preload requires .mjs extension https://www.electronjs.org/docs/latest/tutorial/esm#esm-preload-scripts-must-have-the-mjs-extension
 import { contextBridge, ipcRenderer } from "electron";
 
-// //CHANGED
-// // Override the confirm function to send a message to the main process
-// window.confirm = async (message) => {
-//   // Send a message to the main process to trigger the confirmation dialog
-//   const confirmed = await ipcRenderer.invoke("confirm-dialog", message);
-//   return confirmed;
-// };
-
-// // Expose other functions or variables as needed
-// // Example:
-// contextBridge.exposeInMainWorld("myAPI", {
-//   // Functions or variables to expose
-// });
-// //CHANGED
 
 let notes = null;
+let tags = null;
 await readAndDefineNotesIfNull();
+await readAndDefineTagsIfNull();
 // Provide context bridge to expose file to render.js
 contextBridge.exposeInMainWorld("notes", {
   createNote,
+  createTag,
   readNotes,
   readNote,
+  readTags,
   updateNote,
   deleteNote,
 });
@@ -54,12 +44,28 @@ async function createNote(title, content, tags, date) {
 }
 
 /**
+ * Create a new tag with color and content, and save to file storage.
+ * @param {string} content
+ * @param {string} color
+ */
+async function createTag(content, color) {
+  readAndDefineTagsIfNull();
+  let newTag = {
+    content: content,
+    color: color,
+  };
+  tags[content] = newTag;
+  updateNotesFile();
+}
+
+/**
  * Return all notes as an array.
  * @returns {object[]}
  */
 function readNotes() {
   return Object.values(notes);
 }
+
 /**
  * Return note based on noteID.
  * @param {string} noteID
@@ -67,6 +73,14 @@ function readNotes() {
  */
 function readNote(noteID) {
   return notes[noteID];
+}
+
+/**
+ * Return all tags as an array
+ * @returns {object[]}
+ */
+function readTags() {
+  return Object.values(tags);
 }
 
 /**
@@ -117,11 +131,28 @@ async function readAndDefineNotesIfNull() {
 }
 
 /**
+ * Define local representation of tags from file storage if tags is not already defined.
+ * @returns {object}
+ */
+async function readAndDefineTagsIfNull() {
+  if (tags == null) {
+    try {
+      tags = await ipcRenderer.invoke("fileStorage:readTagsFile");
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Unable to load tags from file system. ${err}`);
+    }
+  }
+  return tags;
+}
+
+/**
  * Update file storage representation of notes with local representation of notes.
  */
 async function updateNotesFile() {
   try {
     await ipcRenderer.invoke("fileStorage:updateNotesFile", notes);
+    await ipcRenderer.invoke("fileStorage:updateTagsFile", tags);
   } catch (err) {
     console.error(err);
     throw new Error(`Unable to save notes to file system. ${err}`);
