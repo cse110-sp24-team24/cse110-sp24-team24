@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createNote">createNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#defineNotesIfNull">defineNotesIfNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#deleteNote">deleteNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateID">generateID</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNote">readNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNotes">readNotes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNotesFile">readNotesFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateFileStorage">updateFileStorage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNote">updateNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNotesFile">updateNotesFile</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createNote">createNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createTag">createTag</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#deleteNote">deleteNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateID">generateID</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readAndDefineNotesIfNull">readAndDefineNotesIfNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readAndDefineTagsIfNull">readAndDefineTagsIfNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readFile">readFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNote">readNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNotes">readNotes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readTags">readTags</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readTagsFile">readTagsFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateFile">updateFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNote">updateNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNotesFile">updateNotesFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateTagsFile">updateTagsFile</a></span></li>
 </nav>
 
 <div id="main">
@@ -48,19 +48,64 @@
 
 
     <section class="readme">
-        <article><h1>Team 24</h1>
-<hr style="border:2px solid gray">
-<p><a href="https://github.com/cse110-sp24-team24/cse110-sp24-team24/blob/main/admin/team.md">Team Page Link</a></p>
-<h1>Sub-Team 1 - Electron file storage</h1>
+        <article><h1>Team 24 - Developer Journal</h1>
+<p>A simple and intuitive developer journal application to keep track of your daily coding activities, thoughts, progress, and meeting notes. This project aims to help developers maintain a log of their work, which can be useful for reflection, accountability, and improvement.</p>
+<h3>Features</h3>
+<ul>
+<li>Create, edit, and delete journal entries</li>
+<li>Create and add tags to notes for organizational purposes</li>
+<li>Search through title entries</li>
+<li>Filter through tag entries</li>
+</ul>
+<h3>Installation</h3>
+<p>You can find the most recent release of the app for Windows and MacOS at...</p>
+<h2>Developer Setup</h2>
+<p>These instructions are here to help future developers setup the project on their machine.</p>
+<h3>Prerequisites</h3>
+<p>You will need to install <a href="https://nodejs.org/en">node.js</a> then <a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone">clone</a> the repo. You can now install all required dependencies with:</p>
+<pre class="prettyprint source"><code>npm install
+</code></pre>
+<p>That's it you are now all setup!</p>
+<h3>Running</h3>
+<p>To run the project, simply use:</p>
+<pre class="prettyprint source"><code>npm start
+</code></pre>
+<h3>Testing</h3>
+<p>To run tests, use:</p>
+<pre class="prettyprint source"><code>npm test
+</code></pre>
+<h2>Built With</h2>
+<ul>
+<li><a href="https://www.electronjs.org/">Electron</a> - Framework for Desktop</li>
+<li><a href="https://jestjs.io/">Jest</a> - Testing Framework</li>
+<li><a href="https://pptr.dev/">Puppeteer</a> - Library used to do E2E testing</li>
+</ul>
+<h2>Team Members</h2>
+<p>Meet the awesome team behind this project:</p>
+<ul>
+<li><strong>Cynthia Delira</strong> - <em>Project Lead</em></li>
+<li><strong>Ishaan Kale</strong> - <em>Project Lead</em></li>
+<li><strong>David Choi</strong> - <em>Project Developer</em></li>
+<li><strong>Eugenie Ren</strong> - <em>Project Developer</em></li>
+<li><strong>Harsh Gurnani</strong> - <em>Project Developer</em></li>
+<li><strong>Kiera Navarro</strong> - <em>Project Developer</em></li>
+<li><strong>Sarvesh Mann</strong> - <em>Project Developer</em></li>
+<li><strong>Jeffrey Lee</strong> - <em>Project Developer</em></li>
+<li><strong>Sofia Nguyen</strong> - <em>Project Developer</em></li>
+<li><strong>Terence Tan</strong> - <em>Project Developer</em></li>
+</ul>
+<p>You can learn more about us from our <a href="https://github.com/cse110-sp24-team24/cse110-sp24-team24/blob/main/admin/team.md">team page</a>.</p>
+<h1>Sub-Team 2: API and Tagging System</h1>
 <hr style="border:2px solid gray">
 <p><strong>Members</strong></p>
 <ul>
-<li>David Choi</li>
-<li>Geena Limfat</li>
-<li>Kiera Navarro</li>
+<li>Harsh Gurnani</li>
+<li>Sofia Nguyen</li>
+<li>Terence Tan</li>
+<li>Eugenie Ren</li>
 </ul>
-<p><strong>Purpose</strong>:</p>
-<p>Team 1 was responsible for implementing the ElectronJS file storage. ElectronJS leverages the user's local files to keep the desktop application running even without an internet connection. As a group, we completed the initial Electron set up. We switched all the code from using local storage to use file storage. In order for file storage to access node modules, we refactored the entire code in <code>script.js</code> into a separate API in <code>preload.mjs</code>, <code>fileStorage.js</code>, and <code>render.js</code>. We also created unit testing for our changes and for running Electron.</p></article>
+<p><strong>Purpose:</strong></p>
+<p>Team 2 was responsible for creating the basic API structure with the CRUD operations for notes. These CRUD functions were based on saving to local storage for a long time, adhering to the local first principle. As a group, we were also responsible for creating the tag system which we designed and then tailored to be less complex for both the user and the developer. We went from considering a color dependency to implementing tag creation with limited colors to adhere to the KISS principle. We also added functionalities to filter notes by tag and to allow the user to access a dropdown of previously created tags. Team 2 was also in charge of styling our tags and creating unit tests for tag and note creation. Furthermore, in order to package our project as a web app, we had for adopt a new file storage system made by Team 1, which required us to switch from local storage to electron saving techniques for both notes and tags.</p></article>
     </section>
 
 
@@ -73,7 +118,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Jun 10 2024 00:46:19 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Jun 10 2024 01:05:23 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>

@@ -24,7 +24,7 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createNote">createNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#defineNotesIfNull">defineNotesIfNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#deleteNote">deleteNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateID">generateID</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNote">readNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNotes">readNotes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNotesFile">readNotesFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateFileStorage">updateFileStorage</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNote">updateNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNotesFile">updateNotesFile</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createNote">createNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#createTag">createTag</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#deleteNote">deleteNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#generateID">generateID</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readAndDefineNotesIfNull">readAndDefineNotesIfNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readAndDefineTagsIfNull">readAndDefineTagsIfNull</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readFile">readFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNote">readNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readNotes">readNotes</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readTags">readTags</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#readTagsFile">readTagsFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateFile">updateFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNote">updateNote</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateNotesFile">updateNotesFile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#updateTagsFile">updateTagsFile</a></span></li>
 </nav>
 
 <div id="main">
@@ -160,7 +160,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line36">line 36</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -394,7 +394,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line36">line 36</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -585,14 +585,14 @@
 
     
 
-    <h4 class="name" id="defineNotesIfNull"><span class="type-signature">(async) </span>defineNotesIfNull<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="createTag"><span class="type-signature">(async) </span>createTag<span class="signature">(content, color)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Define local representation of notes from file storage if notes is not already defined.
+    Create a new tag with color and content, and save to file storage.
 </div>
 
 
@@ -628,7 +628,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line94">line 94</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -647,38 +647,95 @@
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
+        <th>Type</th>
 
         
 
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
         
-<span class="param-type"><code>object</code></span>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
 
 
-    </dd>
-</dl>
+            
+            </td>
 
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
 
     
-</div>
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -689,14 +746,14 @@
 
     
 
-    <h4 class="name" id="defineNotesIfNull"><span class="type-signature">(async) </span>defineNotesIfNull<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="createTag"><span class="type-signature">(async) </span>createTag<span class="signature">(content, color)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Define local representation of notes from file storage if notes is not already defined.
+    Create a new tag with color and content, and save to file storage.
 </div>
 
 
@@ -732,7 +789,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line94">line 94</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -751,38 +808,95 @@
 
 
 
+    <h5>Parameters:</h5>
+    
 
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
 
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
+        <th>Type</th>
 
         
 
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
         
-<span class="param-type"><code>object</code></span>
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>content</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
 
 
-    </dd>
-</dl>
+            
+            </td>
 
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
 
     
-</div>
+
+        <tr>
+            
+                <td class="name"><code>color</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -836,7 +950,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line84">line 84</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -971,7 +1085,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line84">line 84</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -1107,7 +1221,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line23">line 23</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -1216,7 +1330,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line23">line 23</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line25">line 25</a>
     </li></ul></dd>
     
 
@@ -1281,6 +1395,786 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
+    <h4 class="name" id="readAndDefineNotesIfNull"><span class="type-signature">(async) </span>readAndDefineNotesIfNull<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Define local representation of notes from file storage if notes is not already defined.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>object</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readAndDefineNotesIfNull"><span class="type-signature">(async) </span>readAndDefineNotesIfNull<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Define local representation of notes from file storage if notes is not already defined.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>object</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readAndDefineTagsIfNull"><span class="type-signature">(async) </span>readAndDefineTagsIfNull<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Define local representation of tags from file storage if tags is not already defined.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>object</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readAndDefineTagsIfNull"><span class="type-signature">(async) </span>readAndDefineTagsIfNull<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Define local representation of tags from file storage if tags is not already defined.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>object</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readFile"><span class="type-signature">(async) </span>readFile<span class="signature">(dir, file)</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Return the notes saved in file storage.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>object</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readFile"><span class="type-signature">(async) </span>readFile<span class="signature">(dir, file)</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Return the notes saved in file storage.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>object</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
     <h4 class="name" id="readNote"><span class="type-signature"></span>readNote<span class="signature">(noteID)</span><span class="type-signature"> &rarr; {object}</span></h4>
 
     
@@ -1324,7 +2218,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line55">line 55</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1480,7 +2374,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line55">line 55</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1636,7 +2530,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line47">line 47</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -1740,7 +2634,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line47">line 47</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line64">line 64</a>
     </li></ul></dd>
     
 
@@ -1801,14 +2695,14 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
-    <h4 class="name" id="readNotesFile"><span class="type-signature">(async) </span>readNotesFile<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="readTags"><span class="type-signature"></span>readTags<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
 
     
 
 
 
 <div class="description">
-    Return the notes saved in file storage.
+    Return all tags as an array
 </div>
 
 
@@ -1844,7 +2738,215 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line28">line 28</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Array.&lt;object></code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readTags"><span class="type-signature"></span>readTags<span class="signature">()</span><span class="type-signature"> &rarr; {Array.&lt;object>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Return all tags as an array
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>Array.&lt;object></code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="readTagsFile"><span class="type-signature">(async) </span>readTagsFile<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Return the tags saved in file storage.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -1905,14 +3007,14 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
-    <h4 class="name" id="readNotesFile"><span class="type-signature">(async) </span>readNotesFile<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
+    <h4 class="name" id="readTagsFile"><span class="type-signature">(async) </span>readTagsFile<span class="signature">()</span><span class="type-signature"> &rarr; {object}</span></h4>
 
     
 
 
 
 <div class="description">
-    Return the notes saved in file storage.
+    Return the tags saved in file storage.
 </div>
 
 
@@ -1948,7 +3050,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line28">line 28</a>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line56">line 56</a>
     </li></ul></dd>
     
 
@@ -2009,14 +3111,14 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
-    <h4 class="name" id="updateFileStorage"><span class="type-signature">(async) </span>updateFileStorage<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateFile"><span class="type-signature">(async) </span>updateFile<span class="signature">(data, dir, file)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Update file storage representation of notes with local representation of notes.
+    Save the notes to file storage.
 </div>
 
 
@@ -2052,7 +3154,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line109">line 109</a>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -2069,6 +3171,110 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -2092,14 +3298,14 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
-    <h4 class="name" id="updateFileStorage"><span class="type-signature">(async) </span>updateFileStorage<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateFile"><span class="type-signature">(async) </span>updateFile<span class="signature">(data, dir, file)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Update file storage representation of notes with local representation of notes.
+    Save the notes to file storage.
 </div>
 
 
@@ -2135,7 +3341,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line109">line 109</a>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -2152,6 +3358,110 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>object</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>dir</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>string</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -2218,7 +3528,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line67">line 67</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -2372,7 +3682,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
             <td class="type">
             
                 
-<span class="param-type"><code>obejct</code></span>
+<span class="param-type"><code>object</code></span>
 
 
             
@@ -2457,7 +3767,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line67">line 67</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line93">line 93</a>
     </li></ul></dd>
     
 
@@ -2611,7 +3921,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
             <td class="type">
             
                 
-<span class="param-type"><code>obejct</code></span>
+<span class="param-type"><code>object</code></span>
 
 
             
@@ -2653,14 +3963,14 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
-    <h4 class="name" id="updateNotesFile"><span class="type-signature">(async) </span>updateNotesFile<span class="signature">(notes)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateNotesFile"><span class="type-signature">(async) </span>updateNotesFile<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Save the notes to file storage.
+    Update file storage representation of notes with local representation of notes.
 </div>
 
 
@@ -2696,7 +4006,173 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line15">line 15</a>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateNotesFile"><span class="type-signature">(async) </span>updateNotesFile<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Update file storage representation of notes with local representation of notes.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="preload.mjs.html">preload.mjs</a>, <a href="preload.mjs.html#line151">line 151</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateTagsFile"><span class="type-signature">(async) </span>updateTagsFile<span class="signature">(tags)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Save the tags to file storage.
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -2740,7 +4216,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
         <tr>
             
-                <td class="name"><code>notes</code></td>
+                <td class="name"><code>tags</code></td>
             
 
             <td class="type">
@@ -2788,14 +4264,14 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
     
 
-    <h4 class="name" id="updateNotesFile"><span class="type-signature">(async) </span>updateNotesFile<span class="signature">(notes)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateTagsFile"><span class="type-signature">(async) </span>updateTagsFile<span class="signature">(tags)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Save the notes to file storage.
+    Save the tags to file storage.
 </div>
 
 
@@ -2831,7 +4307,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line15">line 15</a>
+        <a href="fileStorage.js.html">fileStorage.js</a>, <a href="fileStorage.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -2875,7 +4351,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 
         <tr>
             
-                <td class="name"><code>notes</code></td>
+                <td class="name"><code>tags</code></td>
             
 
             <td class="type">
@@ -2935,7 +4411,7 @@ See https://stackoverflow.com/questions/3231459/how-can-i-create-unique-ids-with
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Jun 10 2024 00:46:19 GMT+0000 (Coordinated Universal Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a> on Mon Jun 10 2024 01:05:23 GMT+0000 (Coordinated Universal Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
