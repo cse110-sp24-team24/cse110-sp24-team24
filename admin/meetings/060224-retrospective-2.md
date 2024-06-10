@@ -2,11 +2,11 @@
 
 ## Meeting Details
 
-- **Date:** June 3, 2024
+- **Date:** June 2, 2024
 - **Time:** 3:00 PM - 3:30 PM
 - **Locaton:** Zoom
-- **Attendees:** Geena, Harsh,  Sarvesh, Terence, Sofia, Cynthia, Ishaan, Jeffrey, Eugenie 
-- **Absentees:**  David,  Kiera
+- **Attendees:** Geena, Harsh,  Sarvesh, Sofia, Cynthia, Jeffrey, Eugenie, Kiera 
+- **Absentees:**  David, Ishaan, Terence 
 
 ## Agenda
 
