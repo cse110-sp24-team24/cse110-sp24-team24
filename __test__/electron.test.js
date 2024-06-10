@@ -11,24 +11,42 @@ describe("Testing Window Functionality", () => {
       executablePath: require("electron"),
       args: [path.resolve("./src/index.html")],
       slowMo: 25, // 25 milliseconds delay between operations
+      ignoreDefaultArgs: ["--disable-features=site-per-process"] // Disable WebSocket support
     });
-
+  
     // Create a new page
     const pages = await browser.pages();
     page = pages[0];
   });
 
   afterAll(async () => {
-    await browser.close();
+    try {
+      // Close the browser instance
+      await browser.close();
+    } catch (error) {
+      console.error("Error closing browser:", error);
+    }
   });
 
   test("Open the main window and check title", async () => {
     await page.waitForSelector("title");
     const pageTitle = await page.title();
-    expect(pageTitle).toBe("Dev Journal");
+    expect(pageTitle).toBe("Purrfect Notes");
   });
 
-  test("Reopen the app after closing", async () => {
+  // test("Reopen the app after closing", async () => {
+  //   // Navigate to a new URL to simulate reopening the app
+  //   await page.goto("about:blank");
+  //   // Wait for a short period to ensure the page is loaded
+  //   await page.waitForTimeout(1000);
+  //   // Navigate back to the app URL
+  //   await page.goto("file://" + path.resolve("./src/index.html"));
+
+  //   await page.waitForSelector("title");
+  //   const newPageTitle = await page.title();
+  //   expect(newPageTitle).toBe("Purrfect Notes");
+  // });
+    test("Reopen the app after closing", async () => {
     // Navigate to a new URL to simulate reopening the app
     await page.goto("about:blank");
     // Wait for a short period to ensure the page is loaded
@@ -38,7 +56,7 @@ describe("Testing Window Functionality", () => {
 
     await page.waitForSelector("title");
     const newPageTitle = await page.title();
-    expect(newPageTitle).toBe("Dev Journal");
+    expect(newPageTitle).toBe("Purrfect Notes");
   });
 
   test("Cancel note and close editor window", async () => {
@@ -155,3 +173,38 @@ describe("Testing Window Functionality", () => {
     expect(isUnderlined).toBe(true);
   });
 });
+
+  // test("Cancel note and close editor window", async () => {
+  //   await page.click("#addNoteButton");
+  //   await page.waitForSelector("#noteEditor:not(.hidden)");
+
+  //   await page.waitForSelector("#cancelButton", { visible: true });
+  //   await page.click("#cancelButton");
+
+  //   await page.waitForSelector("#noteEditor.hidden");
+
+  //   // Check if the note editor is hidden
+  //   const isNoteEditorHidden = await page.evaluate(() => {
+  //     const noteEditor = document.querySelector("#noteEditor");
+  //     return noteEditor.classList.contains("hidden");
+  //   });
+  //   expect(isNoteEditorHidden).toBe(true);
+
+  //   // Check if the save button is not clicked
+  //   const isSaveButtonClicked = await page.evaluate(() => {
+  //     const saveButton = document.querySelector("#saveNoteButton");
+  //     return saveButton.classList.contains("clicked");
+  //   });
+  //   expect(isSaveButtonClicked).toBe(false);
+  // });
+
+  // test("Add new note", async () => {
+  //   // Logic to add a new note
+  //   // Simulate adding a new note and verify its presence
+  // });
+
+  // test("Apply bold, italic, and underline styles to text", async () => {
+  //   // Logic to apply styles to text
+  //   // Simulate applying bold, italic, and underline styles to text and verify the changes
+  // });
+
