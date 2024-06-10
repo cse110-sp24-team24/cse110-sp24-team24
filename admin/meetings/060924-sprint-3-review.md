@@ -11,7 +11,7 @@
 ### Completed Tasks:
 
 **Team 1:**
-- - Working on build
+- Working on build
 - e2e Testing
     - difficulties with save and delete because of jest and Node conflict
   
