@@ -270,10 +270,9 @@ function initializeNoteApp() {
   }
 
   /**
-   * Toggle note content styling button's class to "on" or "off"
-   * button class represents style on UI for whether style is applied
-   * or not
-   * @param {DOM element} button
+   * Toggle note content styling button's class to "on" or "off".
+   * Button class represents style on UI for whether style is applied or not.
+   * @param {HTMLElement} button - The button element to toggle.
    */
   function styleToggle(button) {
     if (button.className == "on") {
@@ -307,20 +306,6 @@ function initializeNoteApp() {
       styleToggle(italicButton);
     }
     noteContent.focus();
-  }
-
-  /**
-   * Toggle note content styling button's class to "on" or "off"
-   * button class represents style on UI for whether style is applied
-   * or not
-   * @param {DOM element} button
-   */
-  function styleToggle(button) {
-    if (button.className == "on") {
-      button.className = "off";
-    } else {
-      button.className = "on";
-    }
   }
 
   /**
@@ -873,7 +858,6 @@ function initializeNoteApp() {
   /**
    * Adds the tag from the drop down list and populate the tag list
    * @param {string} tag
-   * @returns
    */
   function addTagFromDropdown(tag) {
     const notes = notesAPI.readNotes();
