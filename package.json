@@ -32,9 +32,13 @@
   },
   "build": {
     "appId": "team24.dev.journal",
-    "productName": "Developer Journal",
-    "mac": {},
-    "win": {}
+    "productName": "Purrfect Notes",
+    "mac": {
+      "icon": "src/assets/paw_icon_big"
+    },
+    "win": {
+      "icon": "src/assets/paw_icon_big"
+    }
   },
   "tags": {
     "allowUnknownTags": true
@@ -60,7 +64,7 @@
   "type": "module",
   "name": "cse110-sp24-team24",
   "description": "A simple and intuitive developer journal application to keep track of your daily coding activities, thoughts, progress, and meeting notes.",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "src/main.js",
   "keywords": [],
   "author": "",
