@@ -98,9 +98,7 @@ function initializeNoteApp() {
   const tagCreateButton = document.getElementById("tag-create");
   tagList = document.getElementById("tag-list");
   tagDropdownButton = document.getElementById("tag-dropdown");
-  tagDropdownContainer = document.getElementById(
-    "tag-dropdown-container"
-  );
+  tagDropdownContainer = document.getElementById("tag-dropdown-container");
   tagDropdownList = document.getElementById("tag-dropdown-list");
   const tagColorButton = document.getElementById("tag-color");
   // event listeners for when user clicks around toggle text styling buttons on and off when selecting into styled or nonstyled text
