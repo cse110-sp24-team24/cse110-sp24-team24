@@ -25,7 +25,7 @@ async function main() {
 }
 
 const createWindow = () => {
-  const notesDataPath = path.join(app.getPath("documents"), "Purrfect Notes");
+  const notesDataPath = path.join(app.getPath("documents"), "Purrfect-Notes");
   ipcMain.handle("fileStorage:readNotesFile", async () => {
     return await fileStorage.readFile(notesDataPath, "notes.json");
   });
