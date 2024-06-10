@@ -110,7 +110,88 @@ describe("Testing Window Functionality", () => {
     expect(noteContentValue).toBe("Write unit tests using puppeteer and chat");
   }, 150000);
 
+  test("Apply bold to text by typing", async () => {
+    // Wait for the note editor to be displayed
+    await page.waitForSelector("#noteEditor:not(.hidden)");
+  
+    // Apply bold style
+    await page.click("#makeBoldButton");
+    // Type some text into the content area
+    await page.type("#noteContent", "This is a bold test text.");
+  
+    // Click on the text to set the cursor
+    await page.click("#noteContent");
+  
+  
+    // Check if the text is bold
+     // Check if the text is bold
+     const isBold = await page.evaluate(() => {
+      return document.queryCommandState('bold');
+    });
+  
+    // Expect the text to be bold
+    expect(isBold).toBe(true);
+  
+
+    // // Apply Italic style
+    // await page.click("#makeItalicButton");
+    // // Type some text into the content area
+    // await page.type("#noteContent", "This is an italic test text.");
+  
+    // // Click on the text to set the cursor
+    // await page.click("#noteContent");
+  
+  
+    // // Check if the text is bold
+
+    // const isItalic = await page.evaluate(() => {
+    //   return document.queryCommandState('italic');
+    // });
+
+    //  // Expect the text to be bold
+    //  expect(isItalic).toBe(true);
+   
+  });
+  
+  // test("Apply italic to text by typing", async () => {
+  //   // Wait for the note editor to be displayed
+  //   await page.waitForSelector("#noteEditor:not(.hidden)");
+  
+  //   // Apply bold style
+  //   await page.click("#makeItalicButton");
+  //   // Type some text into the content area
+  //   await page.type("#noteContent", "This is an italic test text.");
+  
+  //   // Click on the text to set the cursor
+  //   await page.click("#noteContent");
+  
+  
+  //   // Check if the text is bold
+  //    // Check if the text is bold
+  //    const isItalic = await page.evaluate(() => {
+  //     return document.queryCommandState('italic');
+  //   });
+  
+  //   // Expect the text to be bold
+  //   expect(isItalic).toBe(true);
+
+  // });
+
   test("Apply bold, italic, and underline styles to text", async () => {
+    await page.click("#addNoteButton");
+
+    // Wait for the note editor to be displayed
+    await page.waitForSelector("#noteEditor:not(.hidden)");
+
+    // Wait for the input fields to appear
+    await page.waitForSelector("#noteTitle");
+    await page.waitForSelector("#noteTags");
+    await page.waitForSelector("#noteContent");
+    await page.waitForSelector("#noteDate");
+
+    // Type some text into the content area
+    await page.type("#noteContent", "This is a test text.");
+
     // Select the text
     await page.evaluate(() => {
       const range = document.createRange();
