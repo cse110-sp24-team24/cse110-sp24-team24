@@ -1,9 +1,6 @@
 name: JS Docs Test
 
-on:
-  push:
-    branches:
-      - jsdoc-automation
+on: [push]
 
 jobs:
   deploy:
