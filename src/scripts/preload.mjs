@@ -1,15 +1,17 @@
 // preload requires .mjs extension https://www.electronjs.org/docs/latest/tutorial/esm#esm-preload-scripts-must-have-the-mjs-extension
-import fileStorage from "./fileStorage.js";
-import { contextBridge } from "electron";
-
+import { contextBridge, ipcRenderer } from "electron";
 
 let notes = null;
-await defineNotesIfNull();
+let tags = null;
+await readAndDefineNotesIfNull();
+await readAndDefineTagsIfNull();
 // Provide context bridge to expose file to render.js
 contextBridge.exposeInMainWorld("notes", {
   createNote,
+  createTag,
   readNotes,
   readNote,
+  readTags,
   updateNote,
   deleteNote,
 });
@@ -34,10 +36,25 @@ function generateID() {
  * @returns {string}
  */
 async function createNote(title, content, tags, date) {
-  defineNotesIfNull();
+  readAndDefineNotesIfNull();
   let newID = generateID();
   await updateNote(newID, title, content, tags, date);
   return newID;
+}
+
+/**
+ * Create a new tag with color and content, and save to file storage.
+ * @param {string} content
+ * @param {string} color
+ */
+async function createTag(content, color) {
+  readAndDefineTagsIfNull();
+  let newTag = {
+    content: content,
+    color: color,
+  };
+  tags[content] = newTag;
+  updateNotesFile();
 }
 
 /**
@@ -47,6 +64,7 @@ async function createNote(title, content, tags, date) {
 function readNotes() {
   return Object.values(notes);
 }
+
 /**
  * Return note based on noteID.
  * @param {string} noteID
@@ -57,15 +75,23 @@ function readNote(noteID) {
 }
 
 /**
+ * Return all tags as an array
+ * @returns {object[]}
+ */
+function readTags() {
+  return Object.values(tags);
+}
+
+/**
  * Override the note specified by noteID with the specified parameters and update file storage.
  * @param {string} noteID
  * @param {string} title
  * @param {string} content
  * @param {string} tags
- * @param {obejct} date
+ * @param {object} date
  */
 async function updateNote(noteID, title, content, tags, date) {
-  defineNotesIfNull();
+  readAndDefineNotesIfNull();
   let newNote = {
     ID: noteID,
     title: title,
@@ -74,7 +100,7 @@ async function updateNote(noteID, title, content, tags, date) {
     date: date,
   };
   notes[newNote.ID] = newNote;
-  updateFileStorage();
+  updateNotesFile();
 }
 
 /**
@@ -82,19 +108,19 @@ async function updateNote(noteID, title, content, tags, date) {
  * @param {object} noteID
  */
 async function deleteNote(noteID) {
-  defineNotesIfNull();
+  readAndDefineNotesIfNull();
   delete notes[noteID];
-  updateFileStorage();
+  updateNotesFile();
 }
 
 /**
  * Define local representation of notes from file storage if notes is not already defined.
  * @returns {object}
  */
-async function defineNotesIfNull() {
+async function readAndDefineNotesIfNull() {
   if (notes == null) {
     try {
-      notes = await fileStorage.readNotesFile();
+      notes = await ipcRenderer.invoke("fileStorage:readNotesFile");
     } catch (err) {
       console.error(err);
       throw new Error(`Unable to load notes from file system. ${err}`);
@@ -104,11 +130,28 @@ async function defineNotesIfNull() {
 }
 
 /**
+ * Define local representation of tags from file storage if tags is not already defined.
+ * @returns {object}
+ */
+async function readAndDefineTagsIfNull() {
+  if (tags == null) {
+    try {
+      tags = await ipcRenderer.invoke("fileStorage:readTagsFile");
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Unable to load tags from file system. ${err}`);
+    }
+  }
+  return tags;
+}
+
+/**
  * Update file storage representation of notes with local representation of notes.
  */
-async function updateFileStorage() {
+async function updateNotesFile() {
   try {
-    await fileStorage.updateNotesFile(notes);
+    await ipcRenderer.invoke("fileStorage:updateNotesFile", notes);
+    await ipcRenderer.invoke("fileStorage:updateTagsFile", tags);
   } catch (err) {
     console.error(err);
     throw new Error(`Unable to save notes to file system. ${err}`);
