@@ -1,4 +1,4 @@
-# Sprint 2 Developer Journal Review
+# Sprint 3 Developer Journal Review
 
 ## Meeting Details:
 
