@@ -23,7 +23,8 @@
     "style:prettier": "prettier --check '**/*.{js,jsx,ts,tsx}'",
     "test": "jest",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "release": "electron-builder --mac --windows --publish always"
   },
   "jest": {
     "preset": "jest-puppeteer",
