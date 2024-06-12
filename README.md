@@ -1,4 +1,6 @@
-# Team 24 - Developer Journal
+# Team 24 - Computer PAWgrammers
+
+## Purrfect Notes: A PAWgrammer's Notebook
 
 A simple and intuitive developer journal application to keep track of your daily coding activities, thoughts, progress, and meeting notes. This project aims to help developers maintain a log of their work, which can be useful for reflection, accountability, and improvement.
 
