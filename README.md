@@ -51,8 +51,10 @@ npm test
 - [Jest](https://jestjs.io/) - Testing Framework
 - [Puppeteer](https://pptr.dev/) - Library used to do E2E testing
 
-## Team Video
-[Video Link](https://www.youtube.com/watch?v=PqLQ9NjTBlo)
+## Team Videos
+[Public Video Link](https://www.youtube.com/watch?v=PqLQ9NjTBlo)
+
+[Private Video Link](https://youtu.be/H1sJdECD77A)
 
 ## JSDocs Site
 [GitHub Pages](https://cse110-sp24-team24.github.io/cse110-sp24-team24/index.html)
