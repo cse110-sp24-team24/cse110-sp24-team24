@@ -54,6 +54,9 @@ npm test
 ## Team Video
 [Video Link](https://www.youtube.com/watch?v=PqLQ9NjTBlo)
 
+## JSDocs Site
+[GitHub Pages](https://cse110-sp24-team24.github.io/cse110-sp24-team24/index.html)
+
 ## Team Members
 
 Meet the awesome team behind this project:
